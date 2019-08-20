@@ -16,8 +16,8 @@ public class RouteService {
     /**
      * @param func
      */
-    public void getMyRouts(final Function<List<ApiRoute>, Void> func) {
-        ApiService.getInstance().route().getMyRoutes().enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
+    public void getMyRouts(String type, final Function<List<ApiRoute>, Void> func) {
+        ApiService.getInstance().route().getMyRoutes(type).enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ApiRoute>>> call, Response<ApiResponse<List<ApiRoute>>> response) {
                 if (response.isSuccessful()) {
@@ -36,11 +36,12 @@ public class RouteService {
     /**
      * @param name
      */
-    public void createRoute(String name, Function<ApiRoute, Void> func) {
+    public void createRoute(String name, String type, Function<ApiRoute, Void> func) {
 
         ApiRoute route = new ApiRoute();
         route.name = name;
         route.seats = 4;
+        route.type = type;
 
         ApiService.getInstance().route().createRoute(route).enqueue(new Callback<ApiResponse<ApiRoute>>() {
             @Override

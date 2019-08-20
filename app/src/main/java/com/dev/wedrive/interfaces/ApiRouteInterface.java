@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 public interface ApiRouteInterface {
 
     @GET("/route")
-    public Call<ApiResponse<List<ApiRoute>>> getMyRoutes();
+    public Call<ApiResponse<List<ApiRoute>>> getMyRoutes(@Query("type") String type);
 
     @POST("/route/create")
     public Call<ApiResponse<ApiRoute>> createRoute(@Body ApiRoute apiRoute);

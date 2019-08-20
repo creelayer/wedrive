@@ -83,14 +83,16 @@ public class RouteDialog extends DialogAbstract implements Validator.ValidationL
     public void onValidationSucceeded() {
 
         if (route == null) {
-            routeService.createRoute(name.getText().toString(), (route) -> {
+            routeService.createRoute(name.getText().toString(), ApiRoute.TYPE_DRIVER, (route) -> {
                 ((DriverController) activity.getController()).updateRouteControls(route);
+                new InformDialog(activity, "Route "+ route.name+" added.").show();
                 return null;
             });
         } else {
             route.name = name.getText().toString();
             routeService.updateRoute(route, (route) -> {
                 ((DriverController) activity.getController()).updateRouteControls(route);
+                new InformDialog(activity, "Route "+ route.name+" updated.").show();
                 return null;
             });
         }

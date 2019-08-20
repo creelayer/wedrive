@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 
-public class ApiLocation implements ApiLocationInterface {
+public class ApiLocation implements ApiLocationInterface, TypeInterface {
 
     @SerializedName("uuid")
     @Getter
@@ -17,6 +17,10 @@ public class ApiLocation implements ApiLocationInterface {
 
     @SerializedName("route_uuid")
     public String routeUuid;
+
+    @SerializedName("type")
+    @Getter
+    public String type;
 
     @SerializedName("time")
     @Getter
@@ -55,14 +59,11 @@ public class ApiLocation implements ApiLocationInterface {
      */
     public ApiLocation(LatLng latLng, ApiRoute route) {
         this.routeUuid = route.uuid;
+        this.type = route.type + "_location";
         this.latitude = latLng.latitude;
         this.longitude = latLng.longitude;
     }
-
-    public String getType() {
-        return routeUuid == null ? MMarker.TYPE_PASSENGER_ROUTE : MMarker.TYPE_DRIVER_ROUTE;
-    }
-
+    
     public LatLng getLatLng() {
         return new LatLng(latitude, longitude);
     }

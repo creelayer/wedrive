@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 
-public class ApiCurrentLocation implements ApiLocationInterface {
+public class ApiCurrentLocation implements ApiLocationInterface, TypeInterface {
 
     @SerializedName("uuid")
     @Getter

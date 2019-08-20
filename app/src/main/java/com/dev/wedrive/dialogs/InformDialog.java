@@ -33,12 +33,7 @@ public class InformDialog extends DialogAbstract {
 
         Button okBtn = view.findViewById(R.id.dialog_ok_btn);
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//TODO: hide
-            }
-        });
+        okBtn.setOnClickListener((v) -> this.hide());
 
 
         informLayout.removeAllViews();

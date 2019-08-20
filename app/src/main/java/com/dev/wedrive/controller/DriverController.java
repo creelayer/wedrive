@@ -1,6 +1,5 @@
 package com.dev.wedrive.controller;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,7 +8,6 @@ import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.dialogs.DeleteRouteDialog;
 import com.dev.wedrive.dialogs.DriverLocationDialog;
-import com.dev.wedrive.dialogs.InformDialog;
 import com.dev.wedrive.dialogs.RouteDialog;
 import com.dev.wedrive.dialogs.RouteInfoDialog;
 import com.dev.wedrive.entity.ApiLocation;
@@ -51,7 +49,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         routeLayout.addView(addBtn);
 
         btnN = 0;
-        routeService.getMyRouts((routes) -> {
+        routeService.getMyRouts(ApiRoute.TYPE_DRIVER, (routes) -> {
             for (ApiRoute route : routes) {
                 if (currentRoute == null) {
                     showRoute(route);
@@ -127,7 +125,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         MMarker mMarker = mapService.getMMarker(marker);
 
         switch (mMarker.getType()) {
-            case MMarker.TYPE_DRIVER_ROUTE:
+            case ApiLocation.TYPE_DRIVER_LOCATION :
                 new DriverLocationDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
                 break;
         }

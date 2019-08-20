@@ -30,12 +30,17 @@ public class PassengerController implements ControllerInterface {
      * Add route buttons on map interface
      */
     private void createRouteControls() {
-        routeService.getMyRouts((routes) -> {
-            for (ApiRoute route : routes) {
-                if (currentRoute == null) {
+        routeService.getMyRouts(ApiRoute.TYPE_PASSENGER, (routes) -> {
+
+            if (!routes.isEmpty()) {
+                currentRoute = routes.get(0);
+            } else {
+                routeService.createRoute(ApiRoute.DEFAULT_NAME, ApiRoute.TYPE_PASSENGER, (route) -> {
                     currentRoute = route;
-                }
+                    return null;
+                });
             }
+
             return null;
         });
     }
@@ -47,7 +52,7 @@ public class PassengerController implements ControllerInterface {
         MMarker mMarker = mapService.getMMarker(marker);
 
         switch (mMarker.getType()) {
-            case MMarker.TYPE_PASSENGER_ROUTE:
+            case MMarker.TYPE_PASSENGER_LOCATION:
                 new PassengerLocationDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
                 break;
         }

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
+import com.dev.wedrive.entity.ApiCurrentLocation;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiLocationInterface;
 import com.dev.wedrive.entity.ApiProfile;
@@ -128,7 +129,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-            mapService.loadNearestCurrentLocations(profile.getType().equals(ApiLocationInterface.TYPE_DRIVER) ? ApiLocationInterface.TYPE_PASSENGER : ApiLocationInterface.TYPE_DRIVER);
+            mapService.loadNearestCurrentLocations(profile.getType().equals(ApiCurrentLocation.TYPE_DRIVER) ? ApiCurrentLocation.TYPE_PASSENGER : ApiCurrentLocation.TYPE_DRIVER);
         }
 
         @Override

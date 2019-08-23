@@ -51,22 +51,14 @@ public class DeleteRouteDialog extends DialogAbstract {
         Button okBtn = view.findViewById(R.id.dialog_ok_btn);
         Button cancelBtn = view.findViewById(R.id.dialog_cancel_btn);
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                routeService.deleteRoute(route, (route) -> {
-                    ((DriverController) activity.getController()).updateRouteControls(null);
-                    return null;
-                });
-            }
+        okBtn.setOnClickListener((v) -> {
+            routeService.deleteRoute(route, (route) -> {
+                ((DriverController) activity.getController()).updateRouteControls(null);
+                return null;
+            });
         });
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("aaa", "zzzz");
-            }
-        });
+        cancelBtn.setOnClickListener((v) -> this.hide());
 
         informLayout.removeAllViews();
         informLayout.addView(view);

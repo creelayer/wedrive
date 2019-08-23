@@ -8,10 +8,9 @@ import android.support.v4.app.FragmentActivity;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
-import com.dev.wedrive.entity.ApiCurrentLocation;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiLocationInterface;
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.loaders.LoaderInterface;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
@@ -44,6 +44,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private MapService mapService;
 
     private ApiProfile profile;
+
+    @Setter
+    private LoaderInterface loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +132,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-            mapService.loadNearestCurrentLocations(profile.getType().equals(ApiCurrentLocation.TYPE_DRIVER) ? ApiCurrentLocation.TYPE_PASSENGER : ApiCurrentLocation.TYPE_DRIVER);
+            mapService.loadNearestLocations(profile.getType().equals(ApiLocation.TYPE_DRIVER) ? ApiLocation.TYPE_PASSENGER : ApiLocation.TYPE_DRIVER);
         }
 
         @Override

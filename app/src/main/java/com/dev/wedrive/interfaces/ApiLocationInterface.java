@@ -13,11 +13,15 @@ import retrofit2.http.Query;
 
 public interface ApiLocationInterface {
 
-    @GET("/location")
-    public Call<ApiResponse<List<ApiLocation>>> getLocations();
 
     @GET("/location")
-    public Call<ApiResponse<List<ApiLocation>>> getLocations(@Query("uuid") String uuid);
+    public Call<ApiResponse<List<ApiLocation>>> getLocations(@Query("type") String type);
+
+    @POST("/location/position")
+    public Call<ApiResponse<ApiLocation>> positionLocation(@Body ApiLocation apiLocation);
+
+    @GET("/location/route")
+    public Call<ApiResponse<List<ApiLocation>>> getRouteLocations(@Query("route") String uuid);
 
     @POST("/location/create")
     public Call<ApiResponse<ApiLocation>> createLocation(@Body ApiLocation location);

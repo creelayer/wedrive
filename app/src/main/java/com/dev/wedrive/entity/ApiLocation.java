@@ -11,10 +11,6 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @Getter
     public String uuid;
 
-    @SerializedName("user_id")
-    @Getter
-    public Integer userId;
-
     @SerializedName("route_uuid")
     public String routeUuid;
 

@@ -1,15 +1,11 @@
 package com.dev.wedrive.service;
 
-import android.util.Log;
-
-import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiResponseError;
 import com.dev.wedrive.entity.ApiToken;
-import com.dev.wedrive.interfaces.ApiCurrentLocationInterface;
+import com.dev.wedrive.interfaces.ApiLocationInterface;
 import com.dev.wedrive.interfaces.ApiProfileInterface;
 import com.dev.wedrive.interfaces.ApiRouteInterface;
-import com.dev.wedrive.interfaces.ApiLocationInterface;
 import com.dev.wedrive.interfaces.ApiUserInterface;
 
 import org.json.JSONObject;
@@ -21,8 +17,8 @@ import lombok.Setter;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -82,13 +78,6 @@ public class ApiService {
         }
 
         return apiServiceInstance;
-    }
-
-    /**
-     * @return
-     */
-    public ApiCurrentLocationInterface currentLocation() {
-        return mRetrofit.create(ApiCurrentLocationInterface.class);
     }
 
     /**

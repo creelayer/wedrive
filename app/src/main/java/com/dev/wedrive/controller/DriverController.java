@@ -140,5 +140,4 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         new DriverLocationDialog(mapActivity, location).show();
     }
 
-
 }

@@ -1,7 +1,6 @@
 package com.dev.wedrive.service;
 
 import com.dev.wedrive.collection.MarkerCollection;
-import com.dev.wedrive.entity.ApiCurrentLocation;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.MMarker;
@@ -16,8 +15,6 @@ public class MapService {
     private GoogleMap map;
     private MarkerCollection markerCollection;
     private LocationService locationService;
-    private RouteService routeService;
-
 
     /**
      * @param map
@@ -26,7 +23,6 @@ public class MapService {
         this.map = map;
         this.markerCollection = new MarkerCollection();
         this.locationService = new LocationService();
-        this.routeService = new RouteService();
     }
 
     /**
@@ -61,10 +57,10 @@ public class MapService {
     /**
      * Update all markers on map
      */
-    public void loadNearestCurrentLocations(String type) {
-        locationService.getNearestCurrentLocations(type, (locations) -> {
+    public void loadNearestLocations(String type) {
+        locationService.getNearestLocations(type, (locations) -> {
 
-            for (ApiCurrentLocation location : locations) {
+            for (ApiLocation location : locations) {
 
                 MMarker marker = markerCollection.get(location);
 
@@ -79,8 +75,6 @@ public class MapService {
         });
     }
 
-
-
     /**
      * @param route
      */
@@ -88,7 +82,7 @@ public class MapService {
 
         clearRouteLocations();
 
-        locationService.getLocations(route, (locations) -> {
+        locationService.getRouteLocations(route, (locations) -> {
 
             for (ApiLocation location : locations) {
                 MMarker marker = markerCollection.get(location.uuid);

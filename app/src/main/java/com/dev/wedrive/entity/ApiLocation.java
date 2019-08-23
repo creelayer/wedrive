@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 
-public class ApiLocation implements ApiLocationInterface, TypeInterface {
+public class ApiLocation<T> implements ApiLocationInterface, TypeInterface {
 
     @SerializedName("uuid")
     @Getter
@@ -18,14 +18,6 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @Getter
     public String type;
 
-    @SerializedName("time")
-    @Getter
-    public String time;
-
-    @SerializedName("gap")
-    @Getter
-    public String gap;
-
     @SerializedName("latitude")
     @Getter
     public double latitude;
@@ -33,6 +25,10 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @SerializedName("longitude")
     @Getter
     public double longitude;
+
+    @SerializedName("data")
+    @Getter
+    public T data;
 
     /**
      *

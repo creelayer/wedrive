@@ -80,9 +80,9 @@ public class PassengerLocationDialog extends DialogAbstract implements Validator
 
 
         if (apiLocation.getUuid() != null) {
-            String[] time = apiLocation.getTime().split(":");
-            hour.setText(time[0]);
-            minute.setText(time[1]);
+//            String[] time = apiLocation.getTime().split(":");
+//            hour.setText(time[0]);
+//            minute.setText(time[1]);
             cancelBtn.setText("Delete");
         }
 
@@ -111,7 +111,7 @@ public class PassengerLocationDialog extends DialogAbstract implements Validator
     @Override
     public void onValidationSucceeded() {
 
-        apiLocation.time = hour.getText().toString() + minute.getText().toString();
+       // apiLocation.time = hour.getText().toString() + minute.getText().toString();
 
         if (mMarker == null) {
             locationService.createLocation(apiLocation, (result) -> {

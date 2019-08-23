@@ -10,6 +10,7 @@ import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
+import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.MapService;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -81,10 +82,10 @@ public class DriverLocationDialog extends DialogAbstract implements Validator.Va
 
 
         if (apiLocation.getUuid() != null) {
-            String[] time = apiLocation.getTime().split(":");
-            hour.setText(time[0]);
-            minute.setText(time[1]);
-            gap.setText(apiLocation.getGap());
+//            String[] time = apiLocation.getTime().split(":");
+//            hour.setText(time[0]);
+//            minute.setText(time[1]);
+//            gap.setText(apiLocation.getGap());
             cancelBtn.setText("Delete");
         }
 
@@ -104,8 +105,13 @@ public class DriverLocationDialog extends DialogAbstract implements Validator.Va
     @Override
     public void onValidationSucceeded() {
 
-        apiLocation.time = hour.getText().toString() + minute.getText().toString();
-        apiLocation.gap = gap.getText().toString();
+//        apiLocation.time = hour.getText().toString() + minute.getText().toString();
+//        apiLocation.gap = gap.getText().toString();
+
+        //TODO: check
+        apiLocation.data = new DriverLocationData()
+                .setGap(gap.getText().toString())
+                .setTime(hour.getText().toString() + minute.getText().toString());
 
         if (apiLocation.getUuid() == null) {
             routeLocationService.createLocation(apiLocation, (result) -> {

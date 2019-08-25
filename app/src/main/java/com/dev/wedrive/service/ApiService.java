@@ -3,10 +3,10 @@ package com.dev.wedrive.service;
 import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiResponseError;
 import com.dev.wedrive.entity.ApiToken;
-import com.dev.wedrive.interfaces.ApiLocationInterface;
-import com.dev.wedrive.interfaces.ApiProfileInterface;
-import com.dev.wedrive.interfaces.ApiRouteInterface;
-import com.dev.wedrive.interfaces.ApiUserInterface;
+import com.dev.wedrive.api.ApiLocationInterface;
+import com.dev.wedrive.api.ApiProfileInterface;
+import com.dev.wedrive.api.ApiRouteInterface;
+import com.dev.wedrive.api.ApiUserInterface;
 
 import org.json.JSONObject;
 

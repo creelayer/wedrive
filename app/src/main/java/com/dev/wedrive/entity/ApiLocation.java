@@ -2,10 +2,12 @@ package com.dev.wedrive.entity;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.internal.LinkedTreeMap;
 
 import lombok.Getter;
+import lombok.Setter;
 
-public class ApiLocation<T> implements ApiLocationInterface, TypeInterface {
+public class ApiLocation implements ApiLocationInterface, TypeInterface {
 
     @SerializedName("uuid")
     @Getter
@@ -27,8 +29,9 @@ public class ApiLocation<T> implements ApiLocationInterface, TypeInterface {
     public double longitude;
 
     @SerializedName("data")
+    @Setter
     @Getter
-    public T data;
+    public Object data;
 
     /**
      *
@@ -55,9 +58,8 @@ public class ApiLocation<T> implements ApiLocationInterface, TypeInterface {
         this.latitude = latLng.latitude;
         this.longitude = latLng.longitude;
     }
-    
+
     public LatLng getLatLng() {
         return new LatLng(latitude, longitude);
     }
-
 }

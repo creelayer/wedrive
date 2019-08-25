@@ -10,6 +10,7 @@ import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.loaders.LoaderInterface;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
@@ -46,7 +47,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ApiProfile profile;
 
     @Setter
-    private LoaderInterface loader;
+    private LoaderCollection loaders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +133,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+
+            loaders.run();
+
+
             mapService.loadNearestLocations(profile.getType().equals(ApiLocation.TYPE_DRIVER) ? ApiLocation.TYPE_PASSENGER : ApiLocation.TYPE_DRIVER);
         }
 

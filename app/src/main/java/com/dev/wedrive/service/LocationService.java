@@ -102,9 +102,9 @@ public class LocationService {
     /**
      * @param func
      */
-    public void getNearestLocations(String type, final Function<List<ApiLocation>, Void> func) {
+    public void getNearestLocations( final Function<List<ApiLocation>, Void> func) {
 
-        ApiService.getInstance().location().getLocations(type).enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
+        ApiService.getInstance().location().getNearestLocations().enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ApiLocation>>> call, Response<ApiResponse<List<ApiLocation>>> response) {
                 if (response.isSuccessful()) {

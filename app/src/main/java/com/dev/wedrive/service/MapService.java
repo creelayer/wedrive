@@ -57,8 +57,8 @@ public class MapService {
     /**
      * Update all markers on map
      */
-    public void loadNearestLocations(String type) {
-        locationService.getNearestLocations(type, (locations) -> {
+    public void loadNearestLocations() {
+        locationService.getNearestLocations((locations) -> {
 
             for (ApiLocation location : locations) {
 

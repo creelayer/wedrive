@@ -1,11 +1,10 @@
-package com.dev.wedrive.interfaces;
+package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiUser;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ApiUserInterface {

@@ -12,6 +12,7 @@ import com.dev.wedrive.dialogs.RouteDialog;
 import com.dev.wedrive.dialogs.RouteInfoDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
+import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.entity.MMarker;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.RouteService;

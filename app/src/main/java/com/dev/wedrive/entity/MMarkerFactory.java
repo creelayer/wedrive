@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MMarkerFactory {
 
-    public static MMarker make(GoogleMap map, ApiLocationInterface location) {
+    public static MMarker make(GoogleMap map, ApiLocation location) {
 
         int icon = 0;
 

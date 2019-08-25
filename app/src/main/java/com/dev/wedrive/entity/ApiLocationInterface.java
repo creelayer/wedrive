@@ -13,4 +13,6 @@ public interface ApiLocationInterface {
     public double getLatitude();
 
     public double getLongitude();
+
+    //public DriverLocationData getData();
 }

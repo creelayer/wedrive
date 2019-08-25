@@ -1,4 +1,4 @@
-package com.dev.wedrive.interfaces;
+package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiRoute;
@@ -20,8 +20,8 @@ public interface ApiRouteInterface {
     public Call<ApiResponse<ApiRoute>> createRoute(@Body ApiRoute apiRoute);
 
     @POST("/route/update")
-    public Call<ApiResponse<ApiRoute>> updateRoute(@Query("uuid") String uuid, @Body ApiRoute apiRoute);
+    public Call<ApiResponse<ApiRoute>> updateRoute(@Query("route") String uuid, @Body ApiRoute apiRoute);
 
     @POST("/route/delete")
-    public Call<ApiResponse<ApiRoute>> deleteRoute(@Query("uuid") String uuid);
+    public Call<ApiResponse<ApiRoute>> deleteRoute(@Query("route") String uuid);
 }

@@ -26,7 +26,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public class DriverLocationDialog extends DialogAbstract implements Validator.ValidationListener {
+public class LocationDriverEditDialog extends DialogAbstract implements Validator.ValidationListener {
 
 
     private Validator validator;
@@ -56,7 +56,7 @@ public class DriverLocationDialog extends DialogAbstract implements Validator.Va
     private EditText gap;
 
 
-    public DriverLocationDialog(MapActivity activity, ApiLocation apiLocation) {
+    public LocationDriverEditDialog(MapActivity activity, ApiLocation apiLocation) {
         super(activity);
         this.mapService = activity.getMapService();
         this.apiLocation = apiLocation;
@@ -116,12 +116,12 @@ public class DriverLocationDialog extends DialogAbstract implements Validator.Va
 
         if (apiLocation.getUuid() == null) {
             routeLocationService.createLocation(apiLocation, (result) -> {
-                mapService.loadLocationsByRoute(new ApiRoute().setUuid(apiLocation.routeUuid));
+                activity.getLoader().getLast().load();
                 return null;
             });
         } else {
             routeLocationService.updateLocation(apiLocation, (result) -> {
-                mapService.loadLocationsByRoute(new ApiRoute().setUuid(apiLocation.routeUuid));
+                activity.getLoader().getLast().load();
                 return null;
             });
         }

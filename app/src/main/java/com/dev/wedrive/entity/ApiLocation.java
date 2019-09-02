@@ -33,6 +33,16 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @Getter
     public Object data;
 
+    @SerializedName("user")
+    @Setter
+    @Getter
+    public ApiUser user;
+
+    @SerializedName("route")
+    @Setter
+    @Getter
+    public ApiRoute route;
+
     /**
      *
      */

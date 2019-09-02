@@ -1,13 +1,27 @@
 package com.dev.wedrive.loaders;
 
-import com.dev.wedrive.service.MapService;
+import com.dev.wedrive.collection.MarkerCollection;
+import com.dev.wedrive.service.LocationService;
+import com.google.android.gms.maps.GoogleMap;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 public abstract class LoaderAbstract implements LoaderInterface {
 
-    protected MapService mapService;
+    @Setter
+    @Accessors(chain = true)
+    protected GoogleMap map;
 
-    public LoaderAbstract(MapService mapService){
-        this.mapService = mapService;
+    protected LocationService locationService;
+
+    @Getter
+    protected MarkerCollection markerCollection;
+
+    public LoaderAbstract(){
+        this.markerCollection = new MarkerCollection();
+        this.locationService = new LocationService();
     }
 
 }

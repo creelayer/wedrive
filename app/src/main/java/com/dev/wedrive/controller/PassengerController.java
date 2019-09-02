@@ -1,11 +1,12 @@
 package com.dev.wedrive.controller;
 
 import com.dev.wedrive.MapActivity;
-import com.dev.wedrive.dialogs.PassengerLocationDialog;
+import com.dev.wedrive.dialogs.RouteInfoDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.MMarker;
-import com.dev.wedrive.service.MapService;
+import com.dev.wedrive.loaders.RouteLoader;
+import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -14,15 +15,14 @@ public class PassengerController implements ControllerInterface {
 
     private MapActivity mapActivity;
 
-    private MapService mapService;
     private RouteService routeService;
+    private LocationService locationService;
     private ApiRoute currentRoute;
-
 
     public PassengerController(MapActivity mapActivity) {
         this.mapActivity = mapActivity;
-        this.mapService = mapActivity.getMapService();
         this.routeService = new RouteService();
+        this.locationService = new LocationService();
         createRouteControls();
     }
 
@@ -49,13 +49,22 @@ public class PassengerController implements ControllerInterface {
      * @param marker
      */
     public void onMarkerClick(Marker marker) {
-        MMarker mMarker = mapService.getMMarker(marker);
+        MMarker mMarker = mapActivity.getLoader().getLast().getMarkerCollection().get(marker);
 
-        switch (mMarker.getType()) {
-            case MMarker.TYPE_PASSENGER_LOCATION:
-                new PassengerLocationDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
-                break;
-        }
+        locationService.getLocationInfo((ApiLocation) mMarker.getLocation(), (location) -> {
+            switch (mMarker.getType()) {
+                case MMarker.TYPE_DRIVER:
+                case MMarker.TYPE_DRIVER_LOCATION:
+                    new RouteInfoDialog(mapActivity, location.route).show();
+                    if (!(mapActivity.getLoader().getLast() instanceof RouteLoader)) {
+                        mapActivity.getLoader().add(new RouteLoader(location.route));
+                    }
+                    break;
+            }
+            return null;
+        });
+
+
     }
 
     /**
@@ -63,7 +72,7 @@ public class PassengerController implements ControllerInterface {
      */
     public void onMapLongClick(LatLng latLng) {
 //        ApiLocation location = new ApiLocation(latLng, currentRoute);
-//        new PassengerLocationDialog(mapActivity, location).show();
+//        new LocationPassengerEditDialog(mapActivity, location).show();
     }
 
 }

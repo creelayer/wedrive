@@ -123,7 +123,7 @@ public class LocationService {
      * @param route
      * @param func
      */
-    public void getRouteLocations(ApiRoute route, final Function<List<ApiLocation>, Void> func) {
+    public void getLocationsByRoute(ApiRoute route, final Function<List<ApiLocation>, Void> func) {
         ApiService.getInstance().location().getRouteLocations(route.uuid).enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ApiLocation>>> call, Response<ApiResponse<List<ApiLocation>>> response) {
@@ -134,6 +134,29 @@ public class LocationService {
 
             @Override
             public void onFailure(Call<ApiResponse<List<ApiLocation>>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+    /**
+     *
+     * @param location
+     * @param func
+     */
+    public void getLocationInfo(ApiLocation location, final Function<ApiLocation, Void> func) {
+        ApiService.getInstance().location().getLocationInfo(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
+                if (response.isSuccessful()) {
+                    func.apply(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
 
             }
         });

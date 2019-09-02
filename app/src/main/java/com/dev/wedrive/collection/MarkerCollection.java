@@ -46,12 +46,23 @@ public class MarkerCollection {
     }
 
     /**
-     *
      * @param location
      * @return
      */
     public MMarker get(ApiLocationInterface location) {
         return markers.get(location.getUuid());
+    }
+
+
+    /**
+     *
+     */
+    public void clear() {
+        for (Iterator<Map.Entry<String, MMarker>> it = markers.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, MMarker> entry = it.next();
+            entry.getValue().getMarker().remove();
+            it.remove();
+        }
     }
 
     /**
@@ -62,9 +73,10 @@ public class MarkerCollection {
     }
 
     /**
+     *
      * @param group
      */
-    public void removeByGroup(String group) {
+    public void remove(String group) {
         for (Iterator<Map.Entry<String, MMarker>> it = markers.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, MMarker> entry = it.next();
             if (entry.getValue().getGroup() == group) {
@@ -73,4 +85,5 @@ public class MarkerCollection {
             }
         }
     }
+
 }

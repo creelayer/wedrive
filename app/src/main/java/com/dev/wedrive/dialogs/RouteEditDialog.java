@@ -1,6 +1,5 @@
 package com.dev.wedrive.dialogs;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,7 @@ import java.util.List;
 
 import lombok.Setter;
 
-public class RouteDialog extends DialogAbstract implements Validator.ValidationListener {
+public class RouteEditDialog extends DialogAbstract implements Validator.ValidationListener {
 
     private Validator validator;
 
@@ -36,13 +35,13 @@ public class RouteDialog extends DialogAbstract implements Validator.ValidationL
     private EditText name;
 
 
-    public RouteDialog(MapActivity activity, ApiRoute route) {
+    public RouteEditDialog(MapActivity activity, ApiRoute route) {
         super(activity);
         this.routeService = new RouteService();
         this.route = route;
     }
 
-    public RouteDialog(MapActivity activity) {
+    public RouteEditDialog(MapActivity activity) {
         super(activity);
         this.routeService = new RouteService();
     }

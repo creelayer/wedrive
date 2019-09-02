@@ -27,7 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-public class PassengerLocationDialog extends DialogAbstract implements Validator.ValidationListener {
+public class LocationPassengerEditDialog extends DialogAbstract implements Validator.ValidationListener {
 
     private Validator validator;
     private AlertDialog dialog;
@@ -57,7 +57,7 @@ public class PassengerLocationDialog extends DialogAbstract implements Validator
     @Min(0)
     private EditText minute;
 
-    public PassengerLocationDialog(MapActivity activity, ApiLocation apiLocation) {
+    public LocationPassengerEditDialog(MapActivity activity, ApiLocation apiLocation) {
         super(activity);
         this.locationService = new LocationService();
         this.apiLocation = apiLocation;
@@ -111,16 +111,16 @@ public class PassengerLocationDialog extends DialogAbstract implements Validator
     @Override
     public void onValidationSucceeded() {
 
-       // apiLocation.time = hour.getText().toString() + minute.getText().toString();
+        // apiLocation.time = hour.getText().toString() + minute.getText().toString();
 
         if (mMarker == null) {
             locationService.createLocation(apiLocation, (result) -> {
-                mapService.loadLocationsByRoute(null);
+                //TODO Load route locations with loader. See more in driverDialog
                 return null;
             });
         } else {
             locationService.updateLocation(apiLocation, (result) -> {
-                mapService.loadLocationsByRoute(null);
+                //TODO Load route locations with loader. See more in driverDialog
                 return null;
             });
         }
@@ -129,7 +129,7 @@ public class PassengerLocationDialog extends DialogAbstract implements Validator
 
     }
 
-    public void hide(){
+    public void hide() {
         super.hide();
     }
 

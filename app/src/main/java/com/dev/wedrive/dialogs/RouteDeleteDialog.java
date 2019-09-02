@@ -21,7 +21,7 @@ import java.util.List;
 
 import lombok.Setter;
 
-public class DeleteRouteDialog extends DialogAbstract {
+public class RouteDeleteDialog extends DialogAbstract {
 
     @Setter
     private RouteService routeService;
@@ -30,13 +30,13 @@ public class DeleteRouteDialog extends DialogAbstract {
     private ApiRoute route;
 
 
-    public DeleteRouteDialog(MapActivity activity, ApiRoute route) {
+    public RouteDeleteDialog(MapActivity activity, ApiRoute route) {
         super(activity);
         this.routeService = new RouteService();
         this.route = route;
     }
 
-    public DeleteRouteDialog(MapActivity activity) {
+    public RouteDeleteDialog(MapActivity activity) {
         super(activity);
         this.routeService = new RouteService();
         this.route = new ApiRoute();

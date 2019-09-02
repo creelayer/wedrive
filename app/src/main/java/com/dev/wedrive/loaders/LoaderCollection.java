@@ -1,27 +1,36 @@
 package com.dev.wedrive.loaders;
 
-import java.util.ArrayList;
+import com.google.android.gms.maps.GoogleMap;
 
-public class LoaderCollection {
+import java.util.ArrayDeque;
 
+public class LoaderCollection extends ArrayDeque<LoaderInterface> {
 
-    ArrayList<LoaderInterface> loaders;
+    protected GoogleMap map;
 
-    public void push(LoaderInterface loader) {
-        loaders.add(loader);
+    public LoaderCollection(GoogleMap map) {
+        super();
+        this.map = map;
     }
 
-    public void pop(LoaderInterface loader) {
-        loaders.add(loader);
+    @Override
+    public LoaderInterface removeLast() {
+        LoaderInterface loader = super.removeLast();
+        loader.getMarkerCollection().clear();
+        super.getLast().load();
+        return loader;
     }
 
-    public void run() {
+    @Override
+    public boolean add(LoaderInterface loaderInterface) {
 
-        if (loaders.size() == 0) {
-            return;
+        loaderInterface.setMap(map);
+
+        if (!isEmpty()) {
+            getLast().getMarkerCollection().clear();
         }
 
-        loaders.get(loaders.size() - 1).run();
+        loaderInterface.load();
+        return super.add(loaderInterface);
     }
-
 }

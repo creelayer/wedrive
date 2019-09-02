@@ -5,11 +5,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
-import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.loaders.DefaultLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.loaders.LoaderInterface;
 import com.dev.wedrive.service.MapService;
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+
+import java.util.ArrayDeque;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +50,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ApiProfile profile;
 
     @Setter
-    private LoaderCollection loaders;
+    @Getter
+    private LoaderCollection loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         this.map = map;
         this.profileService = new ProfileService();
         this.mapService = new MapService(map);
+        this.loader = new LoaderCollection(map);
 
         profileService.getMyProfile((profile) -> {
             this.profile = profile;
@@ -122,22 +127,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     private LocationListener locationListener = new LocationListener() {
 
-        private boolean inited = false;
-
         @Override
         public void onLocationChanged(Location location) {
 
-            if(!this.inited){
+            if(loader.isEmpty()){
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
-                this.inited = true;
+                loader.add(new DefaultLoader(map));
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-
-            loaders.run();
-
-
-            mapService.loadNearestLocations(profile.getType().equals(ApiLocation.TYPE_DRIVER) ? ApiLocation.TYPE_PASSENGER : ApiLocation.TYPE_DRIVER);
+            loader.getLast().run();
         }
 
         @Override

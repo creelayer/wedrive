@@ -17,6 +17,9 @@ public interface ApiLocationInterface {
     @GET("/location/nearest")
     public Call<ApiResponse<List<ApiLocation>>> getNearestLocations();
 
+    @GET("/location/info")
+    public Call<ApiResponse<ApiLocation>> getLocationInfo(@Query("location") String uuid);
+
     @POST("/location/position")
     public Call<ApiResponse<ApiLocation>> positionLocation(@Body ApiLocation apiLocation);
 

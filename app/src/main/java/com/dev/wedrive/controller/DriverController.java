@@ -6,14 +6,15 @@ import android.widget.LinearLayout;
 
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
-import com.dev.wedrive.dialogs.DeleteRouteDialog;
-import com.dev.wedrive.dialogs.DriverLocationDialog;
-import com.dev.wedrive.dialogs.RouteDialog;
+import com.dev.wedrive.dialogs.RouteDeleteDialog;
+import com.dev.wedrive.dialogs.LocationDriverEditDialog;
+import com.dev.wedrive.dialogs.RouteEditDialog;
 import com.dev.wedrive.dialogs.RouteInfoDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.entity.MMarker;
+import com.dev.wedrive.loaders.LoaderCollection;
+import com.dev.wedrive.loaders.RouteLoader;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.gms.maps.model.LatLng;
@@ -85,12 +86,13 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
 
         currentRoute = route;
 
-        if (route == null) {
-            mapService.clearRouteLocations();
-            return;
+        LoaderCollection loader = mapActivity.getLoader();
+
+        if (!loader.isEmpty() && loader.getLast() instanceof RouteLoader) {
+            mapActivity.getLoader().pop();
         }
 
-        mapService.loadLocationsByRoute(route);
+        loader.add(new RouteLoader(route));
     }
 
 
@@ -102,9 +104,9 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_route_btn) {
-            new RouteDialog(mapActivity).show();
+            new RouteEditDialog(mapActivity).show();
         } else if (v.getId() == R.id.edit_route_btn) {
-            new RouteDialog(mapActivity, currentRoute).show();
+            new RouteEditDialog(mapActivity, currentRoute).show();
         } else {
             showRoute((ApiRoute) v.getTag());
             new RouteInfoDialog(mapActivity, currentRoute).show();
@@ -114,7 +116,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
     @Override
     public boolean onLongClick(View v) {
         ApiRoute route = (ApiRoute) v.getTag();
-        new DeleteRouteDialog(mapActivity, route).show();
+        new RouteDeleteDialog(mapActivity, route).show();
         return false;
     }
 
@@ -126,8 +128,8 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         MMarker mMarker = mapService.getMMarker(marker);
 
         switch (mMarker.getType()) {
-            case ApiLocation.TYPE_DRIVER_LOCATION :
-                new DriverLocationDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
+            case ApiLocation.TYPE_DRIVER_LOCATION:
+                new LocationDriverEditDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
                 break;
         }
 
@@ -138,7 +140,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
      */
     public void onMapLongClick(LatLng latLng) {
         ApiLocation location = new ApiLocation(latLng, currentRoute);
-        new DriverLocationDialog(mapActivity, location).show();
+        new LocationDriverEditDialog(mapActivity, location).show();
     }
 
 }

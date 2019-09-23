@@ -5,14 +5,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.DefaultLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
-import com.dev.wedrive.loaders.LoaderInterface;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,8 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-import java.util.ArrayDeque;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +27,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public final int MIN_TIME = 10000;
     public final int MIN_DISTANCE = 10;
-    public final int ZOOM = 14;
+    public final int ZOOM = 15;
 
     private LocationManager locationManager;
 
@@ -47,6 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Getter
     private MapService mapService;
 
+    @Getter
     private ApiProfile profile;
 
     @Setter

@@ -1,5 +1,6 @@
 package com.dev.wedrive.dialogs;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -9,23 +10,29 @@ import android.widget.TextView;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.entity.TypeInterface;
-import com.dev.wedrive.loaders.RouteLoader;
 import com.google.gson.internal.LinkedTreeMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Setter;
 
 public class RouteInfoDialog extends DialogAbstract {
 
+    private View view;
 
     @Setter
-    private ApiRoute route;
+    private ApiLocation location;
 
-    public RouteInfoDialog(MapActivity activity, ApiRoute route) {
+    private String current;
+
+
+    public RouteInfoDialog(MapActivity activity, ApiLocation location) {
         super(activity);
-        this.route = route;
+        this.location = location;
+        this.current = location.uuid;
     }
 
 
@@ -33,54 +40,46 @@ public class RouteInfoDialog extends DialogAbstract {
     public void show() {
 
         LayoutInflater inflater = activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.route_info_dialog, null);
+        view = inflater.inflate(R.layout.route_info_dialog, null);
+
+        TextView name = view.findViewById(R.id.route_inform_name);
+        name.setText(location.route.name);
+        addRouteLocation();
+        addControls();
 
         informLayout.removeAllViews();
-        addName(view);
-        addRoutes(view);
-        addControls(view);
+        informLayout.addView(view);
         informLayout.setMinimumHeight(400);
 
         super.show();
     }
 
-    private void addName(View view){
-        TextView label = new TextView(view.getContext());
-        label.setText("Назва");
-        TextView name = new TextView(view.getContext());
-        name.setText(route.name);
-        informLayout.addView(label);
-        informLayout.addView(name);
-    }
 
-    private void addRoutes(View view){
+    private void addRouteLocation() {
 
-        LinearLayout layout = new LinearLayout(view.getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout layout = view.findViewById(R.id.route_inform_list);
+        layout.removeAllViews();
 
-        for (ApiLocation location: route.locations){
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(10, 0, 0, 10);
 
-            if(!location.type.equals(TypeInterface.TYPE_DRIVER_LOCATION)){
+        for (ApiLocation item : location.route.locations) {
+
+            if (!item.type.equals(TypeInterface.TYPE_DRIVER_LOCATION)) {
                 continue;
             }
 
-            DriverLocationData data = new DriverLocationData((LinkedTreeMap<String, String>) location.getData());
-
-            TextView text = new TextView(view.getContext());
-            text.setText("... "+data.getHour()+':'+data.getMin());
-            layout.addView(text);
+            layout.addView(createLabel(item), layoutParams);
         }
-
-        informLayout.addView(layout);
     }
 
 
-    private void addControls(View view){
+    private void addControls() {
 
-        LinearLayout layout = new LinearLayout(view.getContext());
+        LinearLayout layout = view.findViewById(R.id.route_inform_controls);
 
         Button okBtn = new Button(view.getContext());
-        okBtn.setText("Ok");
+        okBtn.setText("Поехали!");
 
         okBtn.setOnClickListener((v) -> {
             activity.getLoader().removeLast();
@@ -89,16 +88,37 @@ public class RouteInfoDialog extends DialogAbstract {
 
         layout.addView(okBtn);
 
-        Button editBtn = new Button(view.getContext());
-        editBtn.setText("Edit");
+        Button cancelBtn = new Button(view.getContext());
+        cancelBtn.setText("Cancel");
 
-        editBtn.setOnClickListener((v) -> {
-            new RouteEditDialog(this.activity, this.route).show();
+        cancelBtn.setOnClickListener((v) -> {
+            activity.getLoader().removeLast();
+            this.hide();
         });
 
-        layout.addView(editBtn);
-        informLayout.addView(layout);
+        layout.addView(cancelBtn);
+
     }
 
+    private TextView createLabel(ApiLocation item) {
+        DriverLocationData data = new DriverLocationData((LinkedTreeMap<String, String>) item.getData());
+        TextView text = new TextView(view.getContext());
+
+        String name = "   " + data.getHour() + ':' + data.getMin();
+
+        if (item.uuid.equals(current)) {
+            name += " текущий";
+        }
+
+        text.setText(name);
+        text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_driver_location, 0, 0, 0);
+        text.setTag(item.uuid);
+        text.setOnClickListener((v) -> {
+            current = (String) v.getTag();
+            addRouteLocation();
+        });
+
+        return text;
+    }
 
 }

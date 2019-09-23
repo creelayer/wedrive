@@ -15,6 +15,7 @@ import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.MMarker;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.loaders.RouteLoader;
+import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,6 +29,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
     private MapService mapService;
     private RouteService routeService;
     private ApiRoute currentRoute;
+    private LocationService locationService;
 
     private int btnN = 0;
 
@@ -36,6 +38,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         this.mapService = mapActivity.getMapService();
         this.routeService = new RouteService();
         routeLayout = (LinearLayout) mapActivity.findViewById(R.id.route_layout);
+        this.locationService = new LocationService();
         createRouteControls();
     }
 
@@ -109,7 +112,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
             new RouteEditDialog(mapActivity, currentRoute).show();
         } else {
             showRoute((ApiRoute) v.getTag());
-            new RouteInfoDialog(mapActivity, currentRoute).show();
+            //new RouteInfoDialog(mapActivity, currentRoute).show();
         }
     }
 
@@ -125,13 +128,20 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
      */
     public void onMarkerClick(Marker marker) {
 
-        MMarker mMarker = mapService.getMMarker(marker);
+        MMarker mMarker = mapActivity.getLoader().getLast().getMarkerCollection().get(marker);
 
-        switch (mMarker.getType()) {
-            case ApiLocation.TYPE_DRIVER_LOCATION:
-                new LocationDriverEditDialog(mapActivity, (ApiLocation) mMarker.getLocation()).show();
-                break;
-        }
+        locationService.getLocationInfo((ApiLocation) mMarker.getLocation(), (location) -> {
+            switch (mMarker.getType()) {
+                case MMarker.TYPE_DRIVER:
+                case MMarker.TYPE_DRIVER_LOCATION:
+                    new LocationDriverEditDialog(mapActivity, location).show();
+                    if (!(mapActivity.getLoader().getLast() instanceof RouteLoader)) {
+                        mapActivity.getLoader().add(new RouteLoader(location.route));
+                    }
+                    break;
+            }
+            return null;
+        });
 
     }
 

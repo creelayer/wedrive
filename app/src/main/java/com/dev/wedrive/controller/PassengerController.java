@@ -55,7 +55,7 @@ public class PassengerController implements ControllerInterface {
             switch (mMarker.getType()) {
                 case MMarker.TYPE_DRIVER:
                 case MMarker.TYPE_DRIVER_LOCATION:
-                    new RouteInfoDialog(mapActivity, location.route).show();
+                    new RouteInfoDialog(mapActivity, location).show();
                     if (!(mapActivity.getLoader().getLast() instanceof RouteLoader)) {
                         mapActivity.getLoader().add(new RouteLoader(location.route));
                     }

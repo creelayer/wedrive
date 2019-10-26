@@ -8,4 +8,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="informBg" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPadding">10dp</item>
+        <item name="contentPaddingTop">8dp</item>
+        <item name="contentPaddingLeft">15dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="informLabels" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="btnPrimary" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="btn" parent="btnPrimary">
+        <item name="android:textColor">#1E78B8</item>
+    </style>
+
 </resources>

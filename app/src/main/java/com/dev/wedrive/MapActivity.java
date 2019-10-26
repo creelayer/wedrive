@@ -1,10 +1,14 @@
 package com.dev.wedrive;
 
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.ViewFlipper;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
@@ -23,7 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
     public final int MIN_TIME = 10000;
     public final int MIN_DISTANCE = 10;

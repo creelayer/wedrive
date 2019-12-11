@@ -9,7 +9,6 @@ import com.dev.wedrive.R;
 import com.dev.wedrive.dialogs.RouteDeleteDialog;
 import com.dev.wedrive.dialogs.LocationDriverEditDialog;
 import com.dev.wedrive.dialogs.RouteEditDialog;
-import com.dev.wedrive.dialogs.RouteInfoDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.MMarker;
@@ -49,7 +48,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
 
         Button addBtn = new Button(mapActivity);
         addBtn.setText("+");
-        addBtn.setId(R.id.add_route_btn);
+        addBtn.setId(R.id.route_add_btn);
         addBtn.setOnClickListener(this);
         routeLayout.addView(addBtn);
 
@@ -106,7 +105,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.add_route_btn) {
+        if (v.getId() == R.id.route_add_btn) {
             new RouteEditDialog(mapActivity).show();
         } else if (v.getId() == R.id.edit_route_btn) {
             new RouteEditDialog(mapActivity, currentRoute).show();

@@ -2,17 +2,16 @@ package com.dev.wedrive.dialoga;
 
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-public class BottomDialog {
-
-   // public static final String  TYPE_HEIGHT_  = 28;
+public class BottomDialogBuilder {
 
     private MapActivity activity;
 
@@ -20,23 +19,34 @@ public class BottomDialog {
     @Accessors(chain = true)
     private Fragment fragment;
 
-    private BottomSheetBehavior sheetBehavior;
-    private FrameLayout layout;
+    @Setter
+    @Accessors(chain = true)
+    private int height;
 
-    public BottomDialog(MapActivity activity) {
+    public BottomDialogBuilder(MapActivity activity) {
         this.activity = activity;
-        layout = activity.findViewById(R.id.btmControls);
-        ViewGroup.LayoutParams params = layout.getLayoutParams();
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        layout.setLayoutParams(params);
-        sheetBehavior = BottomSheetBehavior.from(layout);
+        this.height = ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
 
-    public void show(){
+    public BottomSheetBehavior create() {
+
+        View layout = activity.findViewById(R.id.btmControls);
+        ViewGroup.LayoutParams params = layout.getLayoutParams();
+        params.height = height;
+        layout.setLayoutParams(params);
+
+        BottomSheetBehavior sheetBehavior = BottomSheetBehavior.from(layout);
+
+        for (Fragment fragment : activity.getSupportFragmentManager().getFragments()) {
+            activity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.btmControls, fragment)
                 .commit();
+
+        return sheetBehavior;
     }
 }

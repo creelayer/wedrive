@@ -18,8 +18,7 @@
     <FrameLayout
         android:id="@+id/lftControls"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="wrap_content"/>
 
 
     <LinearLayout
@@ -58,24 +57,7 @@
         android:layout_height="wrap_content"
         app:behavior_hideable="false"
         app:behavior_peekHeight="56dp"
-        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"></FrameLayout>
-
-
-    <!--<ViewFlipper-->
-        <!--android:id="@+id/vf"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:padding="4dp"-->
-        <!--app:behavior_hideable="false"-->
-        <!--app:behavior_peekHeight="56dp"-->
-        <!--app:layout_behavior="android.support.design.widget.BottomSheetBehavior"-->
-        <!--&gt;-->
-
-        <!--<include-->
-            <!--android:id="@+id/include1"-->
-            <!--layout="@layout/menu_route_view" />-->
-
-    <!--</ViewFlipper>-->
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"/>
 
 
 

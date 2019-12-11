@@ -15,10 +15,12 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-54dp" />
 
+    <FrameLayout
+        android:id="@+id/lftControls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
-    <include
-        android:id="@+id/include1"
-        layout="@layout/route_controls_fragment" />
 
     <LinearLayout
         android:id="@+id/inform_layout"
@@ -50,21 +52,30 @@
     </LinearLayout>
 
 
-    <ViewFlipper
-        android:id="@+id/vf"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:padding="4dp"
+    <FrameLayout
+        android:id="@+id/btmControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:behavior_hideable="false"
         app:behavior_peekHeight="56dp"
-        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-        >
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"></FrameLayout>
 
-        <include
-            android:id="@+id/include1"
-            layout="@layout/menu_route_view" />
 
-    </ViewFlipper>
+    <!--<ViewFlipper-->
+        <!--android:id="@+id/vf"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:padding="4dp"-->
+        <!--app:behavior_hideable="false"-->
+        <!--app:behavior_peekHeight="56dp"-->
+        <!--app:layout_behavior="android.support.design.widget.BottomSheetBehavior"-->
+        <!--&gt;-->
+
+        <!--<include-->
+            <!--android:id="@+id/include1"-->
+            <!--layout="@layout/menu_route_view" />-->
+
+    <!--</ViewFlipper>-->
 
 
 

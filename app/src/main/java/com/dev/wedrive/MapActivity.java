@@ -12,6 +12,9 @@ import android.widget.ViewFlipper;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
+import com.dev.wedrive.controls.ControlsInterface;
+import com.dev.wedrive.controls.DriverControls;
+import com.dev.wedrive.dialoga.BottomDialog;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.DefaultLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
@@ -37,6 +40,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private GoogleMap map;
+
+    private ControlsInterface controls;
+
+    @Getter
+    private BottomDialog bottomDialog;
 
     @Getter
     private ControllerInterface controller;
@@ -83,10 +91,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.profileService = new ProfileService();
         this.mapService = new MapService(map);
         this.loader = new LoaderCollection(map);
+        this.bottomDialog = new BottomDialog(this);
 
         profileService.getMyProfile((profile) -> {
             this.profile = profile;
             this.controller = ControllerFactory.make(profile, this, this.mapService);
+
+            this.controls = new DriverControls(this);
+            ((DriverControls) this.controls).init();
+
             return null;
         }, (error) -> {
             return null;

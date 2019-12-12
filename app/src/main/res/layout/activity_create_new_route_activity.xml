@@ -6,4 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".CreateNewRouteActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Destination from"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/route_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:theme="@style/fieldInput" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/fieldHint"
+            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/route_save_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        android:theme="@style/btnLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

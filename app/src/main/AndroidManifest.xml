@@ -23,7 +23,7 @@
         <activity
             android:name=".CreateNewRouteActivity"
             android:parentActivityName=".MapActivity"
-            android:label=""
+            android:label="Add new route"
             />
 
         <activity android:name=".TypeActivity" />

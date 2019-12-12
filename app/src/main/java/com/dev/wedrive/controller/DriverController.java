@@ -6,9 +6,7 @@ import android.widget.LinearLayout;
 
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
-import com.dev.wedrive.dialogs.RouteDeleteDialog;
 import com.dev.wedrive.dialogs.LocationDriverEditDialog;
-import com.dev.wedrive.dialogs.RouteEditDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.MMarker;
@@ -106,9 +104,9 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.route_add_btn) {
-            new RouteEditDialog(mapActivity).show();
+
         } else if (v.getId() == R.id.edit_route_btn) {
-            new RouteEditDialog(mapActivity, currentRoute).show();
+
         } else {
             showRoute((ApiRoute) v.getTag());
             //new RouteInfoDialog(mapActivity, currentRoute).show();
@@ -118,7 +116,6 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
     @Override
     public boolean onLongClick(View v) {
         ApiRoute route = (ApiRoute) v.getTag();
-        new RouteDeleteDialog(mapActivity, route).show();
         return false;
     }
 

@@ -1,16 +1,20 @@
 package com.dev.wedrive;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 
 import com.dev.wedrive.controller.ControllerFactory;
 import com.dev.wedrive.controller.ControllerInterface;
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
 import com.dev.wedrive.dialoga.BottomDialogBuilder;
+import com.dev.wedrive.dialoga.DriverRoutesListFragment;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.DefaultLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
@@ -103,6 +107,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         map.setOnMarkerClickListener(this);
         map.setOnMapLongClickListener(this);
+
+
+        new BottomDialogBuilder(this)
+                .setFragment(new DriverRoutesListFragment().setActivity(this))
+                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                .create()
+                .setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
 

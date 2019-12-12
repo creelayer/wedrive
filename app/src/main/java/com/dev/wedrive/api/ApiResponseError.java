@@ -1,4 +1,4 @@
-package com.dev.wedrive.entity;
+package com.dev.wedrive.api;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiResponse;
 
 import java.util.List;
 

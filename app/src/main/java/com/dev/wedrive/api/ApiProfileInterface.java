@@ -1,7 +1,6 @@
 package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.entity.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

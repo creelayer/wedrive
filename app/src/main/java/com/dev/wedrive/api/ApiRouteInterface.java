@@ -1,6 +1,5 @@
 package com.dev.wedrive.api;
 
-import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiRoute;
 
 import java.util.List;

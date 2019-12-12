@@ -1,6 +1,5 @@
 package com.dev.wedrive.api;
 
-import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiUser;
 
 import retrofit2.Call;

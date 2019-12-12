@@ -2,17 +2,13 @@ package com.dev.wedrive.service;
 
 import android.arch.core.util.Function;
 
+import com.dev.wedrive.api.ApiResponse;
+import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiResponse;
 import com.dev.wedrive.entity.ApiRoute;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LocationService {
 
@@ -24,15 +20,10 @@ public class LocationService {
 
         ApiService.getInstance().location().createLocation(location).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiLocation) response.getData());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
-
             }
         });
     }
@@ -45,15 +36,10 @@ public class LocationService {
 
         ApiService.getInstance().location().updateLocation(location.uuid, location).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiLocation) response.getData());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
-
             }
         });
     }
@@ -66,15 +52,10 @@ public class LocationService {
 
         ApiService.getInstance().location().deleteLocation(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiLocation) response.getData());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
-
             }
         });
     }
@@ -88,12 +69,7 @@ public class LocationService {
     public void updateMyLocation(LatLng latLng) {
         ApiService.getInstance().location().positionLocation(new ApiLocation(latLng)).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
+            public void onResult(ApiResponse response) {
 
             }
         });
@@ -102,19 +78,14 @@ public class LocationService {
     /**
      * @param func
      */
-    public void getNearestLocations( final Function<List<ApiLocation>, Void> func) {
+    public void getNearestLocations(final Function<List<ApiLocation>, Void> func) {
 
         ApiService.getInstance().location().getNearestLocations().enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<ApiLocation>>> call, Response<ApiResponse<List<ApiLocation>>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((List<ApiLocation>) response.getData());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<ApiLocation>>> call, Throwable t) {
-
             }
         });
     }
@@ -126,38 +97,24 @@ public class LocationService {
     public void getLocationsByRoute(ApiRoute route, final Function<List<ApiLocation>, Void> func) {
         ApiService.getInstance().location().getRouteLocations(route.uuid).enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<ApiLocation>>> call, Response<ApiResponse<List<ApiLocation>>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((List<ApiLocation>) response.getData());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<ApiLocation>>> call, Throwable t) {
-
             }
         });
 
     }
 
-
     /**
-     *
      * @param location
      * @param func
      */
     public void getLocationInfo(ApiLocation location, final Function<ApiLocation, Void> func) {
         ApiService.getInstance().location().getLocationInfo(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ApiLocation>> call, Response<ApiResponse<ApiLocation>> response) {
-                if (response.isSuccessful()) {
-                    func.apply(response.body().getData());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ApiLocation>> call, Throwable t) {
-
+            public void onResult(ApiResponse response) {
+                func.apply((ApiLocation) response.getData());
             }
         });
 

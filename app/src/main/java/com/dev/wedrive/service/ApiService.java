@@ -1,7 +1,7 @@
 package com.dev.wedrive.service;
 
-import com.dev.wedrive.entity.ApiResponse;
-import com.dev.wedrive.entity.ApiResponseError;
+import com.dev.wedrive.api.ApiResponse;
+import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.entity.ApiToken;
 import com.dev.wedrive.api.ApiLocationInterface;
 import com.dev.wedrive.api.ApiProfileInterface;

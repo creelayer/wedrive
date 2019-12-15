@@ -3,6 +3,7 @@ package com.dev.wedrive.api;
 import com.dev.wedrive.entity.ApiRoute;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,6 +15,9 @@ public interface ApiRouteInterface {
 
     @GET("/route")
     public Call<ApiResponse<List<ApiRoute>>> getMyRoutes(@Query("type") String type);
+
+    @POST("/route/status")
+    public Call<ApiResponse<ApiRoute>> setStatus(@Query("route") String uuid, @Body Map<String, String> status);
 
     @POST("/route/create")
     public Call<ApiResponse<ApiRoute>> createRoute(@Body ApiRoute apiRoute);

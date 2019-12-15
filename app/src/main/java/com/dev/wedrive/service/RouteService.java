@@ -7,11 +7,14 @@ import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiRoute;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RouteService {
 
     /**
+     * @param type
      * @param func
      */
     public void getMyRouts(String type, final Function<ArrayList<ApiRoute>, Void> func) {
@@ -25,9 +28,29 @@ public class RouteService {
         });
     }
 
+    /**
+     * @param route
+     * @param status
+     * @param func
+     */
+    public void setStatus(ApiRoute route, String status, final Function<ApiRoute, Void> func) {
+
+        Map<String, String> mStatus = new HashMap<>();
+        mStatus.put("status", status);
+
+        ApiService.getInstance().route().setStatus(route.uuid, mStatus).enqueue(new Callback<ApiResponse<ApiRoute>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                func.apply((ApiRoute) response.getData());
+            }
+        });
+    }
+
 
     /**
      * @param name
+     * @param type
+     * @param func
      */
     public void createRoute(String name, String type, Function<ApiRoute, Void> func) {
 

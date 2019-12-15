@@ -12,6 +12,8 @@ public class ApiRoute implements TypeInterface {
 
     public final static String DEFAULT_NAME = "default";
 
+    public final static String STATUS_CURRENT = "current";
+
 
     @Setter
     @Accessors(chain = true)

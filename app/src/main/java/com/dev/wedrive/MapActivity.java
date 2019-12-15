@@ -41,6 +41,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private GoogleMap map;
 
+    @Getter
+    private BottomSheetBehavior bottomInform;
+
     private ControlsInterface controls;
 
     @Getter
@@ -109,11 +112,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setOnMapLongClickListener(this);
 
 
-        new BottomDialogBuilder(this)
+        bottomInform = new BottomDialogBuilder(this)
                 .setFragment(new DriverRoutesListFragment().setActivity(this))
                 .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
-                .create()
-                .setState(BottomSheetBehavior.STATE_EXPANDED);
+                .create();
+
+        bottomInform.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
 

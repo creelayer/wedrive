@@ -6,6 +6,7 @@ import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiRoute;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RouteService {
@@ -13,12 +14,12 @@ public class RouteService {
     /**
      * @param func
      */
-    public void getMyRouts(String type, final Function<List<ApiRoute>, Void> func) {
+    public void getMyRouts(String type, final Function<ArrayList<ApiRoute>, Void> func) {
         ApiService.getInstance().route().getMyRoutes(type).enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((List<ApiRoute>) response.getData());
+                    func.apply((ArrayList<ApiRoute>) response.getData());
                 }
             }
         });

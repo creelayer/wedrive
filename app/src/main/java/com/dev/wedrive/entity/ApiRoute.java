@@ -12,6 +12,7 @@ public class ApiRoute implements TypeInterface {
 
     public final static String DEFAULT_NAME = "default";
 
+
     @Setter
     @Accessors(chain = true)
     @SerializedName("uuid")
@@ -23,6 +24,10 @@ public class ApiRoute implements TypeInterface {
     @SerializedName("type")
     @Getter
     public String type;
+
+    @SerializedName("status")
+    @Getter
+    public String status;
 
     @SerializedName("name")
     public String name;

@@ -12,15 +12,7 @@ public class DriverControls implements ControlsInterface {
     }
 
     public void init() {
-
-        DriverRoutesFragment fragment = new DriverRoutesFragment();
-        fragment.setActivity(activity);
-
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.lftControls, fragment)
-                .commit();
+        activity.setFragment(R.id.lftControls, new DriverRoutesFragment());
     }
-
 
 }

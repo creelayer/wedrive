@@ -10,14 +10,11 @@ import java.util.ArrayList;
 
 public abstract class ListAdapter<T> extends ArrayAdapter {
 
-
-    protected Context mContext;
     protected int mResource;
     protected LayoutInflater inflater;
 
     public ListAdapter(Context context, int resource, ArrayList<T> routes) {
         super(context, resource, routes);
-        mContext = context;
         mResource = resource;
         inflater = LayoutInflater.from(context);
     }

@@ -1,20 +1,14 @@
 package com.dev.wedrive;
 
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
 
-import com.dev.wedrive.controller.ControllerFactory;
-import com.dev.wedrive.controller.ControllerInterface;
-import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
-import com.dev.wedrive.dialoga.BottomDialogBuilder;
-import com.dev.wedrive.dialoga.DriverRoutesListFragment;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.DefaultLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
@@ -43,11 +37,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Getter
     private BottomSheetBehavior bottomInform;
-
-    private ControlsInterface controls;
-
-    @Getter
-    private ControllerInterface controller;
 
     @Getter
     private ProfileService profileService;
@@ -93,14 +82,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         this.loader = new LoaderCollection(map);
 
 
-
         profileService.getMyProfile((profile) -> {
             this.profile = profile;
-            this.controller = ControllerFactory.make(profile, this, this.mapService);
-
-            this.controls = new DriverControls(this);
-            ((DriverControls) this.controls).init();
-
+            new DriverControls(this).init();
             return null;
         }, (error) -> {
             return null;
@@ -111,13 +95,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setOnMarkerClickListener(this);
         map.setOnMapLongClickListener(this);
 
+    }
 
-        bottomInform = new BottomDialogBuilder(this)
-                .setFragment(new DriverRoutesListFragment().setActivity(this))
-                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
-                .create();
+//    public Fragment getFragment(int id){
+//        return getSupportFragmentManager().findFragmentById(id);
+//    }
 
-        bottomInform.setState(BottomSheetBehavior.STATE_EXPANDED);
+    public void setFragment(int id, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(id, fragment)
+                .commit();
     }
 
 
@@ -136,13 +124,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        controller.onMarkerClick(marker);
+     //   controller.onMarkerClick(marker);
         return false;
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        controller.onMapLongClick(latLng);
+       // controller.onMapLongClick(latLng);
     }
 
     /**
@@ -153,7 +141,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
 
-            if(loader.isEmpty()){
+            if (loader.isEmpty()) {
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
                 loader.add(new DefaultLoader(map));
             }

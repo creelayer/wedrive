@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dev.wedrive.controls.DriverControls;
@@ -97,15 +98,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-//    public Fragment getFragment(int id){
-//        return getSupportFragmentManager().findFragmentById(id);
-//    }
-
     public void setFragment(int id, Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(id, fragment)
-                .commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(id, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
@@ -124,13 +121,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-     //   controller.onMarkerClick(marker);
+        //   controller.onMarkerClick(marker);
         return false;
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-       // controller.onMapLongClick(latLng);
+        // controller.onMapLongClick(latLng);
     }
 
     /**

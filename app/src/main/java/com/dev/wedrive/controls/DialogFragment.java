@@ -31,5 +31,9 @@ public class DialogFragment extends Fragment {
         return view;
     }
 
+    public void collapse(){
+        state = BottomSheetBehavior.STATE_COLLAPSED;
+        sheetBehavior.setState(state);
+    }
 
 }

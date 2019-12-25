@@ -47,11 +47,6 @@ public class DriverRoutesListFragment extends DialogFragment implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.route_add_btn) {
-
-//            DriverRoutesListFragment driverRoutesListFragment = (DriverRoutesListFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.btmControls);
-//
-//            driverRoutesListFragment.sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
             Intent myIntent = new Intent(getActivity(), CreateNewRouteActivity.class);
             startActivity(myIntent);
         }
@@ -60,7 +55,13 @@ public class DriverRoutesListFragment extends DialogFragment implements View.OnC
     private void loadRoutesList(View view) {
         routeService.getMyRouts(ApiRoute.TYPE_DRIVER, (routes) -> {
             ListView list = view.findViewById(R.id.routes_list);
-            list.setAdapter(new RoutesListAdapter(getContext(), routes));
+            list.setAdapter(new RoutesListAdapter(getContext(), routes, (route) -> {
+                routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> {
+                    this.collapse();
+                    return null;
+                });
+
+            }));
             return null;
         });
     }

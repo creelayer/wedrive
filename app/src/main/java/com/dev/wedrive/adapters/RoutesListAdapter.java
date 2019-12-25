@@ -16,16 +16,16 @@ import com.dev.wedrive.service.RouteService;
 import java.util.ArrayList;
 import java.util.function.Function;
 
-public class RoutesListAdapter extends ListAdapter  {
+public class RoutesListAdapter extends ListAdapter {
 
-
-    private RouteService routeService;
     private Drawable activeRadioShape;
 
-    public RoutesListAdapter(Context context, ArrayList<ApiRoute> routes) {
+    private final OnItemClickListener listener;
+
+    public RoutesListAdapter(Context context, ArrayList<ApiRoute> routes, OnItemClickListener listener) {
         super(context, R.layout.adapter_route_list_item, routes);
-        routeService = new RouteService();
         activeRadioShape = getContext().getDrawable(R.drawable.btn_radio_shape_checked);
+        this.listener = listener;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class RoutesListAdapter extends ListAdapter  {
         ApiRoute route = (ApiRoute) getItem(position);
 
         CardView item = convertView.findViewById(R.id.route_list_item);
-       // item.setOnClickListener();
+        item.setOnClickListener((v) -> listener.onItemClick(route));
 
         TextView name = convertView.findViewById(R.id.route_list_name);
         name.setText(route.name);
@@ -46,24 +46,7 @@ public class RoutesListAdapter extends ListAdapter  {
         return convertView;
     }
 
-
-
-    //    public class OnClickListener implements View.OnClickListener {
-//
-//        ApiRoute mRoute;
-//
-//        public OnClickListener(ApiRoute route) {
-//            mRoute = route;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//
-//            routeService.setStatus(mRoute, ApiRoute.STATUS_CURRENT, (route) -> {
-//                //TODO: collapse bottom context
-//                return null;
-//            });
-//
-//        }
-//    }
+    public interface OnItemClickListener {
+        void onItemClick(ApiRoute item);
+    }
 }

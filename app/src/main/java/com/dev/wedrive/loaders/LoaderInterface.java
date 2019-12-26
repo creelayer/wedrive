@@ -1,16 +1,13 @@
 package com.dev.wedrive.loaders;
 
-import com.dev.wedrive.collection.MarkerCollection;
-import com.google.android.gms.maps.GoogleMap;
+import com.dev.wedrive.service.MapService;
 
 public interface LoaderInterface {
+
+    public void setMapService(MapService mapService);
 
     public void load();
 
     public void run();
-
-    public MarkerCollection getMarkerCollection();
-
-    public LoaderInterface setMap(GoogleMap map);
 
 }

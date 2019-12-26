@@ -4,18 +4,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dev.wedrive.controls.DriverControls;
 import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.loaders.DefaultLoader;
+import com.dev.wedrive.loaders.LocationsLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -33,11 +31,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private LocationManager locationManager;
 
-
     private GoogleMap map;
-
-    @Getter
-    private BottomSheetBehavior bottomInform;
 
     @Getter
     private ProfileService profileService;
@@ -78,9 +72,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
 
         this.map = map;
-        this.profileService = new ProfileService();
-        this.mapService = new MapService(map);
-        this.loader = new LoaderCollection(map);
+        profileService = new ProfileService();
+        mapService = new MapService(map);
+        loader = new LoaderCollection(mapService);
+        loader.add(new LocationsLoader());
 
 
         profileService.getMyProfile((profile) -> {
@@ -138,13 +133,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
 
-            if (loader.isEmpty()) {
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
-                loader.add(new DefaultLoader(map));
-            }
+            // map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-            loader.getLast().run();
+
+            loader.run();
         }
 
         @Override

@@ -1,40 +1,83 @@
 package com.dev.wedrive.service;
 
-import com.dev.wedrive.collection.MarkerCollection;
-import com.dev.wedrive.entity.MMarker;
+import com.dev.wedrive.R;
+import com.dev.wedrive.adapters.LocationAdapter;
+import com.dev.wedrive.collection.LocationCollection;
+import com.dev.wedrive.entity.ApiLocation;
+import com.dev.wedrive.entity.TypeInterface;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Map;
 
 public class MapService {
 
-    private GoogleMap map;
-    private MarkerCollection markerCollection;
+    protected GoogleMap map;
     private LocationService locationService;
 
-    /**
-     * @param map
-     */
     public MapService(GoogleMap map) {
         this.map = map;
-        this.markerCollection = new MarkerCollection();
         this.locationService = new LocationService();
     }
 
-    /**
-     * @param marker
-     * @return
-     */
-    public MMarker getMMarker(Marker marker) {
-        return markerCollection.get(marker);
-    }
-
-    /**
-     * @param latLng
-     */
     public void updateMyLocation(LatLng latLng) {
         locationService.updateMyLocation(latLng);
+    }
+
+    public void updateLocations(LocationCollection locations) {
+
+        for (Map.Entry<String, LocationAdapter> entry : locations.entrySet()) {
+
+
+            LocationAdapter locationAdapter = entry.getValue();
+            ApiLocation location = locationAdapter.getLocation();
+            Marker marker = locationAdapter.getMarker();
+
+            if (marker == null) {
+
+                int icon = 0;
+
+                switch (locationAdapter.getLocation().getType()) {
+                    case TypeInterface.TYPE_DRIVER:
+                        icon = R.drawable.ic_car;
+                        break;
+                    case TypeInterface.TYPE_PASSENGER:
+                        icon = R.drawable.ic_man;
+                        break;
+                    case TypeInterface.TYPE_DRIVER_LOCATION:
+                        icon = R.drawable.ic_driver_location;
+                        break;
+                    case TypeInterface.TYPE_PASSENGER_LOCATION:
+                        icon = R.drawable.ic_passenger_location;
+                        break;
+                    default:
+                        icon = R.drawable.ic_car;
+                        break;
+                }
+
+                marker = map.addMarker(
+                        new MarkerOptions()
+                                .position(location.getLatLng())
+                                .title(location.getType())
+                                .icon(BitmapDescriptorFactory.fromResource(icon)));
+
+                marker.setTag(location.getUuid());
+                locationAdapter.setMarker(marker);
+                locations.put(locationAdapter);
+
+            } else {
+                if (locationAdapter.getUpdated() < locations.getUpdated()) {
+                    locations.remove(locationAdapter);
+                } else {
+                    marker.setPosition(location.getLatLng());
+                }
+            }
+
+            locations.touch();
+        }
     }
 
 }

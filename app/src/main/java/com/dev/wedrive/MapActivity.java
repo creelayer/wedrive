@@ -121,8 +121,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapLongClick(LatLng latLng)
+    {
         // controller.onMapLongClick(latLng);
+
+        loader.load();
     }
 
     /**
@@ -137,7 +140,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
 
-            loader.run();
         }
 
         @Override

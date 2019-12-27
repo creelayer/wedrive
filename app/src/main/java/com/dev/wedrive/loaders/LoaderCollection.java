@@ -23,7 +23,6 @@ public class LoaderCollection extends ArrayDeque<LoaderInterface> {
     }
 
     public void run() {
-        LoaderInterface loader = getLast();
-        loader.run();
+        getLast().run();
     }
 }

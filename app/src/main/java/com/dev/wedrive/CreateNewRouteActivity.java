@@ -1,5 +1,6 @@
 package com.dev.wedrive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dev.wedrive.controller.DriverController;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.RouteService;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -36,7 +36,7 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_route_activity);
+        setContentView(R.layout.activity_create_new_route);
 
         routeService = new RouteService();
         validator = new Validator(this);
@@ -55,12 +55,17 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
 
         if (route == null) {
             routeService.createRoute(name.getText().toString(), ApiRoute.TYPE_DRIVER, (route) -> {
-                finish();
+                routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> {
+                    finish();
+                    return null;
+                });
                 return null;
             });
         } else {
             route.name = name.getText().toString();
             routeService.updateRoute(route, (route) -> {
+                Intent myIntent = new Intent(this, RouteListActivity.class);
+                startActivity(myIntent);
                 finish();
                 return null;
             });

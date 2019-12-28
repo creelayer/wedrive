@@ -3,18 +3,13 @@ package com.dev.wedrive.adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.service.RouteService;
 
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class RoutesListAdapter extends ListAdapter {
 

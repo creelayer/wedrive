@@ -20,11 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RouteListActivity"
+            android:label="Route list"
+            android:parentActivityName=".MapActivity"
+            />
         <activity
             android:name=".CreateNewRouteActivity"
-            android:parentActivityName=".MapActivity"
             android:label="Add new route"
-            />
+            android:parentActivityName=".RouteListActivity" />
 
         <activity android:name=".TypeActivity" />
         <!--

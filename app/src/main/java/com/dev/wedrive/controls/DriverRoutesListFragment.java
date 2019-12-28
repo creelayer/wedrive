@@ -36,7 +36,7 @@ public class DriverRoutesListFragment extends DialogFragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_driver_routes_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_driver_routes, container, false);
         view.findViewById(R.id.route_add_btn).setOnClickListener(this);
 
         loadRoutesList(view);

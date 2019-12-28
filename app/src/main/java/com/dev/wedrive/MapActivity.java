@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.LocationsLoader;
@@ -32,6 +33,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager locationManager;
 
     private GoogleMap map;
+
+    private ControlsInterface controller;
 
     @Getter
     private ProfileService profileService;
@@ -80,7 +83,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         profileService.getMyProfile((profile) -> {
             this.profile = profile;
-            new DriverControls(this).init();
+            controller = new DriverControls(this).init();
             return null;
         }, (error) -> {
             return null;
@@ -123,9 +126,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapLongClick(LatLng latLng)
     {
-        // controller.onMapLongClick(latLng);
-
-        loader.load();
+         controller.onMapLongClick(latLng);
     }
 
     /**

@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dev.wedrive.controller.DriverController;
-import com.dev.wedrive.dialogs.InformDialog;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.RouteService;
 import com.mobsandgeeks.saripaar.ValidationError;

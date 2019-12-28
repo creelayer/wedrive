@@ -1,12 +1,8 @@
 package com.dev.wedrive.loaders;
 
 import com.dev.wedrive.collection.LocationCollection;
-import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.MMarker;
-import com.dev.wedrive.entity.MMarkerFactory;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.MapService;
-import com.google.android.gms.maps.GoogleMap;
 
 public class LocationsLoader implements LoaderInterface {
 

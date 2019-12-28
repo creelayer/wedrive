@@ -1,10 +1,7 @@
 package com.dev.wedrive.controller;
 
 import com.dev.wedrive.MapActivity;
-import com.dev.wedrive.dialogs.RouteInfoDialog;
-import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.entity.MMarker;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.gms.maps.model.LatLng;

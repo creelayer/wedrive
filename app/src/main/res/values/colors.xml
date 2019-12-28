@@ -6,4 +6,7 @@
     <color name="grey">#ECECEC</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+
+    <color name="informBgDark">#FF8900</color>
+
 </resources>

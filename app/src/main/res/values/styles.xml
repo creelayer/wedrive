@@ -46,6 +46,7 @@
 
 
 
+
     <style name="routeListItem" parent="Theme.AppCompat.Light">
         <item name="cardCornerRadius">5dp</item>
         <item name="cardElevation">2dp</item>
@@ -70,8 +71,14 @@
 
 
 
+<!-- inform messages -->
 
 
+
+    <style name="informDark" parent="Theme.AppCompat.Light">
+        <item name="cardBackgroundColor">@color/informBgDark</item>
+        <item name="contentPaddingBottom">10dp</item>
+    </style>
 
 
 

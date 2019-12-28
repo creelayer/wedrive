@@ -6,10 +6,8 @@ import android.widget.LinearLayout;
 
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
-import com.dev.wedrive.dialogs.LocationDriverEditDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.entity.MMarker;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.MapService;
@@ -33,7 +31,7 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
         this.mapActivity = mapActivity;
         this.mapService = mapActivity.getMapService();
         this.routeService = new RouteService();
-        routeLayout = (LinearLayout) mapActivity.findViewById(R.id.route_layout);
+      //  routeLayout = (LinearLayout) mapActivity.findViewById(R.id.route_layout);
         this.locationService = new LocationService();
         createRouteControls();
     }
@@ -144,8 +142,8 @@ public class DriverController implements View.OnClickListener, View.OnLongClickL
      * @param latLng
      */
     public void onMapLongClick(LatLng latLng) {
-        ApiLocation location = new ApiLocation(latLng, currentRoute);
-        new LocationDriverEditDialog(mapActivity, location).show();
+//        ApiLocation location = new ApiLocation(latLng, currentRoute);
+//        new LocationDriverEditDialog(mapActivity, location).show();
     }
 
 }

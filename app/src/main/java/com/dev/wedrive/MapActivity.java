@@ -137,9 +137,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
 
-            // map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
+             //map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+            loader.getLast().run();
 
         }
 

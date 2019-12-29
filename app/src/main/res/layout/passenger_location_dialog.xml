@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/route_hour"
+                android:id="@+id/driver_location_hour"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -42,7 +42,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/route_minute"
+                android:id="@+id/driver_location_minute"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -92,14 +92,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dialog_ok_btn"
+            android:id="@+id/driver_location_ok_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ok" />
 
         <Button
-            android:id="@+id/dialog_cancel_btn"
+            android:id="@+id/driver_location_delete_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

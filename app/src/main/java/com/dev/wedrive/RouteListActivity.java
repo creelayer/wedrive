@@ -28,6 +28,11 @@ public class RouteListActivity extends AppCompatActivity implements View.OnClick
         loadRoutesList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadRoutesList();
+    }
 
     @Override
     public void onClick(View v) {

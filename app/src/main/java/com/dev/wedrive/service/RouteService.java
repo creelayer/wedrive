@@ -28,6 +28,17 @@ public class RouteService {
         });
     }
 
+    public void getCurrentRoute(final Function<ApiRoute, Void> func) {
+        ApiService.getInstance().route().getCurrentRoute().enqueue(new Callback<ApiResponse<ApiRoute>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiRoute) response.getData());
+                }
+            }
+        });
+    }
+
     /**
      * @param route
      * @param status

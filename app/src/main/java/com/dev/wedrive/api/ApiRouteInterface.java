@@ -16,6 +16,9 @@ public interface ApiRouteInterface {
     @GET("/route")
     public Call<ApiResponse<List<ApiRoute>>> getMyRoutes(@Query("type") String type);
 
+    @POST("/route/current")
+    public Call<ApiResponse<ApiRoute>> getCurrentRoute();
+
     @POST("/route/status")
     public Call<ApiResponse<ApiRoute>> setStatus(@Query("route") String uuid, @Body Map<String, String> status);
 

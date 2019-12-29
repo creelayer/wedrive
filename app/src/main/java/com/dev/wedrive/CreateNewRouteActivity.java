@@ -55,17 +55,12 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
 
         if (route == null) {
             routeService.createRoute(name.getText().toString(), ApiRoute.TYPE_DRIVER, (route) -> {
-                routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> {
-                    finish();
-                    return null;
-                });
+                finish();
                 return null;
             });
         } else {
             route.name = name.getText().toString();
             routeService.updateRoute(route, (route) -> {
-                Intent myIntent = new Intent(this, RouteListActivity.class);
-                startActivity(myIntent);
                 finish();
                 return null;
             });

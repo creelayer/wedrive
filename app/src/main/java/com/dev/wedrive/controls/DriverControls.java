@@ -1,18 +1,24 @@
 package com.dev.wedrive.controls;
 
+import android.content.Intent;
+
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
-import com.dev.wedrive.dialog.CreateNewDriverPoint;
+import com.dev.wedrive.RouteListActivity;
+import com.dev.wedrive.dialog.CreateNewDriverLocationDialog;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.informs.InformMessageFragment;
+import com.dev.wedrive.service.RouteService;
 import com.google.android.gms.maps.model.LatLng;
 
 public class DriverControls implements ControlsInterface {
 
     private MapActivity activity;
+    private RouteService routeService;
 
     public DriverControls(MapActivity activity) {
+
         this.activity = activity;
+        this.routeService = new RouteService();
     }
 
     public DriverControls init() {
@@ -30,7 +36,16 @@ public class DriverControls implements ControlsInterface {
      * @param latLng
      */
     public void onMapLongClick(LatLng latLng) {
-        new CreateNewDriverPoint(activity, new ApiLocation(latLng)).create().show();
+
+        routeService.getCurrentRoute((route) -> {
+            if (route == null) {
+                Intent myIntent = new Intent(activity, RouteListActivity.class);
+                activity.startActivity(myIntent);
+            } else {
+                new CreateNewDriverLocationDialog(activity, new ApiLocation(latLng, route)).create().show();
+            }
+            return null;
+        });
     }
 
 }

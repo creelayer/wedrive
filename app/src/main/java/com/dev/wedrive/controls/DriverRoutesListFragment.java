@@ -60,7 +60,6 @@ public class DriverRoutesListFragment extends DialogFragment implements View.OnC
                     this.collapse();
                     return null;
                 });
-
             }));
             return null;
         });

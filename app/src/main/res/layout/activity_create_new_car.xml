@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateNewCarActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brand"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/car_brand_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:theme="@style/fieldInput" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Model"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/car_model_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:theme="@style/fieldInput" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Year"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/car_year_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="number"
+            android:theme="@style/fieldInput" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Color"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/car_color_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:theme="@style/fieldInput" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number"
+            android:theme="@style/fieldLabel" />
+
+        <EditText
+            android:id="@+id/car_number_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_field_bg"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:theme="@style/fieldInput" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/car_save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:text="Сохранить"
+        android:theme="@style/btnLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</RelativeLayout>

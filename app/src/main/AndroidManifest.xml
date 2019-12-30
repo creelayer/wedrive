@@ -20,15 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RouteListActivity"
+        <activity android:name=".CreateNewCarActivity"
+            android:label="Add new car"
+            android:parentActivityName=".CarListActivity"/>
+        <activity
+            android:name=".CarListActivity"
+            android:label="Car list"
+            android:parentActivityName=".MapActivity" />
+        <activity
+            android:name=".RouteListActivity"
             android:label="Route list"
-            android:parentActivityName=".MapActivity"
-            />
+            android:parentActivityName=".MapActivity" />
         <activity
             android:name=".CreateNewRouteActivity"
             android:label="Add new route"
             android:parentActivityName=".RouteListActivity" />
-
         <activity android:name=".TypeActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

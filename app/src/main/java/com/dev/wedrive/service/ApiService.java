@@ -1,5 +1,6 @@
 package com.dev.wedrive.service;
 
+import com.dev.wedrive.api.ApiCarInterface;
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.entity.ApiToken;
@@ -90,6 +91,13 @@ public class ApiService {
     /**
      * @return
      */
+    public ApiCarInterface car() {
+        return mRetrofit.create(ApiCarInterface.class);
+    }
+
+    /**
+     * @return
+     */
     public ApiLocationInterface location() {
         return mRetrofit.create(ApiLocationInterface.class);
     }
@@ -110,17 +118,15 @@ public class ApiService {
 
 
     /**
-     *
      * @param response
      * @param <T>
      * @return
      */
-    public static <T> T getData( Response<ApiResponse<T>> response){
+    public static <T> T getData(Response<ApiResponse<T>> response) {
         return (T) response.body().getData();
     }
 
     /**
-     *
      * @param response
      * @return
      */

@@ -12,7 +12,6 @@ import retrofit2.http.Query;
 
 public interface ApiLocationInterface {
 
-
     @GET("/location/nearest")
     public Call<ApiResponse<List<ApiLocation>>> getNearestLocations();
 

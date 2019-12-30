@@ -10,7 +10,7 @@ import com.dev.wedrive.adapters.RoutesListAdapter;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.RouteService;
 
-public class RouteListActivity extends AppCompatActivity implements View.OnClickListener {
+public class RouteListActivity extends AppCompatActivity {
 
     private RouteService routeService;
 
@@ -24,7 +24,11 @@ public class RouteListActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_list);
 
-        findViewById(R.id.route_add_btn).setOnClickListener(this);
+        findViewById(R.id.route_add_btn).setOnClickListener((v) ->{
+            Intent myIntent = new Intent(this, CreateNewRouteActivity.class);
+            startActivity(myIntent);
+        });
+
         loadRoutesList();
     }
 
@@ -32,14 +36,6 @@ public class RouteListActivity extends AppCompatActivity implements View.OnClick
     protected void onResume() {
         super.onResume();
         loadRoutesList();
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.route_add_btn) {
-            Intent myIntent = new Intent(this, CreateNewRouteActivity.class);
-            startActivity(myIntent);
-        }
     }
 
     private void loadRoutesList() {

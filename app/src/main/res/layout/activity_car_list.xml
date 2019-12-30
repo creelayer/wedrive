@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.v7.widget.CardView
         style="@style/bottomSheet"
         android:layout_width="match_parent"
@@ -11,13 +12,14 @@
 
 
 
-        <ListView
-            android:id="@+id/routes_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+    <ListView
+        android:id="@+id/car_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
 
         <LinearLayout
-            android:id="@+id/no_routes_layout"
+            android:id="@+id/no_car_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -30,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="No routes"
+                android:text="No cars added"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -43,12 +45,13 @@
                 android:textAlignment="center" />
         </LinearLayout>
 
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/route_add_btn"
+                android:id="@+id/car_add_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -61,6 +64,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
+
 
     </android.support.v7.widget.CardView>
 

@@ -1,6 +1,5 @@
 package com.dev.wedrive;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,7 +22,6 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
 
     private Validator validator;
 
-    @Setter
     private RouteService routeService;
 
     @Setter
@@ -33,15 +31,22 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
     @Length(max = 100)
     private EditText name;
 
+    public CreateNewRouteActivity() {
+        super();
+        routeService = new RouteService();
+        validator = new Validator(this);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_route);
 
-        routeService = new RouteService();
-        validator = new Validator(this);
         validator.setValidationListener(this);
+
         name = findViewById(R.id.route_name_input);
+
         Button okBtn = findViewById(R.id.route_save_btn);
         okBtn.setOnClickListener((v) -> validator.validate());
 

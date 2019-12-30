@@ -1,5 +1,6 @@
 package com.dev.wedrive;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -63,10 +64,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         Button testBtn = findViewById(R.id.test_btn);
-        testBtn.setOnClickListener((v)->{
-            loader.load();
+        testBtn.setOnClickListener((v) -> {
+            Intent myIntent = new Intent(this, CarListActivity.class);
+            startActivity(myIntent);
         });
-
 
     }
 

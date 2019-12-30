@@ -60,8 +60,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Log.e("xxxx", "created");
-
 
         Button testBtn = findViewById(R.id.test_btn);
         testBtn.setOnClickListener((v) -> {
@@ -101,7 +99,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         map.setOnMarkerClickListener(this);
         map.setOnMapLongClickListener(this);
-        Log.e("xxxx", "ready");
     }
 
     public void setFragment(int id, Fragment fragment) {
@@ -119,7 +116,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
 
         if (controller != null) controller.init();
-        Log.e("xxxx", "resume");
     }
 
     @Override

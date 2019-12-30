@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.tubb.smrv.SwipeHorizontalMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sml"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    app:sml_auto_open_percent="0.2"
+    app:sml_scroller_duration="250"
+    app:sml_scroller_interpolator="@android:anim/bounce_interpolator">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/car_list_item"
-        style="@style/routeListItem"
+    <RelativeLayout
+        android:id="@id/smContentView"
+        android:background="@drawable/shape_list_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/list_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Киев - Велики Васюки"
+            android:theme="@style/label1" />
 
-            <TextView
-                android:id="@+id/car_list_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Киев - Велики Васюки"
-                android:theme="@style/label1" />
+        <ImageView
+            android:id="@+id/list_status"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/btn_radio_shape" />
 
-            <ImageView
-                android:id="@+id/car_list_status"
-                app:srcCompat="@drawable/btn_radio_shape"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true" />
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@id/smMenuViewLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/list_item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/list_item_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit" />
+
+    </LinearLayout>
+
+</com.tubb.smrv.SwipeHorizontalMenuLayout>
+

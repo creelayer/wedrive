@@ -1,5 +1,6 @@
 package com.dev.wedrive.entity;
 
+import com.dev.wedrive.CreateNewRouteActivity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -35,12 +36,23 @@ public class ApiRoute implements TypeInterface {
     @SerializedName("name")
     public String name;
 
-    @SerializedName("seats")
-    public double seats;
-
     @SerializedName("locations")
     @Getter
     @Setter
     public List<ApiLocation> locations;
+
+
+    public ApiRoute() {
+    }
+
+    public ApiRoute(CreateNewRouteActivity activity) {
+        load(activity);
+    }
+
+    public ApiRoute load(CreateNewRouteActivity activity) {
+        name = activity.getName().getText().toString();
+        type = ApiRoute.TYPE_DRIVER;
+        return this;
+    }
 
 }

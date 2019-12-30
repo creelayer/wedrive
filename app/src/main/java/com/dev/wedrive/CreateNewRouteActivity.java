@@ -16,6 +16,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public class CreateNewRouteActivity extends AppCompatActivity implements Validator.ValidationListener {
@@ -24,9 +25,9 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
 
     private RouteService routeService;
 
-    @Setter
     private ApiRoute route;
 
+    @Getter
     @NotEmpty
     @Length(max = 100)
     private EditText name;
@@ -50,8 +51,9 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
         Button okBtn = findViewById(R.id.route_save_btn);
         okBtn.setOnClickListener((v) -> validator.validate());
 
-        if (route != null) {
-            name.setText(route.name);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            load(bundle.getString("uuid"));
         }
     }
 
@@ -59,13 +61,12 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
     public void onValidationSucceeded() {
 
         if (route == null) {
-            routeService.createRoute(name.getText().toString(), ApiRoute.TYPE_DRIVER, (route) -> {
+            routeService.createRoute(new ApiRoute(this), (route) -> {
                 finish();
                 return null;
             });
         } else {
-            route.name = name.getText().toString();
-            routeService.updateRoute(route, (route) -> {
+            routeService.updateRoute(route.load(this), (route) -> {
                 finish();
                 return null;
             });
@@ -85,5 +86,13 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    private void load(String uuid) {
+        routeService.getRoute(uuid, (route) -> {
+            this.route = route;
+            name.setText(route.name);
+            return null;
+        });
     }
 }

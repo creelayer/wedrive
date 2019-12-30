@@ -15,6 +15,9 @@ public interface ApiCarInterface {
     @GET("/car")
     public Call<ApiResponse<List<ApiCar>>> getMyCars();
 
+    @POST("/car/info")
+    public Call<ApiResponse<ApiCar>> getInfo(@Query("car") String uuid);
+
     @GET("/car/current")
     public Call<ApiResponse<ApiCar>> getCurrentCar();
 
@@ -28,5 +31,5 @@ public interface ApiCarInterface {
     public Call<ApiResponse<ApiCar>> updateCar(@Query("car") String uuid, @Body ApiCar apiCar);
 
     @POST("/car/delete")
-    public Call<ApiResponse<ApiCar>> deleteCar(@Body ApiCar apiCar);
+    public Call<ApiResponse<ApiCar>> deleteCar(@Query("car") String uuid);
 }

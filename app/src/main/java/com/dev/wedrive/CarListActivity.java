@@ -14,7 +14,7 @@ public class CarListActivity extends AppCompatActivity {
 
     protected CarService carService;
 
-    public CarListActivity(){
+    public CarListActivity() {
         carService = new CarService();
     }
 
@@ -23,9 +23,8 @@ public class CarListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_list);
 
-        findViewById(R.id.car_add_btn).setOnClickListener((v) ->{
-            Intent myIntent = new Intent(this, CreateNewCarActivity.class);
-            startActivity(myIntent);
+        findViewById(R.id.car_add_btn).setOnClickListener((v) -> {
+            startActivity(new Intent(this, CreateNewCarActivity.class));
         });
 
         loadCarList();
@@ -38,13 +37,30 @@ public class CarListActivity extends AppCompatActivity {
     }
 
     private void loadCarList() {
-        carService.getMyCars( (cars) -> {
+        carService.getMyCars((cars) -> {
             ListView list = findViewById(R.id.car_list);
-            list.setAdapter(new CarListAdapter(this, cars, (car) -> {
-                carService.setCurrent(car,  (mCar) -> {
-                    finish();
-                    return null;
-                });
+            list.setAdapter(new CarListAdapter(this, cars, (id, car) -> {
+
+                if (id == R.id.smContentView) {
+                    carService.setCurrent(car, (mCar) -> {
+                        finish();
+                        return null;
+                    });
+                }
+
+                if (id == R.id.list_item_delete) {
+                    carService.deleteCar(car, (mCar) -> {
+                        finish();
+                        return null;
+                    });
+                }
+
+                if (id == R.id.list_item_edit) {
+                    Intent intent = new Intent(this, CreateNewCarActivity.class);
+                    intent.putExtra("uuid", car.uuid);
+                    startActivity(intent);
+                }
+
             }));
             return null;
         });

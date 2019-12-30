@@ -26,6 +26,20 @@ public class CarService {
     }
 
     /**
+     * @param func
+     */
+    public void getCar(String uuid, final Function<ApiCar, Void> func) {
+        ApiService.getInstance().car().getInfo(uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiCar) response.getData());
+                }
+            }
+        });
+    }
+
+    /**
      * @param car
      * @param func
      */
@@ -33,7 +47,9 @@ public class CarService {
         ApiService.getInstance().car().setCurrent(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                func.apply((ApiCar) response.getData());
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiCar) response.getData());
+                }
             }
         });
     }
@@ -59,6 +75,21 @@ public class CarService {
      */
     public void updateCar(ApiCar car, Function<ApiCar, Void> func) {
         ApiService.getInstance().car().updateCar(car.uuid, car).enqueue(new Callback<ApiResponse<ApiCar>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiCar) response.getData());
+                }
+            }
+        });
+    }
+
+    /**
+     * @param car
+     * @param func
+     */
+    public void deleteCar(ApiCar car, Function<ApiCar, Void> func) {
+        ApiService.getInstance().car().deleteCar(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {

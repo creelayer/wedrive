@@ -28,14 +28,14 @@ public class PassengerController implements ControllerInterface {
     private void createRouteControls() {
         routeService.getMyRouts(ApiRoute.TYPE_PASSENGER, (routes) -> {
 
-            if (!routes.isEmpty()) {
-                currentRoute = routes.get(0);
-            } else {
-                routeService.createRoute(ApiRoute.DEFAULT_NAME, ApiRoute.TYPE_PASSENGER, (route) -> {
-                    currentRoute = route;
-                    return null;
-                });
-            }
+//            if (!routes.isEmpty()) {
+//                currentRoute = routes.get(0);
+//            } else {
+//                routeService.createRoute(ApiRoute.DEFAULT_NAME, ApiRoute.TYPE_PASSENGER, (route) -> {
+//                    currentRoute = route;
+//                    return null;
+//                });
+//            }
 
             return null;
         });

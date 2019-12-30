@@ -20,9 +20,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateNewCarActivity"
+        <activity android:name=".TestActivity"></activity>
+        <activity
+            android:name=".CreateNewCarActivity"
             android:label="Add new car"
-            android:parentActivityName=".CarListActivity"/>
+            android:parentActivityName=".CarListActivity" />
         <activity
             android:name=".CarListActivity"
             android:label="Car list"

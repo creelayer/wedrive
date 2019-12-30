@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiCar;
+import com.tubb.smrv.SwipeHorizontalMenuLayout;
 
 import java.util.ArrayList;
 
@@ -28,20 +30,21 @@ public class CarListAdapter extends ListAdapter {
 
         ApiCar car = (ApiCar) getItem(position);
 
-        CardView item = convertView.findViewById(R.id.car_list_item);
-        item.setOnClickListener((v) -> listener.onItemClick(car));
+        convertView.findViewById(R.id.smContentView).setOnClickListener((v) -> listener.onItemClick(R.id.smContentView, car));
+        convertView.findViewById(R.id.list_item_edit).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_edit, car));
+        convertView.findViewById(R.id.list_item_delete).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_delete, car));
 
-        TextView name = convertView.findViewById(R.id.car_list_name);
+        TextView name = convertView.findViewById(R.id.list_name);
         name.setText(car.brand + " " + car.model);
 
         if (car.current) {
-            convertView.findViewById(R.id.car_list_status).setBackground(activeRadioShape);
+            convertView.findViewById(R.id.list_status).setBackground(activeRadioShape);
         }
 
         return convertView;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(ApiCar item);
+        void onItemClick(int id, ApiCar item);
     }
 }

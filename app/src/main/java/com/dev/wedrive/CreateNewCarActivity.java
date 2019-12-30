@@ -27,7 +27,6 @@ public class CreateNewCarActivity extends AppCompatActivity implements Validator
 
     protected CarService carService;
 
-    @Setter
     private ApiCar car;
 
     @Getter
@@ -77,28 +76,27 @@ public class CreateNewCarActivity extends AppCompatActivity implements Validator
 
         Button okBtn = findViewById(R.id.car_save_btn);
         okBtn.setOnClickListener((v) -> validator.validate());
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            load(bundle.getString("uuid"));
+        }
     }
 
     @Override
     public void onValidationSucceeded() {
 
-        if (car == null) {
+        if (car == null)
             carService.createCar(new ApiCar(this), (car) -> {
                 finish();
                 return null;
             });
-        } else {
-            car.brand = brand.getText().toString();
-            car.model = model.getText().toString();
-            car.year = Integer.parseInt(year.getText().toString());
-            car.color = color.getText().toString();
-            car.number = number.getText().toString();
-            carService.updateCar(car, (car) -> {
+        else
+            carService.updateCar(car.load(this), (car) -> {
                 finish();
                 return null;
             });
-        }
-
     }
 
     @Override
@@ -114,5 +112,17 @@ public class CreateNewCarActivity extends AppCompatActivity implements Validator
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    private void load(String uuid) {
+        carService.getCar(uuid, (car) -> {
+            this.car = car;
+            brand.setText(car.brand);
+            model.setText(car.model);
+            year.setText(Integer.toString(car.year));
+            color.setText(car.color);
+            number.setText(car.number);
+            return null;
+        });
     }
 }

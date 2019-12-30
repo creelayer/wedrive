@@ -39,11 +39,16 @@ public class ApiCar {
     }
 
     public ApiCar(CreateNewCarActivity activity) {
+        load(activity);
+    }
+
+    public ApiCar load(CreateNewCarActivity activity) {
         brand = activity.getBrand().getText().toString();
         model = activity.getModel().getText().toString();
         year = Integer.parseInt(activity.getYear().getText().toString());
         color = activity.getColor().getText().toString();
         number = activity.getNumber().getText().toString();
+        return this;
     }
 
 }

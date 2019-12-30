@@ -45,17 +45,7 @@
     </style>
 
 
-
-    <style name="routeListItem" parent="Theme.AppCompat.Light">
-        <item name="cardCornerRadius">5dp</item>
-        <item name="cardElevation">2dp</item>
-        <item name="contentPadding">10dp</item>
-        <item name="contentPaddingTop">8dp</item>
-        <item name="contentPaddingLeft">15dp</item>
-        <item name="cardBackgroundColor">@color/white</item>
-        <item name="android:layout_marginTop">10dp</item>
-    </style>
-
+    <!-- bottom sheet -->
 
 
     <style name="bottomSheet" parent="Theme.AppCompat.Light">
@@ -69,9 +59,7 @@
 
 
 
-
-
-<!-- inform messages -->
+    <!-- inform messages -->
 
 
 

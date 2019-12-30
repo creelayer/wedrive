@@ -13,16 +13,23 @@ import java.util.Map;
 
 public class RouteService {
 
-    /**
-     * @param type
-     * @param func
-     */
     public void getMyRouts(String type, final Function<ArrayList<ApiRoute>, Void> func) {
         ApiService.getInstance().route().getMyRoutes(type).enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
                     func.apply((ArrayList<ApiRoute>) response.getData());
+                }
+            }
+        });
+    }
+
+    public void getRoute(String uuid, final Function<ApiRoute, Void> func) {
+        ApiService.getInstance().route().getRoute(uuid).enqueue(new Callback<ApiResponse<ApiRoute>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiRoute) response.getData());
                 }
             }
         });
@@ -39,11 +46,6 @@ public class RouteService {
         });
     }
 
-    /**
-     * @param route
-     * @param status
-     * @param func
-     */
     public void setStatus(ApiRoute route, String status, final Function<ApiRoute, Void> func) {
 
         Map<String, String> mStatus = new HashMap<>();
@@ -57,19 +59,7 @@ public class RouteService {
         });
     }
 
-
-    /**
-     * @param name
-     * @param type
-     * @param func
-     */
-    public void createRoute(String name, String type, Function<ApiRoute, Void> func) {
-
-        ApiRoute route = new ApiRoute();
-        route.name = name;
-        route.seats = 4;
-        route.type = type;
-
+    public void createRoute(ApiRoute route, Function<ApiRoute, Void> func) {
         ApiService.getInstance().route().createRoute(route).enqueue(new Callback<ApiResponse<ApiRoute>>() {
             @Override
             public void onResult(ApiResponse response) {
@@ -80,10 +70,6 @@ public class RouteService {
         });
     }
 
-    /**
-     * @param route
-     * @param func
-     */
     public void updateRoute(ApiRoute route, Function<ApiRoute, Void> func) {
         ApiService.getInstance().route().updateRoute(route.uuid, route).enqueue(new Callback<ApiResponse<ApiRoute>>() {
             @Override
@@ -95,10 +81,6 @@ public class RouteService {
         });
     }
 
-    /**
-     * @param route
-     * @param func
-     */
     public void deleteRoute(ApiRoute route, Function<ApiRoute, Void> func) {
         ApiService.getInstance().route().deleteRoute(route.uuid).enqueue(new Callback<ApiResponse<ApiRoute>>() {
             @Override

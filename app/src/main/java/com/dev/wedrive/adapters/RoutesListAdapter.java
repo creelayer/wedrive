@@ -2,7 +2,6 @@ package com.dev.wedrive.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,20 +27,21 @@ public class RoutesListAdapter extends ListAdapter {
 
         ApiRoute route = (ApiRoute) getItem(position);
 
-        CardView item = convertView.findViewById(R.id.route_list_item);
-        item.setOnClickListener((v) -> listener.onItemClick(route));
+        convertView.findViewById(R.id.smContentView).setOnClickListener((v) -> listener.onItemClick(R.id.smContentView, route));
+        convertView.findViewById(R.id.list_item_edit).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_edit, route));
+        convertView.findViewById(R.id.list_item_delete).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_delete, route));
 
-        TextView name = convertView.findViewById(R.id.route_list_name);
+        TextView name = convertView.findViewById(R.id.list_name);
         name.setText(route.name);
 
         if (route.status != null) {
-            convertView.findViewById(R.id.route_list_status).setBackground(activeRadioShape);
+            convertView.findViewById(R.id.list_status).setBackground(activeRadioShape);
         }
 
         return convertView;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(ApiRoute item);
+        void onItemClick(int id, ApiRoute item);
     }
 }

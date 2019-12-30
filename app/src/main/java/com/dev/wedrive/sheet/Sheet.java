@@ -1,4 +1,4 @@
-package com.dev.wedrive.controls;
+package com.dev.wedrive.sheet;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 
 import com.dev.wedrive.R;
 
-public class DialogFragment extends Fragment {
+public class Sheet extends Fragment {
 
     BottomSheetBehavior sheetBehavior;
 
     protected int height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    protected int state = BottomSheetBehavior.STATE_COLLAPSED;
+    protected int state = BottomSheetBehavior.STATE_HIDDEN;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,12 +27,18 @@ public class DialogFragment extends Fragment {
 
         sheetBehavior = BottomSheetBehavior.from(view);
         sheetBehavior.setState(state);
+        sheetBehavior.setHideable(true);
 
         return view;
     }
 
     public void collapse(){
         state = BottomSheetBehavior.STATE_COLLAPSED;
+        sheetBehavior.setState(state);
+    }
+
+    public void hide(){
+        state = BottomSheetBehavior.STATE_HIDDEN;
         sheetBehavior.setState(state);
     }
 

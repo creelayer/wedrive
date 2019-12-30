@@ -1,6 +1,5 @@
 package com.dev.wedrive.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.DriverLocationData;
@@ -15,13 +15,16 @@ import com.dev.wedrive.service.LocationService;
 import com.google.gson.internal.LinkedTreeMap;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.*;
+import com.mobsandgeeks.saripaar.annotation.Max;
+import com.mobsandgeeks.saripaar.annotation.Min;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Optional;
 
 import java.util.List;
 
 public class CreateNewDriverLocationDialog implements DialogInterface, Validator.ValidationListener {
 
-    Activity mActivity;
+    MapActivity mActivity;
     ApiLocation apiLocation;
 
     LocationService locationService;
@@ -43,7 +46,7 @@ public class CreateNewDriverLocationDialog implements DialogInterface, Validator
     @Min(value = 0, message = "Max gap is 0 minutes")
     private EditText gap;
 
-    public CreateNewDriverLocationDialog(Activity activity, ApiLocation apiLocation) {
+    public CreateNewDriverLocationDialog(MapActivity activity, ApiLocation apiLocation) {
         mActivity = activity;
         this.apiLocation = apiLocation;
         locationService = new LocationService();
@@ -93,6 +96,7 @@ public class CreateNewDriverLocationDialog implements DialogInterface, Validator
 
         if (apiLocation.getUuid() == null) {
             locationService.createLocation(apiLocation, (result) -> {
+                mActivity.getLoader().load();
                 dialogBuilder.cancel();
                 return null;
             });

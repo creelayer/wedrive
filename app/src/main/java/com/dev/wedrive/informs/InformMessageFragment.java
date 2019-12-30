@@ -30,7 +30,7 @@ public class InformMessageFragment extends InformAbstract implements View.OnClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_inform_message, container, false);
+        View view = inflater.inflate(R.layout.inform_message, container, false);
         animationIn = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_in);
         animationOut = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_out);
 

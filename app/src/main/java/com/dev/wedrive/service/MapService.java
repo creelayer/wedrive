@@ -1,7 +1,5 @@
 package com.dev.wedrive.service;
 
-import android.util.Log;
-
 import com.dev.wedrive.R;
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
@@ -13,8 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 public class MapService {
@@ -31,7 +27,7 @@ public class MapService {
         locationService.updateMyLocation(latLng);
     }
 
-    public void updateLocations(LocationCollection locations) {
+    public Void updateLocations(LocationCollection locations) {
 
 
         Set<String> keys = locations.keySet();
@@ -82,10 +78,12 @@ public class MapService {
                 locations.remove(locationAdapter);
             }
         }
-
-        Log.e("zzzzz",Integer.toString(locations.size()));
-
         locations.touch();
+        return null;
+    }
+
+    public void clearLocations(){
+        map.clear();
     }
 
 }

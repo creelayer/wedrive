@@ -30,12 +30,8 @@ public class DriverRoutesFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.route_list_btn) {
-
             Intent myIntent = new Intent(getActivity(), RouteListActivity.class);
             startActivity(myIntent);
-
-//            MapActivity activity = (MapActivity) getActivity();
-//            activity.setFragment(R.id.btmControls, new DriverRoutesListFragment());
         }
     }
 }

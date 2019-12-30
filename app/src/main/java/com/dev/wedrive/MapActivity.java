@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
-import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.loaders.LocationsLoader;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,6 +30,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public final int MIN_DISTANCE = 10;
     public final int ZOOM = 15;
 
+    private boolean cameraInited = false;
+
     private LocationManager locationManager;
 
     private GoogleMap map;
@@ -41,9 +43,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Getter
     private MapService mapService;
-
-    @Getter
-    private ApiProfile profile;
 
     @Setter
     @Getter
@@ -59,6 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Log.e("xxxx", "created");
     }
 
 
@@ -75,15 +75,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
 
         this.map = map;
-        profileService = new ProfileService();
         mapService = new MapService(map);
         loader = new LoaderCollection(mapService);
-        loader.add(new LocationsLoader());
 
-
+        profileService = new ProfileService();
         profileService.getMyProfile((profile) -> {
-            this.profile = profile;
-            controller = new DriverControls(this).init();
+            controller = new DriverControls(this, loader);
+            controller.init();
             return null;
         }, (error) -> {
             return null;
@@ -93,7 +91,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         map.setOnMarkerClickListener(this);
         map.setOnMapLongClickListener(this);
-
+        Log.e("xxxx", "ready");
     }
 
     public void setFragment(int id, Fragment fragment) {
@@ -109,6 +107,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onResume();
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
+
+        if (controller != null) controller.init();
+        Log.e("xxxx", "resume");
     }
 
     @Override
@@ -124,9 +125,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng)
-    {
-         controller.onMapLongClick(latLng);
+    public void onMapLongClick(LatLng latLng) {
+        controller.onMapLongClick(latLng);
     }
 
     /**
@@ -137,11 +137,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
 
-             //map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
+            if (!cameraInited) {
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
+                cameraInited = true;
+            }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-            loader.getLast().run();
-
+            loader.run();
         }
 
         @Override

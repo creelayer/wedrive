@@ -14,8 +14,13 @@ public class LoaderCollection extends ArrayDeque<LoaderInterface> {
 
     @Override
     public boolean add(LoaderInterface loader) {
-        loader.setMapService(mapService);
         return super.add(loader);
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        mapService.clearLocations();
     }
 
     public void load() {
@@ -23,6 +28,8 @@ public class LoaderCollection extends ArrayDeque<LoaderInterface> {
     }
 
     public void run() {
-        getLast().run();
+        if (!isEmpty()) {
+            getLast().run((locations) -> mapService.updateLocations(locations));
+        }
     }
 }

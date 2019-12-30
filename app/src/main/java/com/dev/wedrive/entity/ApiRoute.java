@@ -13,6 +13,7 @@ public class ApiRoute implements TypeInterface {
     public final static String DEFAULT_NAME = "default";
 
     public final static String STATUS_CURRENT = "current";
+    public final static String STATUS_ACTIVE = "active";
 
 
     @Setter

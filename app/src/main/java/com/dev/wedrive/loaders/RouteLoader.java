@@ -6,8 +6,11 @@ import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.LocationService;
 
+import lombok.Getter;
+
 public class RouteLoader implements LoaderInterface {
 
+    @Getter
     protected LocationCollection locationCollection;
     protected LocationService locationService;
 

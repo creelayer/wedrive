@@ -1,6 +1,7 @@
 package com.dev.wedrive.dialog;
 
 import android.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import com.mobsandgeeks.saripaar.annotation.Optional;
 
 import java.util.List;
 
-public class CreateNewDriverLocationDialog implements DialogInterface, Validator.ValidationListener {
+public class CreateDriverLocationDialog implements DialogInterface, Validator.ValidationListener {
 
     MapActivity mActivity;
     ApiLocation apiLocation;
@@ -46,7 +47,7 @@ public class CreateNewDriverLocationDialog implements DialogInterface, Validator
     @Min(value = 0, message = "Max gap is 0 minutes")
     private EditText gap;
 
-    public CreateNewDriverLocationDialog(MapActivity activity, ApiLocation apiLocation) {
+    public CreateDriverLocationDialog(MapActivity activity, ApiLocation apiLocation) {
         mActivity = activity;
         this.apiLocation = apiLocation;
         locationService = new LocationService();
@@ -70,19 +71,27 @@ public class CreateNewDriverLocationDialog implements DialogInterface, Validator
         Button delete = dialogView.findViewById(R.id.driver_location_delete_btn);
 
         ok.setOnClickListener((v) -> validator.validate());
+        delete.setOnClickListener((v) -> deleteLocation());
 
         if (apiLocation.getUuid() != null) {
             DriverLocationData data = new DriverLocationData((LinkedTreeMap<String, String>) apiLocation.data);
             hour.setText(data.hour);
             minute.setText(data.min);
             gap.setText(data.gap);
-        }else{
+        } else {
             delete.setVisibility(View.GONE);
         }
 
-
         dialogBuilder.setView(dialogView);
         return dialogBuilder;
+    }
+
+    private void deleteLocation() {
+        locationService.deleteLocation(apiLocation, (location) -> {
+            mActivity.getLoader().load();
+            dialogBuilder.cancel();
+            return null;
+        });
     }
 
     @Override
@@ -118,8 +127,7 @@ public class CreateNewDriverLocationDialog implements DialogInterface, Validator
             String message = error.getCollatedErrorMessage(dialogBuilder.getContext());
 
             if (view instanceof EditText) {
-                EditText input = (EditText)view;
-               // input.setError(message);
+                EditText input = (EditText) view;
                 input.setError(message, null);
             } else {
                 Toast.makeText(dialogBuilder.getContext(), message, Toast.LENGTH_LONG).show();

@@ -2,6 +2,7 @@ package com.dev.wedrive.collection;
 
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.entity.ApiLocation;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,15 @@ public class LocationCollection extends HashMap<String, LocationAdapter> {
 
     public LocationCollection put(List<ApiLocation> locations) {
         for (ApiLocation location : locations) {
-            put(new LocationAdapter(location));
+
+            LocationAdapter locationAdapter = get(location.uuid);
+
+            if (locationAdapter == null)
+                locationAdapter = new LocationAdapter(location);
+            else
+                locationAdapter.setLocation(location);
+
+            put(locationAdapter);
         }
         return this;
     }
@@ -33,7 +42,7 @@ public class LocationCollection extends HashMap<String, LocationAdapter> {
         remove(locationAdapter.getUuid());
     }
 
-    public void touch(){
+    public void touch() {
         updated = System.currentTimeMillis();
     }
 

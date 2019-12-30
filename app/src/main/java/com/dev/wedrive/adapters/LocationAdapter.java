@@ -8,6 +8,7 @@ import lombok.Setter;
 
 public class LocationAdapter {
 
+    @Setter
     @Getter
     private ApiLocation location;
 

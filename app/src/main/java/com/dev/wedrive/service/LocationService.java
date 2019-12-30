@@ -1,6 +1,7 @@
 package com.dev.wedrive.service;
 
 import android.arch.core.util.Function;
+import android.util.Log;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
@@ -49,7 +50,6 @@ public class LocationService {
      * @param func
      */
     public void deleteLocation(ApiLocation location, Function<ApiLocation, Void> func) {
-
         ApiService.getInstance().location().deleteLocation(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
             public void onResult(ApiResponse response) {

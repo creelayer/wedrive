@@ -1,5 +1,7 @@
 package com.dev.wedrive.service;
 
+import android.util.Log;
+
 import com.dev.wedrive.R;
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;

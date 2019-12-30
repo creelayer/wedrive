@@ -29,7 +29,10 @@ public class LoaderCollection extends ArrayDeque<LoaderInterface> {
 
     public void run() {
         if (!isEmpty()) {
-            getLast().run((locations) -> mapService.updateLocations(locations));
+            getLast().run((locations) -> {
+                mapService.updateLocations(locations);
+                return null;
+            });
         }
     }
 }

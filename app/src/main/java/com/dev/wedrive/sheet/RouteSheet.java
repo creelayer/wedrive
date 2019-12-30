@@ -66,6 +66,8 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
                 status.setText(route.status);
                 actionBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
 
+                getActivity().findViewById(R.id.lftControls).setVisibility(route.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
+
                 return null;
             });
         }

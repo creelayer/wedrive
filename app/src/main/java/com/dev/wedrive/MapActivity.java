@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
@@ -59,6 +60,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Log.e("xxxx", "created");
+
+
+        Button testBtn = findViewById(R.id.test_btn);
+        testBtn.setOnClickListener((v)->{
+            loader.load();
+        });
+
+
     }
 
 
@@ -120,8 +129,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        //   controller.onMarkerClick(marker);
-        return false;
+        return controller.onMarkerClick(marker);
     }
 
     @Override

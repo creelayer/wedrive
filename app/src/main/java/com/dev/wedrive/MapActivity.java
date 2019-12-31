@@ -5,23 +5,23 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
@@ -117,7 +117,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             navName.setText(profile.name + " " + profile.lastName);
             navStatus.setText(profile.type);
             if (!profile.image.equals(""))
-                new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + profile.image);
+                new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
             return null;
         }, (error) -> {
             return null;

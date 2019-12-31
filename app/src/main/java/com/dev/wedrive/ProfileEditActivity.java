@@ -112,7 +112,7 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
             email.setText(profile.email);
 
             if (!profile.image.equals("")) {
-                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + profile.image);
+                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
             }
             return null;
         }, (error) -> {
@@ -135,6 +135,7 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) -> {
+                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
                 return null;
             });
         }

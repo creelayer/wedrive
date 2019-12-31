@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class FileHelper {
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
@@ -20,6 +22,10 @@ public class FileHelper {
                 cursor.close();
             }
         }
+    }
+
+    public static String getStyleName(String name, String style) {
+        return FilenameUtils.removeExtension(name) + "_" + style + "." + FilenameUtils.getExtension(name);
     }
 
 }

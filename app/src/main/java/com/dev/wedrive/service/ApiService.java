@@ -1,13 +1,14 @@
 package com.dev.wedrive.service;
 
+import com.dev.wedrive.Constants;
 import com.dev.wedrive.api.ApiCarInterface;
-import com.dev.wedrive.api.ApiResponse;
-import com.dev.wedrive.api.ApiResponseError;
-import com.dev.wedrive.entity.ApiToken;
 import com.dev.wedrive.api.ApiLocationInterface;
 import com.dev.wedrive.api.ApiProfileInterface;
+import com.dev.wedrive.api.ApiResponse;
+import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.api.ApiRouteInterface;
 import com.dev.wedrive.api.ApiUserInterface;
+import com.dev.wedrive.entity.ApiToken;
 
 import org.json.JSONObject;
 
@@ -25,8 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ApiService {
-
-    private static final String API_URL = "http://wedrive.smarter.com.ua";
 
     private Retrofit mRetrofit;
 
@@ -64,7 +63,7 @@ public class ApiService {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
+                .baseUrl(Constants.API_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

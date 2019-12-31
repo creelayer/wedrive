@@ -1,7 +1,6 @@
 package com.dev.wedrive.service;
 
-import android.arch.core.util.Function;
-import android.util.Log;
+import androidx.arch.core.util.Function;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;

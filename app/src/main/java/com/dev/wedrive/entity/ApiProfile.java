@@ -1,5 +1,6 @@
 package com.dev.wedrive.entity;
 
+import com.dev.wedrive.ProfileEditActivity;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -22,17 +23,26 @@ public class ApiProfile implements Serializable {
     @Getter
     public String name;
 
-    @SerializedName("car_name")
+    @SerializedName("last_name")
     @Getter
-    public String carName;
+    public String lastName;
 
-    @SerializedName("car_color")
+    @SerializedName("phone")
     @Getter
-    public String carColor;
+    public String phone;
 
-    @SerializedName("car_id")
+    @SerializedName("email")
     @Getter
-    public String carId;
+    public String email;
 
+    @SerializedName("image")
+    @Getter
+    public String image;
+
+    public ApiProfile load(ProfileEditActivity activity) {
+        name = activity.getName().getText().toString();
+        lastName = activity.getLastName().getText().toString();
+        return this;
+    }
 
 }

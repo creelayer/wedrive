@@ -1,13 +1,11 @@
 package com.dev.wedrive;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.dev.wedrive.adapters.CarListAdapter;
-import com.dev.wedrive.adapters.RoutesListAdapter;
-import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.CarService;
 
 public class CarListActivity extends AppCompatActivity {

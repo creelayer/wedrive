@@ -2,14 +2,11 @@ package com.dev.wedrive.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiCar;
-import com.tubb.smrv.SwipeHorizontalMenuLayout;
 
 import java.util.ArrayList;
 

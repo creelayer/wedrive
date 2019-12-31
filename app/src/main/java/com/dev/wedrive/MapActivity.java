@@ -5,10 +5,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.Button;
 
 import com.dev.wedrive.controls.ControlsInterface;
@@ -63,7 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         Button testBtn = findViewById(R.id.test_btn);
         testBtn.setOnClickListener((v) -> {
-            Intent myIntent = new Intent(this, CarListActivity.class);
+            Intent myIntent = new Intent(this, ProfileEditActivity.class);
             startActivity(myIntent);
         });
 

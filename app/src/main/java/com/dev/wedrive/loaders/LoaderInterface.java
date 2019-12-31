@@ -1,6 +1,6 @@
 package com.dev.wedrive.loaders;
 
-import android.arch.core.util.Function;
+import androidx.arch.core.util.Function;
 
 import com.dev.wedrive.collection.LocationCollection;
 

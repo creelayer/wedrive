@@ -5,14 +5,23 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.controls.DriverControls;
+import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.helpers.DownloadImageTask;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
@@ -22,17 +31,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.material.navigation.NavigationView;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     public final int MIN_TIME = 10000;
     public final int MIN_DISTANCE = 10;
     public final int ZOOM = 15;
 
-    private boolean cameraInited = false;
+    private boolean cameraInit = false;
 
     private LocationManager locationManager;
 
@@ -50,16 +60,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Getter
     private LoaderCollection loader;
 
+    private ApiProfile profile;
+    private ImageView navImage;
+    private TextView navName;
+    private TextView navStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        navImage = headerView.findViewById(R.id.nav_image);
+        navName = headerView.findViewById(R.id.nav_name);
+        navStatus = headerView.findViewById(R.id.nav_status);
+
 
         Button testBtn = findViewById(R.id.test_btn);
         testBtn.setOnClickListener((v) -> {
@@ -88,8 +110,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         profileService = new ProfileService();
         profileService.getMyProfile((profile) -> {
+            this.profile = profile;
             controller = new DriverControls(this, loader);
             controller.init();
+
+            navName.setText(profile.name + " " + profile.lastName);
+            navStatus.setText(profile.type);
+            if (!profile.image.equals(""))
+                new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + profile.image);
             return null;
         }, (error) -> {
             return null;
@@ -134,6 +162,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         controller.onMapLongClick(latLng);
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     /**
      * Change location listner
      */
@@ -142,9 +187,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
 
-            if (!cameraInited) {
+            if (!cameraInit) {
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), ZOOM));
-                cameraInited = true;
+                cameraInit = true;
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));

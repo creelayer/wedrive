@@ -2,29 +2,34 @@ package com.dev.wedrive.sheet;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.dev.wedrive.CarListActivity;
-import com.dev.wedrive.Constants;
-import com.dev.wedrive.helpers.DownloadImageTask;
-import com.dev.wedrive.helpers.FileHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dev.wedrive.CarListActivity;
+import com.dev.wedrive.Constants;
 import com.dev.wedrive.R;
+import com.dev.wedrive.entity.ApiLocation;
+import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
+import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.helpers.FileHelper;
+import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.RouteService;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import lombok.Getter;
 import lombok.Setter;
 
-public class RouteSheet extends Sheet implements View.OnClickListener {
+public class RouteDriverSheet extends Sheet implements View.OnClickListener {
 
     private RouteService routeService;
+    private RequestService requestService;
 
     @Setter
     private ApiRoute route;
@@ -36,14 +41,13 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
     private TextView carBrand;
     private TextView carModel;
     private TextView carNumber;
-    private Button changeCar;
+    private Button changeCarBtn;
 
     private Button actionBtn;
 
-    public RouteSheet() {
+    public RouteDriverSheet() {
         super();
         routeService = new RouteService();
-        height = ViewGroup.LayoutParams.WRAP_CONTENT;
         state = BottomSheetBehavior.STATE_COLLAPSED;
     }
 
@@ -51,7 +55,7 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.sheet_current_route, container, false);
+        View view = inflater.inflate(R.layout.sheet_driver_route, container, false);
 
         routeName = view.findViewById(R.id.route_name);
         routeStatus = view.findViewById(R.id.route_status);
@@ -59,8 +63,8 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
         carBrand = view.findViewById(R.id.car_brand);
         carModel = view.findViewById(R.id.car_model);
         carNumber = view.findViewById(R.id.car_number);
-        changeCar = view.findViewById(R.id.car_change_btn);
-        changeCar.setOnClickListener((v) -> startActivity(new Intent(getActivity(), CarListActivity.class)));
+        changeCarBtn = view.findViewById(R.id.car_change_btn);
+        changeCarBtn.setOnClickListener((v) -> startActivity(new Intent(getActivity(), CarListActivity.class)));
 
         actionBtn = view.findViewById(R.id.action_run);
         actionBtn.setOnClickListener(this);
@@ -73,7 +77,7 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (route != null && v.getId() == R.id.action_run) {
+        if (v.getId() == R.id.action_run) {
             routeService.setStatus(route, route.status.equals(ApiRoute.STATUS_CURRENT) ? ApiRoute.STATUS_ACTIVE : ApiRoute.STATUS_CURRENT, (route) -> {
                 this.route = route;
                 routeStatus.setText(route.status);
@@ -82,6 +86,7 @@ public class RouteSheet extends Sheet implements View.OnClickListener {
                 return null;
             });
         }
+
     }
 
     private void load() {

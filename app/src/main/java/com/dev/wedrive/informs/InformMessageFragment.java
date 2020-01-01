@@ -1,7 +1,9 @@
 package com.dev.wedrive.informs;
 
 import android.os.Bundle;
+
 import androidx.cardview.widget.CardView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class InformMessageFragment extends InformAbstract implements View.OnClickListener {
+public class InformMessageFragment extends InformAbstract {
 
 
     @Setter
@@ -31,11 +33,9 @@ public class InformMessageFragment extends InformAbstract implements View.OnClic
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.inform_message, container, false);
-        animationIn = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_in);
-        animationOut = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_out);
 
         CardView cardView = view.findViewById(R.id.inform_message_card);
-        cardView.setOnClickListener(this);
+        cardView.setOnClickListener((v) -> hide());
 
         TextView headerView = view.findViewById(R.id.inform_message_header);
         headerView.setText(header);
@@ -43,14 +43,7 @@ public class InformMessageFragment extends InformAbstract implements View.OnClic
         TextView textView = view.findViewById(R.id.inform_message_text);
         textView.setText(text);
 
-        view.startAnimation(animationIn);
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        getView().startAnimation(animationOut);
-        getView().setVisibility(View.INVISIBLE);
     }
 
 }

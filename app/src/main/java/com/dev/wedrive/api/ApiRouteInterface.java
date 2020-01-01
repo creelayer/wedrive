@@ -16,7 +16,7 @@ public interface ApiRouteInterface {
     @GET("/route")
     public Call<ApiResponse<List<ApiRoute>>> getMyRoutes();
 
-    @GET("/route/info?expand=car,user")
+    @GET("/route/info?expand=car,user,request")
     public Call<ApiResponse<ApiRoute>> getRoute(@Query("route") String uuid);
 
     @POST("/route/current")

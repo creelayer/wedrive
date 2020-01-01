@@ -5,7 +5,6 @@ import androidx.arch.core.util.Function;
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiCar;
-import com.dev.wedrive.entity.ApiProfile;
 
 import java.io.File;
 import java.util.ArrayList;

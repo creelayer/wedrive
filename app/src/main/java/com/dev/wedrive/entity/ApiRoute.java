@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 public class ApiRoute implements TypeInterface {
 
-    public final static String DEFAULT_NAME = "default";
+//    public final static String DEFAULT_NAME = "default";
 
     public final static String STATUS_CURRENT = "current";
     public final static String STATUS_ACTIVE = "active";
@@ -24,6 +24,9 @@ public class ApiRoute implements TypeInterface {
 
     @SerializedName("user_id")
     public Integer userId;
+
+    @SerializedName("user")
+    public ApiUser user;
 
     @SerializedName("type")
     @Getter
@@ -39,10 +42,13 @@ public class ApiRoute implements TypeInterface {
     @SerializedName("car")
     public ApiCar car;
 
-    @SerializedName("locations")
-    @Getter
-    @Setter
-    public List<ApiLocation> locations;
+    @SerializedName("request")
+    public ApiRequest request;
+
+//    @SerializedName("locations")
+//    @Getter
+//    @Setter
+//    public List<ApiLocation> locations;
 
 
     public ApiRoute() {

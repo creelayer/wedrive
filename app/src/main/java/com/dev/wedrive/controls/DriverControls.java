@@ -12,7 +12,7 @@ import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.loaders.LoaderCollection;
 import com.dev.wedrive.loaders.RouteLoader;
 import com.dev.wedrive.service.RouteService;
-import com.dev.wedrive.sheet.RouteSheet;
+import com.dev.wedrive.sheet.RouteDriverSheet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -66,7 +66,7 @@ public class DriverControls implements ControlsInterface {
     private void createSheet() {
         routeService.getCurrentRoute((route) -> {
             if (route != null) {
-                RouteSheet sheet = new RouteSheet();
+                RouteDriverSheet sheet = new RouteDriverSheet();
                 sheet.setRoute(route);
                 activity.setFragment(R.id.btmControls, sheet);
             }

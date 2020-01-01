@@ -43,14 +43,6 @@
                     android:layout_weight="1"
                     android:text="Status" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/sheet_car"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
@@ -66,19 +58,19 @@
                     android:layout_weight="1"
                     android:text="Change car" />
 
-                <ImageView
-                    android:id="@+id/car_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/googleg_standard_color_18" />
-
                 <TextView
                     android:id="@+id/car_model"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Model" />
+
+                <ImageView
+                    android:id="@+id/car_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/googleg_standard_color_18" />
 
                 <TextView
                     android:id="@+id/car_brand"
@@ -93,14 +85,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Number" />
-            </LinearLayout>
 
-            <Button
-                android:id="@+id/action_run"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Run" />
+                <Button
+                    android:id="@+id/action_run"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Run" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

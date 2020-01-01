@@ -36,6 +36,9 @@ public class ApiRoute implements TypeInterface {
     @SerializedName("name")
     public String name;
 
+    @SerializedName("car")
+    public ApiCar car;
+
     @SerializedName("locations")
     @Getter
     @Setter

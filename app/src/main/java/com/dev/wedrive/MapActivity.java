@@ -81,9 +81,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navName = headerView.findViewById(R.id.nav_name);
         navType = headerView.findViewById(R.id.nav_type);
 
-
         Button testBtn = findViewById(R.id.test_btn);
-        testBtn.setOnClickListener((v) -> loader.load());
+        testBtn.setOnClickListener((v) -> startActivity(new Intent(this, CarListActivity.class)));
 
     }
 
@@ -152,6 +151,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         return controller.onMarkerClick(marker);
     }
+
 
     @Override
     public void onMapLongClick(LatLng latLng) {

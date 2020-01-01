@@ -5,9 +5,15 @@ import androidx.arch.core.util.Function;
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiCar;
+import com.dev.wedrive.entity.ApiProfile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class CarService {
 
@@ -44,7 +50,7 @@ public class CarService {
      * @param func
      */
     public void setCurrent(ApiCar car, final Function<ApiCar, Void> func) {
-        ApiService.getInstance().car().setCurrent(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
+        ApiService.getInstance().car().setActive(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
@@ -97,6 +103,27 @@ public class CarService {
                 }
             }
         });
+    }
+
+    public void uploadImage(ApiCar car, String uri, final Function<ApiCar, Void> func) {
+        try {
+
+            File file = new File(uri);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("Car[upload]", file.getName(), requestFile);
+
+            ApiService.getInstance().car().uploadImage(car.uuid, multipartBody).enqueue(new Callback<ApiResponse<ApiCar>>() {
+                @Override
+                public void onResult(ApiResponse response) {
+                    if (response instanceof ApiResponse.Success) {
+                        func.apply((ApiCar) response.getData());
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            return;
+        }
     }
 
 }

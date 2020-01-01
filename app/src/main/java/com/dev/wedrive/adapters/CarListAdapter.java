@@ -34,7 +34,7 @@ public class CarListAdapter extends ListAdapter {
         TextView name = convertView.findViewById(R.id.list_name);
         name.setText(car.brand + " " + car.model);
 
-        if (car.current) {
+        if (car.active) {
             convertView.findViewById(R.id.list_status).setBackground(activeRadioShape);
         }
 

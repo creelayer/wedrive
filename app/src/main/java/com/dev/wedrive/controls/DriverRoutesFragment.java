@@ -2,10 +2,11 @@ package com.dev.wedrive.controls;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.dev.wedrive.R;
 import com.dev.wedrive.RouteListActivity;
@@ -30,8 +31,7 @@ public class DriverRoutesFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.route_list_btn) {
-            Intent myIntent = new Intent(getActivity(), RouteListActivity.class);
-            startActivity(myIntent);
+            startActivity(new Intent(getActivity(), RouteListActivity.class));
         }
     }
 }

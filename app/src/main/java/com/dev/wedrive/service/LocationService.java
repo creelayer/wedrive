@@ -107,11 +107,12 @@ public class LocationService {
     }
 
     /**
-     * @param location
+     *
+     * @param uuid
      * @param func
      */
-    public void getLocationInfo(ApiLocation location, final Function<ApiLocation, Void> func) {
-        ApiService.getInstance().location().getLocationInfo(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
+    public void getLocationInfo(String uuid, final Function<ApiLocation, Void> func) {
+        ApiService.getInstance().location().getLocationInfo(uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
             public void onResult(ApiResponse response) {
                 func.apply((ApiLocation) response.getData());

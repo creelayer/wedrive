@@ -18,8 +18,7 @@
             android:id="@+id/list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Киев - Велики Васюки"
-            android:theme="@style/label1" />
+            android:text="Киев - Велики Васюки" />
 
         <ImageView
             android:id="@+id/list_status"

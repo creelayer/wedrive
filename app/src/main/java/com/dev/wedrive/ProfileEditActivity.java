@@ -68,8 +68,8 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
         lastName = findViewById(R.id.profile_last_name);
         phone = findViewById(R.id.profile_phone);
         email = findViewById(R.id.profile_email);
-        ImageButton avatarBtn = findViewById(R.id.chooseBtn);
-        avatarBtn.setOnClickListener((v) -> showFileChooser());
+        ImageButton imageChoose = findViewById(R.id.profile_image_choose);
+        imageChoose.setOnClickListener((v) -> showFileChooser());
 
         Button saveBtn = findViewById(R.id.profile_save_btn);
         saveBtn.setOnClickListener((v) -> validator.validate());

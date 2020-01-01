@@ -28,7 +28,7 @@
                 app:srcCompat="@drawable/googleg_standard_color_18" />
 
             <ImageButton
-                android:id="@+id/chooseBtn"
+                android:id="@+id/profile_image_choose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/profile_image"

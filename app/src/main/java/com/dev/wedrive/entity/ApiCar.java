@@ -32,8 +32,12 @@ public class ApiCar {
     @SerializedName("number")
     public String number;
 
-    @SerializedName("current")
-    public boolean current;
+    @SerializedName("active")
+    public boolean active;
+
+    @SerializedName("image")
+    @Getter
+    public String image;
 
     public ApiCar() {
     }

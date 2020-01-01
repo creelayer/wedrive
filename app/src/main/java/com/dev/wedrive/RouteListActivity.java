@@ -25,10 +25,7 @@ public class RouteListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_list);
 
-        findViewById(R.id.route_add_btn).setOnClickListener((v) -> {
-            Intent myIntent = new Intent(this, CreateNewRouteActivity.class);
-            startActivity(myIntent);
-        });
+        findViewById(R.id.route_add_btn).setOnClickListener((v) -> startActivity(new Intent(this, CreateNewRouteActivity.class)));
 
         loadRoutesList();
     }

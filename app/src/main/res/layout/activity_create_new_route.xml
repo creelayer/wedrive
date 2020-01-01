@@ -19,24 +19,20 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Destination from"
-            android:theme="@style/fieldLabel" />
+            android:text="Destination from" />
 
         <EditText
             android:id="@+id/route_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_field_bg"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:theme="@style/fieldInput" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout"
-            android:theme="@style/fieldHint" />
+            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout" />
     </LinearLayout>
 
     <Button

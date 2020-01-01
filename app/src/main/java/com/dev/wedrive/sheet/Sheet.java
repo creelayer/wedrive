@@ -1,8 +1,11 @@
 package com.dev.wedrive.sheet;
 
 import android.os.Bundle;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +35,22 @@ public class Sheet extends Fragment {
         return view;
     }
 
-    public void collapse(){
+    public void collapse() {
         state = BottomSheetBehavior.STATE_COLLAPSED;
-        sheetBehavior.setState(state);
+        if (sheetBehavior != null)
+            sheetBehavior.setState(state);
     }
 
-    public void hide(){
+    public void expand() {
+        state = BottomSheetBehavior.STATE_EXPANDED;
+        if (sheetBehavior != null)
+            sheetBehavior.setState(state);
+    }
+
+    public void hide() {
         state = BottomSheetBehavior.STATE_HIDDEN;
-        sheetBehavior.setState(state);
+        if (sheetBehavior != null)
+            sheetBehavior.setState(state);
     }
 
 }

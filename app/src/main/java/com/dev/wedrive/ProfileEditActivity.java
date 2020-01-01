@@ -111,7 +111,7 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
             phone.setText(profile.phone);
             email.setText(profile.email);
 
-            if (!profile.image.equals("")) {
+            if (profile.image != null) {
                 new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
             }
             return null;

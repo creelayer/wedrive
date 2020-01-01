@@ -8,6 +8,7 @@ import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationService {
@@ -77,13 +78,13 @@ public class LocationService {
     /**
      * @param func
      */
-    public void getNearestLocations(final Function<List<ApiLocation>, Void> func) {
+    public void getNearestLocations(String type, final Function<ArrayList<ApiLocation>, Void> func) {
 
-        ApiService.getInstance().location().getNearestLocations().enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
+        ApiService.getInstance().location().getNearestLocations(type).enqueue(new Callback<ApiResponse<ArrayList<ApiLocation>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((List<ApiLocation>) response.getData());
+                    func.apply((ArrayList<ApiLocation>) response.getData());
                 }
             }
         });

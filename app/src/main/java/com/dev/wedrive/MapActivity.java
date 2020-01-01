@@ -17,8 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
-import com.dev.wedrive.controls.DriverControls;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.helpers.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
@@ -60,10 +60,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Getter
     private LoaderCollection loader;
 
-    private ApiProfile profile;
     private ImageView navImage;
     private TextView navName;
-    private TextView navStatus;
+    private TextView navType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +79,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         navImage = headerView.findViewById(R.id.nav_image);
         navName = headerView.findViewById(R.id.nav_name);
-        navStatus = headerView.findViewById(R.id.nav_status);
+        navType = headerView.findViewById(R.id.nav_type);
 
 
         Button testBtn = findViewById(R.id.test_btn);
-        testBtn.setOnClickListener((v) -> {
-            Intent myIntent = new Intent(this, ProfileEditActivity.class);
-            startActivity(myIntent);
-        });
+        testBtn.setOnClickListener((v) -> loader.load());
 
     }
 
@@ -110,13 +106,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         profileService = new ProfileService();
         profileService.getMyProfile((profile) -> {
-            this.profile = profile;
-            controller = new DriverControls(this, loader);
-            controller.init();
+
+            controller = ControlsFactory.create(this, profile, loader).init();
 
             navName.setText(profile.name + " " + profile.lastName);
-            navStatus.setText(profile.type);
-            if (!profile.image.equals(""))
+            navType.setText(profile.type);
+
+            if (profile.image != null)
                 new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
             return null;
         }, (error) -> {
@@ -165,13 +161,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
+        } else if (id == R.id.nav_profile_edit) {
+            startActivity(new Intent(this, ProfileEditActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

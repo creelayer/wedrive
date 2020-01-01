@@ -29,36 +29,11 @@ public class DriverControls implements ControlsInterface {
         this.routeService = new RouteService();
     }
 
-    public void init() {
+    public ControlsInterface init() {
         createControls();
         createSheet();
         createLoader();
-    }
-
-    public void createControls() {
-        activity.setFragment(R.id.lftControls, new DriverRoutesFragment());
-    }
-
-    public void createSheet() {
-        routeService.getCurrentRoute((route) -> {
-            if (route != null) {
-                RouteSheet sheet = new RouteSheet();
-                sheet.setRoute(route);
-                activity.setFragment(R.id.btmControls, sheet);
-            }
-            return null;
-        });
-    }
-
-    public void createLoader() {
-        routeService.getCurrentRoute((route) -> {
-            if (route != null) {
-                loader.clear();
-                loader.add(new RouteLoader(route));
-                loader.load();
-            }
-            return null;
-        });
+        return this;
     }
 
     public void onMapLongClick(LatLng latLng) {
@@ -82,6 +57,32 @@ public class DriverControls implements ControlsInterface {
 
         new CreateDriverLocationDialog(activity, locationAdapter.getLocation()).create().show();
         return true;
+    }
+
+    private void createControls() {
+        activity.setFragment(R.id.lftControls, new DriverRoutesFragment());
+    }
+
+    private void createSheet() {
+        routeService.getCurrentRoute((route) -> {
+            if (route != null) {
+                RouteSheet sheet = new RouteSheet();
+                sheet.setRoute(route);
+                activity.setFragment(R.id.btmControls, sheet);
+            }
+            return null;
+        });
+    }
+
+    private void createLoader() {
+        routeService.getCurrentRoute((route) -> {
+            if (route != null) {
+                loader.clear();
+                loader.add(new RouteLoader(route));
+                loader.load();
+            }
+            return null;
+        });
     }
 
 }

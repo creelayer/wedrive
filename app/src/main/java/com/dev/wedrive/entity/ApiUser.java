@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class ApiUser implements Serializable {
 
@@ -23,6 +24,11 @@ public class ApiUser implements Serializable {
     @SerializedName("auth_key")
     @Getter
     public String authKey;
+
+    @SerializedName("profile")
+    @Setter
+    @Getter
+    public ApiProfile profile;
 
     public ApiUser() {
     }

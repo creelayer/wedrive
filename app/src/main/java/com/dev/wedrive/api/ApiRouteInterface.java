@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 public interface ApiRouteInterface {
 
     @GET("/route")
-    public Call<ApiResponse<List<ApiRoute>>> getMyRoutes(@Query("type") String type);
+    public Call<ApiResponse<List<ApiRoute>>> getMyRoutes();
 
     @GET("/route/info")
     public Call<ApiResponse<ApiRoute>> getRoute(@Query("route") String uuid);

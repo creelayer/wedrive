@@ -2,6 +2,7 @@ package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiLocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,9 +14,9 @@ import retrofit2.http.Query;
 public interface ApiLocationInterface {
 
     @GET("/location/nearest")
-    public Call<ApiResponse<List<ApiLocation>>> getNearestLocations();
+    public Call<ApiResponse<ArrayList<ApiLocation>>> getNearestLocations(@Query("type") String type);
 
-    @GET("/location/info")
+    @GET("/location/info?expand=route,user")
     public Call<ApiResponse<ApiLocation>> getLocationInfo(@Query("location") String uuid);
 
     @POST("/location/position")

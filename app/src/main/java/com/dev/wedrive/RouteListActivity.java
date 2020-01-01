@@ -1,7 +1,9 @@
 package com.dev.wedrive;
 
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -38,7 +40,7 @@ public class RouteListActivity extends AppCompatActivity {
     }
 
     private void loadRoutesList() {
-        routeService.getMyRouts(ApiRoute.TYPE_DRIVER, (routes) -> {
+        routeService.getMyRouts((routes) -> {
 
             ListView list = findViewById(R.id.routes_list);
             list.setAdapter(new RoutesListAdapter(this, routes, (id, route) -> {

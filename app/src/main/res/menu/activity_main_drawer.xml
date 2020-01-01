@@ -9,9 +9,9 @@
             android:icon="@drawable/shape_list_item"
             android:title="Hone" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_profile_edit"
             android:icon="@drawable/ic_car"
-            android:title="Gallery" />
+            android:title="Settings" />
     </group>
 
 

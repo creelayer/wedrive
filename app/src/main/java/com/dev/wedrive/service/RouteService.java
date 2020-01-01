@@ -13,8 +13,19 @@ import java.util.Map;
 
 public class RouteService {
 
-    public void getMyRouts(String type, final Function<ArrayList<ApiRoute>, Void> func) {
-        ApiService.getInstance().route().getMyRoutes(type).enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
+    public void getCurrentRoute(final Function<ApiRoute, Void> func) {
+        ApiService.getInstance().route().getCurrentRoute().enqueue(new Callback<ApiResponse<ApiRoute>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.apply((ApiRoute) response.getData());
+                }
+            }
+        });
+    }
+
+    public void getMyRouts(final Function<ArrayList<ApiRoute>, Void> func) {
+        ApiService.getInstance().route().getMyRoutes().enqueue(new Callback<ApiResponse<List<ApiRoute>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
@@ -26,17 +37,6 @@ public class RouteService {
 
     public void getRoute(String uuid, final Function<ApiRoute, Void> func) {
         ApiService.getInstance().route().getRoute(uuid).enqueue(new Callback<ApiResponse<ApiRoute>>() {
-            @Override
-            public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiRoute) response.getData());
-                }
-            }
-        });
-    }
-
-    public void getCurrentRoute(final Function<ApiRoute, Void> func) {
-        ApiService.getInstance().route().getCurrentRoute().enqueue(new Callback<ApiResponse<ApiRoute>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {

@@ -5,13 +5,7 @@ import com.google.android.gms.maps.model.Marker;
 
 public interface ControlsInterface {
 
-    public void init();
-
-    public void createControls();
-
-    public void createSheet();
-
-    public void createLoader();
+    public ControlsInterface init();
 
     public void onMapLongClick(LatLng latLng);
 

@@ -10,6 +10,8 @@ import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.api.ApiRouteInterface;
 import com.dev.wedrive.api.ApiUserInterface;
 import com.dev.wedrive.entity.ApiToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
@@ -47,7 +49,7 @@ public class ApiService {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder newRequest = chain.request().newBuilder();
 
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
+                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
 
                 if (token != null) {
                     newRequest.addHeader("Authorization", "Bearer " + token.accessToken);
@@ -63,10 +65,12 @@ public class ApiService {
                 .addInterceptor(headerInterceptor)
                 .build();
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
+
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.API_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 

@@ -20,10 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileEditActivity"
+        <activity android:name=".RequestListActivity"
+            android:label="Request list"
+            android:parentActivityName=".MapActivity"></activity>
+        <activity
+            android:name=".ProfileEditActivity"
             android:label="Profile edit"
-            android:parentActivityName=".MapActivity"
-            ></activity>
+            android:parentActivityName=".MapActivity" />
         <activity
             android:name=".CreateNewCarActivity"
             android:label="Add new car"

@@ -82,7 +82,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navType = headerView.findViewById(R.id.nav_type);
 
         Button testBtn = findViewById(R.id.test_btn);
-        testBtn.setOnClickListener((v) -> startActivity(new Intent(this, CarListActivity.class)));
+        testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
 
     }
 

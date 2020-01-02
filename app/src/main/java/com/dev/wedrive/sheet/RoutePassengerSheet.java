@@ -87,7 +87,7 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.request_btn) {
             ApiRequest request = new ApiRequest(this);
-            requestService.createReuest(location, request, (mRequest) -> {
+            requestService.createRequest(location, request, (mRequest) -> {
                 showRequestInfo(mRequest);
 
                 MapActivity activity = (MapActivity) getActivity();

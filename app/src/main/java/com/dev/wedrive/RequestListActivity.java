@@ -34,14 +34,12 @@ public class RequestListActivity extends AppCompatActivity {
 
                 if (id == R.id.denied_btn) {
                     requestService.setStatus(request, ApiRequest.STATUS_DENIED, (mRequest) -> {
-                        adapter.hideStatusButtons();
                         return null;
                     });
                 }
 
                 if (id == R.id.accept_btn) {
                     requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED, (mRequest) -> {
-                        adapter.hideStatusButtons();
                         return null;
                     });
                 }

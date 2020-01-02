@@ -58,15 +58,11 @@ public class RequestListAdapter extends ListAdapter {
 
         userName.setText(profile.name + " " + profile.lastName);
         requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt).toString());
-        requestMessage.setText(request.message);
+        requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
         routeName.setText(location.route.name);
         locationTime.setText(locationData.hour + ":" + locationData.min);
         deniedBtn.setOnClickListener((v) -> listener.onItemClick(R.id.denied_btn, request, this));
         acceptBtn.setOnClickListener((v) -> listener.onItemClick(R.id.accept_btn, request, this));
-
-
-        if (!request.status.equals(ApiRequest.STATUS_NEW))
-            hideStatusButtons();
 
         return convertView;
     }
@@ -75,8 +71,4 @@ public class RequestListAdapter extends ListAdapter {
         void onItemClick(int id, ApiRequest item, RequestListAdapter requestListAdapter);
     }
 
-    public void hideStatusButtons() {
-        deniedBtn.setVisibility(View.GONE);
-        acceptBtn.setVisibility(View.GONE);
-    }
 }

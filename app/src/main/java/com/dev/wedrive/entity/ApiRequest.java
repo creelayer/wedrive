@@ -13,6 +13,7 @@ public class ApiRequest {
     public static final String STATUS_NEW = "new";
     public static final String STATUS_ACCEPTED = "accepted";
     public static final String STATUS_DENIED = "denied";
+    public static final String STATUS_CANCELED = "canceled";
 
     @SerializedName("uuid")
     @Getter
@@ -28,10 +29,10 @@ public class ApiRequest {
     @Getter
     public ApiLocation location;
 
-    @SerializedName("message")
+    @SerializedName(value = "Message", alternate = "message")
     @Setter
     @Getter
-    public String message;
+    public ApiMessage message;
 
     @SerializedName("status")
     @Setter
@@ -47,6 +48,8 @@ public class ApiRequest {
     }
 
     public ApiRequest(RoutePassengerSheet routeSheet) {
-        message = routeSheet.getRequestMessageInp().getText().toString();
+        message = new ApiMessage();
+        message.recipientId = routeSheet.getLocation().userId;
+        message.message = routeSheet.getRequestMessageInp().getText().toString();
     }
 }

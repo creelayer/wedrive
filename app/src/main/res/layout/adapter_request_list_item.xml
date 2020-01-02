@@ -47,25 +47,6 @@
                     android:layout_marginEnd="9dp"
                     android:text="time" />
 
-                <Button
-                    android:id="@+id/accept_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/denied_btn"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Accept" />
-
-                <Button
-                    android:id="@+id/denied_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="26dp"
-                    android:layout_marginEnd="104dp"
-                    android:text="Denied" />
             </RelativeLayout>
 
             <TextView
@@ -100,6 +81,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Message" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/accept_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accept" />
+
+                <Button
+                    android:id="@+id/message_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Message" />
+
+                <Button
+                    android:id="@+id/denied_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Denied" />
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -2,6 +2,7 @@ package com.dev.wedrive.service;
 
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.api.ApiCarInterface;
+import com.dev.wedrive.api.ApiInformInterface;
 import com.dev.wedrive.api.ApiLocationInterface;
 import com.dev.wedrive.api.ApiProfileInterface;
 import com.dev.wedrive.api.ApiRequestInterface;
@@ -125,6 +126,13 @@ public class ApiService {
      */
     public ApiRequestInterface request() {
         return mRetrofit.create(ApiRequestInterface.class);
+    }
+
+    /**
+     * @return
+     */
+    public ApiInformInterface inform() {
+        return mRetrofit.create(ApiInformInterface.class);
     }
 
 

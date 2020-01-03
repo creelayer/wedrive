@@ -43,21 +43,13 @@ public class LoaderLocationManager extends ArrayDeque<LoaderInterface> {
     }
 
     public void load() {
-        if (isEmpty())
-            return;
-        getLast().load((locations) -> {
-            mapService.updateLocations(locations);
-            return null;
-        });
+        if (!isEmpty())
+            getLast().load((locations) -> mapService.updateLocations(locations));
     }
 
     public void run() {
-        if (isEmpty())
-            return;
-        getLast().run((locations) -> {
-            mapService.updateLocations(locations);
-            return null;
-        });
+        if (!isEmpty())
+            getLast().run((locations) -> mapService.updateLocations(locations));
 
     }
 }

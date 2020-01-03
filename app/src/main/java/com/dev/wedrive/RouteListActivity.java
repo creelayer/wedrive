@@ -42,20 +42,11 @@ public class RouteListActivity extends AppCompatActivity {
             ListView list = findViewById(R.id.routes_list);
             list.setAdapter(new RoutesListAdapter(this, routes, (id, route) -> {
 
+                if (id == R.id.smContentView)
+                    routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> finish());
 
-                if (id == R.id.smContentView) {
-                    routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> {
-                        finish();
-                        return null;
-                    });
-                }
-
-                if (id == R.id.list_item_delete) {
-                    routeService.deleteRoute(route, (mRoute) -> {
-                        finish();
-                        return null;
-                    });
-                }
+                if (id == R.id.list_item_delete)
+                    routeService.deleteRoute(route, (mRoute) -> finish());
 
                 if (id == R.id.list_item_edit) {
                     Intent intent = new Intent(this, CreateNewRouteActivity.class);
@@ -63,9 +54,7 @@ public class RouteListActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-
             }));
-            return null;
         });
     }
 }

@@ -123,10 +123,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             if (profile.image != null)
                 new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
-            return null;
-        }, (error) -> {
-            return null;
-        });
+        }, (error) -> {});
 
 
         map.setMyLocationEnabled(true);

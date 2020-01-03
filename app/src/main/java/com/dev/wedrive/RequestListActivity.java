@@ -32,20 +32,13 @@ public class RequestListActivity extends AppCompatActivity {
             ListView list = findViewById(R.id.request_list);
             list.setAdapter(new RequestListAdapter(this, requests, (id, request, adapter) -> {
 
-                if (id == R.id.denied_btn) {
-                    requestService.setStatus(request, ApiRequest.STATUS_DENIED, (mRequest) -> {
-                        return null;
-                    });
-                }
+                if (id == R.id.denied_btn)
+                    requestService.setStatus(request, ApiRequest.STATUS_DENIED);
 
-                if (id == R.id.accept_btn) {
-                    requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED, (mRequest) -> {
-                        return null;
-                    });
-                }
+                if (id == R.id.accept_btn)
+                    requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED);
 
             }));
-            return null;
         });
     }
 }

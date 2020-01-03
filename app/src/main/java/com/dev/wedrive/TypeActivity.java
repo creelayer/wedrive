@@ -50,10 +50,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         profileService.updateProfile(profile, (apiProfile) -> {
             Intent myIntent = new Intent(this, MapActivity.class);
             startActivity(myIntent);
-            return null;
-        }, (error) -> {
-            return null;
-        });
+        }, (error) -> {});
 
     }
 }

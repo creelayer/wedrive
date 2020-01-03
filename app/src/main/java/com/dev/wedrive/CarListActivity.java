@@ -1,7 +1,9 @@
 package com.dev.wedrive;
 
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -21,9 +23,7 @@ public class CarListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_list);
 
-        findViewById(R.id.car_add_btn).setOnClickListener((v) -> {
-            startActivity(new Intent(this, CreateNewCarActivity.class));
-        });
+        findViewById(R.id.car_add_btn).setOnClickListener((v) -> startActivity(new Intent(this, CreateNewCarActivity.class)));
 
         loadCarList();
     }
@@ -39,19 +39,11 @@ public class CarListActivity extends AppCompatActivity {
             ListView list = findViewById(R.id.car_list);
             list.setAdapter(new CarListAdapter(this, cars, (id, car) -> {
 
-                if (id == R.id.smContentView) {
-                    carService.setCurrent(car, (mCar) -> {
-                        finish();
-                        return null;
-                    });
-                }
+                if (id == R.id.smContentView)
+                    carService.setCurrent(car, (mCar) -> finish());
 
-                if (id == R.id.list_item_delete) {
-                    carService.deleteCar(car, (mCar) -> {
-                        finish();
-                        return null;
-                    });
-                }
+                if (id == R.id.list_item_delete)
+                    carService.deleteCar(car, (mCar) -> finish());
 
                 if (id == R.id.list_item_edit) {
                     Intent intent = new Intent(this, CreateNewCarActivity.class);
@@ -60,7 +52,6 @@ public class CarListActivity extends AppCompatActivity {
                 }
 
             }));
-            return null;
         });
     }
 }

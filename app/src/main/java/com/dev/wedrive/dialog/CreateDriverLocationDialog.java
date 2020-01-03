@@ -90,7 +90,6 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
         locationService.deleteLocation(apiLocation, (location) -> {
             mActivity.getLoaderLocationManager().load();
             dialogBuilder.cancel();
-            return null;
         });
     }
 
@@ -107,13 +106,9 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
             locationService.createLocation(apiLocation, (result) -> {
                 mActivity.getLoaderLocationManager().load();
                 dialogBuilder.cancel();
-                return null;
             });
         } else {
-            locationService.updateLocation(apiLocation, (result) -> {
-                dialogBuilder.cancel();
-                return null;
-            });
+            locationService.updateLocation(apiLocation, (result) -> dialogBuilder.cancel());
         }
 
     }

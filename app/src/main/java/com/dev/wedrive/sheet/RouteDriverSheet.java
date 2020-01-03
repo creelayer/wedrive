@@ -78,7 +78,6 @@ public class RouteDriverSheet extends Sheet implements View.OnClickListener {
                 routeStatus.setText(route.status);
                 actionBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
                 getActivity().findViewById(R.id.lftControls).setVisibility(route.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
-                return null;
             });
         }
 
@@ -87,10 +86,8 @@ public class RouteDriverSheet extends Sheet implements View.OnClickListener {
     private void load() {
         routeService.getRoute(route.uuid, (route) -> {
 
-            if (route.car == null) {
+            if (route.car == null)
                 startActivity(new Intent(getActivity(), CarListActivity.class));
-                return null;
-            }
 
             routeName.setText(route.name);
             routeStatus.setText(route.status);
@@ -102,10 +99,8 @@ public class RouteDriverSheet extends Sheet implements View.OnClickListener {
             if (route.car.image != null)
                 new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(route.car.image, "sm"));
 
-
             actionBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
             getActivity().findViewById(R.id.lftControls).setVisibility(route.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
-            return null;
         });
     }
 

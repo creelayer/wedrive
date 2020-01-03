@@ -89,7 +89,7 @@ public class CreateNewCarActivity extends AbstractActivity implements Validator.
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             load(bundle.getString("uuid"));
-        }else{
+        } else {
             image.setVisibility(View.INVISIBLE);
             imageChoose.setVisibility(View.INVISIBLE);
         }
@@ -99,15 +99,9 @@ public class CreateNewCarActivity extends AbstractActivity implements Validator.
     public void onValidationSucceeded() {
 
         if (car == null)
-            carService.createCar(new ApiCar(this), (car) -> {
-                finish();
-                return null;
-            });
+            carService.createCar(new ApiCar(this), (car) -> finish());
         else
-            carService.updateCar(car.load(this), (car) -> {
-                finish();
-                return null;
-            });
+            carService.updateCar(car.load(this), (car) -> finish());
     }
 
     @Override
@@ -134,11 +128,9 @@ public class CreateNewCarActivity extends AbstractActivity implements Validator.
             color.setText(car.color);
             number.setText(car.number);
 
-            if (car.image != null) {
+            if (car.image != null)
                 new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
-            }
 
-            return null;
         });
     }
 
@@ -155,11 +147,9 @@ public class CreateNewCarActivity extends AbstractActivity implements Validator.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) -> {
-                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
-                return null;
-            });
-        }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
+            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) ->
+                    new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm")));
+
     }
 }

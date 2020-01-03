@@ -104,7 +104,6 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
 
                 showRequestInfo();
                 collapse();
-                return null;
             });
         }
 
@@ -118,8 +117,6 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
 
                 showRequestInfo();
                 collapse();
-
-                return null;
             });
         }
 
@@ -145,7 +142,6 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
                 new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(route.car.image, "sm"));
 
             showRequestInfo();
-            return null;
         });
     }
 

@@ -2,7 +2,9 @@ package com.dev.wedrive;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,16 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onValidationSucceeded() {
         ApiUser data = new ApiUser(email.getText().toString(), password.getText().toString());
-        userService.login(data, (user) -> {
-
-            Intent myIntent = new Intent(this, TypeActivity.class);
-            startActivity(myIntent);
-
-            return null;
-        }, (error) -> {
-            password.setError(error.getMessage());
-            return null;
-        });
+        userService.login(data, (user) -> startActivity(new Intent(this, TypeActivity.class)), (error) -> password.setError(error.getMessage()));
     }
 
     @Override

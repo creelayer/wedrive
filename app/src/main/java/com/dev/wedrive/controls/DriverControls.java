@@ -38,13 +38,11 @@ public class DriverControls implements ControlsInterface {
 
     public void onMapLongClick(LatLng latLng) {
         routeService.getCurrentRoute((route) -> {
-            if (route == null) {
-                Intent myIntent = new Intent(activity, RouteListActivity.class);
-                activity.startActivity(myIntent);
-            } else {
+            if (route == null)
+                activity.startActivity(new Intent(activity, RouteListActivity.class));
+            else
                 new CreateDriverLocationDialog(activity, new ApiLocation(latLng, route)).create().show();
-            }
-            return null;
+
         });
     }
 
@@ -70,7 +68,6 @@ public class DriverControls implements ControlsInterface {
                 sheet.setRoute(route);
                 activity.setFragment(R.id.btmControls, sheet);
             }
-            return null;
         });
     }
 
@@ -81,7 +78,6 @@ public class DriverControls implements ControlsInterface {
                 loader.add(new RouteLoader(route));
                 loader.load();
             }
-            return null;
         });
     }
 

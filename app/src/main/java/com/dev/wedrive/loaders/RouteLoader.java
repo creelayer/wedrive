@@ -1,6 +1,6 @@
 package com.dev.wedrive.loaders;
 
-import androidx.arch.core.util.Function;
+import androidx.core.util.Consumer;
 
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.entity.ApiRoute;
@@ -22,12 +22,12 @@ public class RouteLoader implements LoaderInterface {
         this.route = route;
     }
 
-    public void load(final Function<LocationCollection, Void> func) {
+    public void load(final Consumer<LocationCollection> func) {
         run(func);
     }
 
-    public void run(final Function<LocationCollection, Void> func) {
-        locationService.getLocationsByRoute(route, (locations) -> func.apply(locationCollection.put(locations)));
+    public void run(final Consumer<LocationCollection> func) {
+        locationService.getLocationsByRoute(route, (locations) -> func.accept(locationCollection.put(locations)));
     }
 
 }

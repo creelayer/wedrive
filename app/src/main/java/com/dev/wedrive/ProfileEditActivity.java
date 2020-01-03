@@ -80,11 +80,7 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
 
     @Override
     public void onValidationSucceeded() {
-        profileService.updateProfile(profile.load(this), (v) -> {
-            finish();
-            return null;
-        }, (e) -> {
-            return null;
+        profileService.updateProfile(profile.load(this), (v) -> finish(), (e) -> {
         });
     }
 
@@ -113,10 +109,7 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
 
             if (profile.image != null)
                 new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
-
-            return null;
         }, (error) -> {
-            return null;
         });
     }
 
@@ -134,10 +127,9 @@ public class ProfileEditActivity extends AbstractActivity implements Validator.V
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) -> {
-                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
-                return null;
-            });
+            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) ->
+                    new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
+            );
         }
     }
 }

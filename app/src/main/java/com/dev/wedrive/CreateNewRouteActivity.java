@@ -60,15 +60,9 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
     public void onValidationSucceeded() {
 
         if (route == null) {
-            routeService.createRoute(new ApiRoute(this), (route) -> {
-                finish();
-                return null;
-            });
+            routeService.createRoute(new ApiRoute(this), (route) ->  finish());
         } else {
-            routeService.updateRoute(route.load(this), (route) -> {
-                finish();
-                return null;
-            });
+            routeService.updateRoute(route.load(this), (route) -> finish());
         }
     }
 
@@ -91,7 +85,6 @@ public class CreateNewRouteActivity extends AppCompatActivity implements Validat
         routeService.getRoute(uuid, (route) -> {
             this.route = route;
             name.setText(route.name);
-            return null;
         });
     }
 }

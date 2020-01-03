@@ -1,6 +1,7 @@
 package com.dev.wedrive.service;
 
 import androidx.arch.core.util.Function;
+import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
@@ -17,13 +18,13 @@ public class LocationService {
      * @param location
      * @param func
      */
-    public void createLocation(ApiLocation location, Function<ApiLocation, Void> func) {
+    public void createLocation(ApiLocation location, Consumer<ApiLocation> func) {
 
         ApiService.getInstance().location().createLocation(location).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiLocation) response.getData());
+                    func.accept((ApiLocation) response.getData());
                 }
             }
         });
@@ -33,13 +34,13 @@ public class LocationService {
      * @param location
      * @param func
      */
-    public void updateLocation(ApiLocation location, Function<ApiLocation, Void> func) {
+    public void updateLocation(ApiLocation location, Consumer<ApiLocation> func) {
 
         ApiService.getInstance().location().updateLocation(location.uuid, location).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiLocation) response.getData());
+                    func.accept((ApiLocation) response.getData());
                 }
             }
         });
@@ -49,12 +50,12 @@ public class LocationService {
      * @param location
      * @param func
      */
-    public void deleteLocation(ApiLocation location, Function<ApiLocation, Void> func) {
+    public void deleteLocation(ApiLocation location, Consumer<ApiLocation> func) {
         ApiService.getInstance().location().deleteLocation(location.uuid).enqueue(new Callback<ApiResponse<ApiLocation>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiLocation) response.getData());
+                    func.accept((ApiLocation) response.getData());
                 }
             }
         });
@@ -78,13 +79,13 @@ public class LocationService {
     /**
      * @param func
      */
-    public void getNearestLocations(String type, final Function<ArrayList<ApiLocation>, Void> func) {
+    public void getNearestLocations(String type, final Consumer<ArrayList<ApiLocation>> func) {
 
         ApiService.getInstance().location().getNearestLocations(type).enqueue(new Callback<ApiResponse<ArrayList<ApiLocation>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ArrayList<ApiLocation>) response.getData());
+                    func.accept((ArrayList<ApiLocation>) response.getData());
                 }
             }
         });
@@ -94,12 +95,12 @@ public class LocationService {
      * @param route
      * @param func
      */
-    public void getLocationsByRoute(ApiRoute route, final Function<List<ApiLocation>, Void> func) {
+    public void getLocationsByRoute(ApiRoute route, final Consumer<List<ApiLocation>> func) {
         ApiService.getInstance().location().getRouteLocations(route.uuid).enqueue(new Callback<ApiResponse<List<ApiLocation>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((List<ApiLocation>) response.getData());
+                    func.accept((List<ApiLocation>) response.getData());
                 }
             }
         });
@@ -107,7 +108,6 @@ public class LocationService {
     }
 
     /**
-     *
      * @param uuid
      * @param func
      */

@@ -1,11 +1,6 @@
 package com.dev.wedrive.service;
 
-import android.app.Activity;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-
-import androidx.arch.core.util.Function;
+import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.ApiResponseError;
@@ -13,7 +8,6 @@ import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiProfile;
 
 import java.io.File;
-import java.net.URI;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -25,14 +19,14 @@ public class ProfileService {
      * @param func
      * @param func2
      */
-    public void getMyProfile(final Function<ApiProfile, Void> func, final Function<ApiResponseError, Void> func2) {
+    public void getMyProfile(final Consumer<ApiProfile> func, final Consumer<ApiResponseError> func2) {
         ApiService.getInstance().profile().getMyProfile().enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiProfile) response.getData());
+                    func.accept((ApiProfile) response.getData());
                 } else {
-                    func2.apply(response.getError());
+                    func2.accept(response.getError());
                 }
             }
         });
@@ -43,14 +37,14 @@ public class ProfileService {
      * @param func
      * @param func2
      */
-    public void getProfile(String uuid, final Function<ApiProfile, Void> func, final Function<ApiResponseError, Void> func2) {
+    public void getProfile(String uuid, final Consumer<ApiProfile> func, final Consumer<ApiResponseError> func2) {
         ApiService.getInstance().profile().getMyProfile().enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiProfile) response.getData());
+                    func.accept((ApiProfile) response.getData());
                 } else {
-                    func2.apply(response.getError());
+                    func2.accept(response.getError());
                 }
             }
         });
@@ -60,20 +54,20 @@ public class ProfileService {
      * @param profile
      * @param func
      */
-    public void updateProfile(ApiProfile profile, final Function<ApiProfile, Void> func, final Function<ApiResponseError, Void> func2) {
+    public void updateProfile(ApiProfile profile, final Consumer<ApiProfile> func, final Consumer<ApiResponseError> func2) {
         ApiService.getInstance().profile().updateProfile(profile).enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiProfile) response.getData());
+                    func.accept((ApiProfile) response.getData());
                 } else {
-                    func2.apply(response.getError());
+                    func2.accept(response.getError());
                 }
             }
         });
     }
 
-    public void uploadImage(String uri, final Function<ApiProfile, Void> func) {
+    public void uploadImage(String uri, final Consumer<ApiProfile> func) {
         try {
 
             File file = new File(uri);
@@ -84,7 +78,7 @@ public class ProfileService {
                 @Override
                 public void onResult(ApiResponse response) {
                     if (response instanceof ApiResponse.Success) {
-                        func.apply((ApiProfile) response.getData());
+                        func.accept((ApiProfile) response.getData());
                     }
                 }
             });

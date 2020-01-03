@@ -1,6 +1,7 @@
 package com.dev.wedrive.service;
 
 import androidx.arch.core.util.Function;
+import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
@@ -16,95 +17,68 @@ import okhttp3.RequestBody;
 
 public class CarService {
 
-    /**
-     * @param func
-     */
-    public void getMyCars(final Function<ArrayList<ApiCar>, Void> func) {
+    public void getMyCars(final Consumer<ArrayList<ApiCar>> func) {
         ApiService.getInstance().car().getMyCars().enqueue(new Callback<ApiResponse<List<ApiCar>>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ArrayList<ApiCar>) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ArrayList<ApiCar>) response.getData());
             }
         });
     }
 
-    /**
-     * @param func
-     */
-    public void getCar(String uuid, final Function<ApiCar, Void> func) {
+    public void getCar(String uuid, final Consumer<ApiCar> func) {
         ApiService.getInstance().car().getInfo(uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiCar) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
             }
         });
     }
 
-    /**
-     * @param car
-     * @param func
-     */
-    public void setCurrent(ApiCar car, final Function<ApiCar, Void> func) {
+    public void setCurrent(ApiCar car, final Consumer<ApiCar> func) {
         ApiService.getInstance().car().setActive(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiCar) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
             }
         });
     }
 
-    /**
-     * @param car
-     * @param func
-     */
-    public void createCar(ApiCar car, Function<ApiCar, Void> func) {
+    public void createCar(ApiCar car, Consumer<ApiCar> func) {
         ApiService.getInstance().car().createCar(car).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiCar) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
             }
         });
     }
 
-    /**
-     * @param car
-     * @param func
-     */
-    public void updateCar(ApiCar car, Function<ApiCar, Void> func) {
+    public void updateCar(ApiCar car, Consumer<ApiCar> func) {
         ApiService.getInstance().car().updateCar(car.uuid, car).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiCar) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
+
             }
         });
     }
 
-    /**
-     * @param car
-     * @param func
-     */
-    public void deleteCar(ApiCar car, Function<ApiCar, Void> func) {
+    public void deleteCar(ApiCar car, Consumer<ApiCar> func) {
         ApiService.getInstance().car().deleteCar(car.uuid).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiCar) response.getData());
-                }
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
             }
         });
     }
 
-    public void uploadImage(ApiCar car, String uri, final Function<ApiCar, Void> func) {
+    public void uploadImage(ApiCar car, String uri, final Consumer<ApiCar> func) {
         try {
 
             File file = new File(uri);
@@ -114,14 +88,12 @@ public class CarService {
             ApiService.getInstance().car().uploadImage(car.uuid, multipartBody).enqueue(new Callback<ApiResponse<ApiCar>>() {
                 @Override
                 public void onResult(ApiResponse response) {
-                    if (response instanceof ApiResponse.Success) {
-                        func.apply((ApiCar) response.getData());
-                    }
+                    if (response instanceof ApiResponse.Success)
+                        func.accept((ApiCar) response.getData());
                 }
             });
 
         } catch (Exception e) {
-            return;
         }
     }
 

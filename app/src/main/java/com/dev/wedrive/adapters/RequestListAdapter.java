@@ -11,11 +11,9 @@ import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.entity.ApiRequest;
-import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.DriverLocationData;
-import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
-import com.dev.wedrive.service.RequestService;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.text.SimpleDateFormat;

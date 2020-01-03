@@ -1,4 +1,4 @@
-package com.dev.wedrive.helpers;
+package com.dev.wedrive.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

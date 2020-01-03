@@ -9,6 +9,7 @@ import lombok.Setter;
 
 public class ApiInform {
 
+    public static final String STATUS_VIEWED = "viewed";
     public static final String TYPE_REQUEST = "request";
 
     @SerializedName("uuid")
@@ -19,6 +20,9 @@ public class ApiInform {
     @Setter
     @Getter
     public ApiUser user;
+
+    @SerializedName("header")
+    public String header;
 
     @SerializedName("message")
     public String message;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.service.ProfileService;
 import com.mobsandgeeks.saripaar.ValidationError;

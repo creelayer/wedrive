@@ -9,7 +9,7 @@ import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.dialog.CreateDriverLocationDialog;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.loaders.LoaderCollection;
+import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.RouteLoader;
 import com.dev.wedrive.service.RouteService;
 import com.dev.wedrive.sheet.RouteDriverSheet;
@@ -19,10 +19,10 @@ import com.google.android.gms.maps.model.Marker;
 public class DriverControls implements ControlsInterface {
 
     private MapActivity activity;
-    private LoaderCollection loader;
+    private LoaderLocationManager loader;
     private RouteService routeService;
 
-    public DriverControls(MapActivity activity, LoaderCollection loaderCollection) {
+    public DriverControls(MapActivity activity, LoaderLocationManager loaderCollection) {
 
         this.activity = activity;
         this.loader = loaderCollection;

@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 
 import com.dev.wedrive.R;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -22,40 +23,32 @@ public class InformAbstract extends Fragment {
     protected Animation animationOut;
 
     @Setter
+    @Getter
+    private String group = String.valueOf(hashCode());
+
+    @Setter
+    @Getter
     protected long delay = 0;
+
+    @Setter
+    @Getter
+    protected boolean priority = true;
+
+    @Setter
+    protected boolean animate = true;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         animationIn = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_in);
         animationOut = AnimationUtils.loadAnimation(getContext(), R.anim.inform_slide_out);
-        view.startAnimation(animationIn);
-        setTimeDown(delay);
+        if (animate)
+            view.startAnimation(animationIn);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-        setTimeDown(delay);
-    }
-
-    private void setTimeDown(long delay) {
-
-        if (delay <= 0)
-            return;
-
-        new CountDownTimer(delay, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-            }
-
-            public void onFinish() {
-                hide();
-            }
-
-        }.start();
     }
 
 

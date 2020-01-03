@@ -1,11 +1,11 @@
 package com.dev.wedrive.service;
 
 import androidx.arch.core.util.Function;
+import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
 import com.dev.wedrive.entity.ApiInform;
-import com.dev.wedrive.entity.ApiRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,21 +25,25 @@ public class InformService {
         });
     }
 
-    public void getLast(final Function<ApiInform, Void> func) {
+    public void getLast(final Consumer<ApiInform> func) {
         ApiService.getInstance().inform().getLast().enqueue(new Callback<ApiResponse<ApiInform>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    func.apply((ApiInform) response.getData());
+                    func.accept((ApiInform) response.getData());
                 }
             }
         });
     }
 
+    public void setStatus(ApiInform inform, String status) {
+        setStatus(inform, status, (i) -> null);
+    }
+
     public void setStatus(ApiInform inform, String status, final Function<ApiInform, Void> func) {
         Map<String, String> mStatus = new HashMap<>();
         mStatus.put("status", status);
-        ApiService.getInstance().request().setStatus(inform.uuid, mStatus).enqueue(new Callback<ApiResponse<ApiRequest>>() {
+        ApiService.getInstance().inform().setStatus(inform.uuid, mStatus).enqueue(new Callback<ApiResponse<ApiInform>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {

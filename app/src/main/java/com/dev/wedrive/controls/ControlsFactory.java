@@ -2,11 +2,11 @@ package com.dev.wedrive.controls;
 
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.loaders.LoaderCollection;
+import com.dev.wedrive.loaders.LoaderLocationManager;
 
 public class ControlsFactory {
 
-    public static ControlsInterface create(MapActivity activity, ApiProfile profile, LoaderCollection loaderCollection) {
+    public static ControlsInterface create(MapActivity activity, ApiProfile profile, LoaderLocationManager loaderCollection) {
 
         switch (profile.type) {
             case ApiProfile.TYPE_DRIVER:

@@ -6,10 +6,9 @@ import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.loaders.LoaderCollection;
+import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.NearestLoader;
 import com.dev.wedrive.service.LocationService;
-import com.dev.wedrive.sheet.RouteDriverSheet;
 import com.dev.wedrive.sheet.RoutePassengerSheet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -17,10 +16,10 @@ import com.google.android.gms.maps.model.Marker;
 public class PassengerControls implements ControlsInterface {
 
     private MapActivity activity;
-    private LoaderCollection loader;
+    private LoaderLocationManager loader;
     private LocationService locationService;
 
-    public PassengerControls(MapActivity activity, LoaderCollection loaderCollection) {
+    public PassengerControls(MapActivity activity, LoaderLocationManager loaderCollection) {
 
         this.activity = activity;
         this.loader = loaderCollection;

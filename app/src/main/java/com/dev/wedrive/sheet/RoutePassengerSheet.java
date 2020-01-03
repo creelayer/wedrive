@@ -15,9 +15,9 @@ import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.DriverLocationData;
-import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
-import com.dev.wedrive.informs.InformMessageFragment;
+import com.dev.wedrive.informs.InformMessage;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -100,7 +100,7 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
                 this.request = mRequest;
 
                 MapActivity activity = (MapActivity) getActivity();
-                activity.setFragment(R.id.inform, new InformMessageFragment().setHeader("Request send").setText("Your request send. Wait for reply.").setDelay(3000));
+                activity.getInformManager().show(new InformMessage().setHeader("Request send").setText("Your request send. Wait for reply.").setDelay(3000));
 
                 showRequestInfo();
                 collapse();
@@ -114,7 +114,7 @@ public class RoutePassengerSheet extends Sheet implements View.OnClickListener {
                 this.request = mRequest;
 
                 MapActivity activity = (MapActivity) getActivity();
-                activity.setFragment(R.id.inform, new InformMessageFragment().setHeader("Request cancel!").setText("Your was canceled.").setDelay(3000));
+                activity.getInformManager().show(new InformMessage().setHeader("Request cancel!").setText("Your was canceled.").setDelay(3000));
 
                 showRequestInfo();
                 collapse();

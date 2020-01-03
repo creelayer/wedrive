@@ -19,13 +19,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
-import com.dev.wedrive.entity.ApiInform;
-import com.dev.wedrive.entity.ApiProfile;
-import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
-import com.dev.wedrive.informs.InformMessageFragment;
-import com.dev.wedrive.loaders.LoaderCollection;
-import com.dev.wedrive.service.InformService;
+import com.dev.wedrive.informs.InformManager;
+import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,10 +33,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -62,14 +57,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Getter
     private MapService mapService;
 
+    @NonNull
     @Getter
-    private InformService informService;
+    private InformManager informManager;
 
     @Setter
     @Getter
-    private LoaderCollection loader;
-
-    private Timer informTimer;
+    private LoaderLocationManager loaderLocationManager;
 
     private ImageView navImage;
     private TextView navName;
@@ -77,8 +71,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public MapActivity() {
         super();
-        informTimer = new Timer();
-        informService = new InformService();
+        informManager = new InformManager(this);
     }
 
     @Override
@@ -99,16 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navType = headerView.findViewById(R.id.nav_type);
 
         Button testBtn = findViewById(R.id.test_btn);
-        // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
-        testBtn.setOnClickListener((v) -> informService.getLast((inform) -> {
-            String header = "";
-
-            if (inform.type.equals(ApiInform.TYPE_REQUEST))
-                header = "New request";
-
-            setFragment(R.id.inform, new InformMessageFragment().setHeader(header).setText(inform.message));
-            return null;
-        }));
+        testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
     }
 
 
@@ -126,12 +110,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         this.map = map;
         mapService = new MapService(map);
-        loader = new LoaderCollection(mapService);
+        loaderLocationManager = new LoaderLocationManager(mapService);
 
         profileService = new ProfileService();
         profileService.getMyProfile((profile) -> {
 
-            controller = ControlsFactory.create(this, profile, loader).init();
+            controller = ControlsFactory.create(this, profile, loaderLocationManager).init();
+            loaderLocationManager.start();
 
             navName.setText(profile.name + " " + profile.lastName);
             navType.setText(profile.type);
@@ -163,34 +148,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
 
-        createInformLoader();
+        informManager.start();
+        if (loaderLocationManager != null)
+            loaderLocationManager.start();
 
-        if (controller != null) controller.init();
+        if (controller != null)
+            controller.init();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        informTimer.cancel();
+        informManager.stop();
+        loaderLocationManager.stop();
         locationManager.removeUpdates(locationListener);
     }
 
-    private void createInformLoader() {
-        informTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                informService.getLast((inform) -> {
-                    String header = "";
-
-                    if (inform.type.equals(ApiInform.TYPE_REQUEST))
-                        header = "New request";
-
-                    setFragment(R.id.inform, new InformMessageFragment().setHeader(header).setText(inform.message));
-                    return null;
-                });
-            }
-        }, 0, 5000);
-    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -233,7 +206,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
             mapService.updateMyLocation(new LatLng(location.getLatitude(), location.getLongitude()));
-            loader.run();
         }
 
         @Override

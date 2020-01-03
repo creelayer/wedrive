@@ -6,24 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.wedrive.CarListActivity;
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.R;
-import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.entity.ApiUser;
-import com.dev.wedrive.helpers.DownloadImageTask;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.RouteService;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import lombok.Getter;
 import lombok.Setter;
 
 public class RouteDriverSheet extends Sheet implements View.OnClickListener {

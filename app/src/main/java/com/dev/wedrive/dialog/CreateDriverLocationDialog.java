@@ -88,7 +88,7 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
 
     private void deleteLocation() {
         locationService.deleteLocation(apiLocation, (location) -> {
-            mActivity.getLoader().load();
+            mActivity.getLoaderLocationManager().load();
             dialogBuilder.cancel();
             return null;
         });
@@ -105,7 +105,7 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
 
         if (apiLocation.getUuid() == null) {
             locationService.createLocation(apiLocation, (result) -> {
-                mActivity.getLoader().load();
+                mActivity.getLoaderLocationManager().load();
                 dialogBuilder.cancel();
                 return null;
             });

@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class InformMessageFragment extends InformAbstract {
+public class InformMessage extends InformAbstract {
 
 
     @Setter
@@ -28,6 +28,13 @@ public class InformMessageFragment extends InformAbstract {
     @Setter
     private String text;
 
+    @Setter
+    protected OnClickListener onClickListener;
+
+    public InformMessage() {
+        onClickListener = () -> hide();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class InformMessageFragment extends InformAbstract {
         View view = inflater.inflate(R.layout.inform_message, container, false);
 
         CardView cardView = view.findViewById(R.id.inform_message_card);
-        cardView.setOnClickListener((v) -> hide());
+        cardView.setOnClickListener((v) -> onClickListener.onClick());
 
         TextView headerView = view.findViewById(R.id.inform_message_header);
         headerView.setText(header);
@@ -44,6 +51,10 @@ public class InformMessageFragment extends InformAbstract {
         textView.setText(text);
 
         return view;
+    }
+
+    public interface OnClickListener {
+        void onClick();
     }
 
 }

@@ -13,8 +13,8 @@ import retrofit2.http.Query;
 
 public interface ApiRequestInterface {
 
-    @GET("/request")
-    public Call<ApiResponse<ArrayList<ApiRequest>>> getRequests();
+    @GET("/request/my")
+    public Call<ApiResponse<ArrayList<ApiRequest>>> getMyRequests();
 
     @GET("/request/info?expand=location.user")
     public Call<ApiResponse<ApiRequest>> getInfo(@Query("request") String uuid);

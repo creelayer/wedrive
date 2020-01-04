@@ -9,7 +9,7 @@ import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.NearestLoader;
 import com.dev.wedrive.service.LocationService;
-import com.dev.wedrive.sheet.RoutePassengerSheet;
+import com.dev.wedrive.sheet.RouteSheet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -52,7 +52,7 @@ public class PassengerControls implements ControlsInterface {
 
     private void createSheet(ApiLocation location) {
 
-        RoutePassengerSheet sheet = new RoutePassengerSheet();
+        RouteSheet sheet = new RouteSheet();
         sheet.setLocation(location);
         sheet.expand();
         activity.setFragment(R.id.btmControls, sheet);

@@ -14,8 +14,8 @@ import java.util.Map;
 public class RequestService {
 
 
-    public void getRequests(final Consumer<ArrayList<ApiRequest>> func) {
-        ApiService.getInstance().request().getRequests().enqueue(new Callback<ApiResponse<ArrayList<ApiRequest>>>() {
+    public void getMyRequests(final Consumer<ArrayList<ApiRequest>> func) {
+        ApiService.getInstance().request().getMyRequests().enqueue(new Callback<ApiResponse<ArrayList<ApiRequest>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {

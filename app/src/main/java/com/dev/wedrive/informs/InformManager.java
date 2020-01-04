@@ -10,8 +10,8 @@ import com.dev.wedrive.R;
 import com.dev.wedrive.RequestListActivity;
 import com.dev.wedrive.entity.ApiInform;
 import com.dev.wedrive.service.InformService;
-import com.dev.wedrive.util.Timer;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 import lombok.Getter;
@@ -24,6 +24,8 @@ public class InformManager {
     private InformService informService;
 
     private Timer timer;
+    private TimerTask timerTask;
+
 
     private InformAbstract state;
 
@@ -71,9 +73,9 @@ public class InformManager {
         }.start();
     }
 
-
     public void start() {
-        timer.scheduleAtFixedRate(new TimerTask() {
+
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 informService.getLast((inform) -> {
@@ -94,7 +96,9 @@ public class InformManager {
                             .setGroup("scheduleInform"));
                 });
             }
-        }, 0, 5000);
+        };
+
+        timer.scheduleAtFixedRate(timerTask, 0, 5000);
     }
 
     public void stop() {
@@ -102,7 +106,8 @@ public class InformManager {
         if (state != null)
             state.hide();
 
-        timer.cancel();
+        if (timerTask != null)
+            timerTask.cancel();
     }
 
 

@@ -1,9 +1,9 @@
 package com.dev.wedrive.loaders;
 
 import com.dev.wedrive.service.MapService;
-import com.dev.wedrive.util.Timer;
 
 import java.util.ArrayDeque;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class LoaderLocationManager extends ArrayDeque<LoaderInterface> {
@@ -11,6 +11,7 @@ public class LoaderLocationManager extends ArrayDeque<LoaderInterface> {
     protected MapService mapService;
 
     private Timer timer;
+    private TimerTask timerTask;
 
     public LoaderLocationManager(MapService mapService) {
         this.mapService = mapService;
@@ -30,16 +31,18 @@ public class LoaderLocationManager extends ArrayDeque<LoaderInterface> {
 
     public void start() {
         LoaderLocationManager that = this;
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 that.run();
             }
-        }, 0, 10000);
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 10000);
     }
 
     public void stop() {
-        timer.cancel();
+        if (timerTask != null)
+            timerTask.cancel();
     }
 
     public void load() {

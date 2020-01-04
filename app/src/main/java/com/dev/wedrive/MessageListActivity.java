@@ -1,7 +1,6 @@
 package com.dev.wedrive;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,10 +14,10 @@ import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.MessagesService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
-import com.dev.wedrive.util.Timer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import lombok.Getter;
@@ -30,6 +29,7 @@ public class MessageListActivity extends AppCompatActivity {
     private UserService userService;
 
     private Timer timer;
+    private TimerTask timerTask;
 
     private ApiUser user;
     private ApiUser recipient;
@@ -50,17 +50,18 @@ public class MessageListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 loadMessageList();
             }
-        }, 10000, 5000);
+        };
+        timer.scheduleAtFixedRate(timerTask, 10000, 5000);
     }
 
     @Override
     protected void onPause() {
-        timer.cancel();
+        timerTask.cancel();
         super.onPause();
     }
 

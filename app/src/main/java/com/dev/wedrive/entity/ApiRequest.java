@@ -1,6 +1,5 @@
 package com.dev.wedrive.entity;
 
-import com.dev.wedrive.sheet.RoutePassengerSheet;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
@@ -52,9 +51,10 @@ public class ApiRequest {
     public ApiRequest() {
     }
 
-    public ApiRequest(RoutePassengerSheet routeSheet) {
+    public ApiRequest(ApiUser recipient, String comment) {
         message = new ApiMessage();
-        message.recipientId = routeSheet.getLocation().userId;
-        message.message = routeSheet.getRequestMessageInp().getText().toString();
+        message.recipientId = recipient.id;
+        message.message = comment;
     }
+
 }

@@ -41,9 +41,6 @@ public class ApiService {
     @Getter
     private ApiToken token;
 
-    /**
-     *
-     */
     private ApiService() {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -52,16 +49,15 @@ public class ApiService {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder newRequest = chain.request().newBuilder();
 
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
+                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
 
-                if (token != null) {
+                if (token != null)
                     newRequest.addHeader("Authorization", "Bearer " + token.accessToken);
-                }
+
 
                 return chain.proceed(newRequest.build());
             }
         };
-
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)

@@ -13,8 +13,8 @@ public abstract class ListAdapter<T> extends ArrayAdapter {
     protected int mResource;
     protected LayoutInflater inflater;
 
-    public ListAdapter(Context context, int resource, ArrayList<T> routes) {
-        super(context, resource, routes);
+    public ListAdapter(Context context, int resource, ArrayList<T> items) {
+        super(context, resource, items);
         mResource = resource;
         inflater = LayoutInflater.from(context);
     }

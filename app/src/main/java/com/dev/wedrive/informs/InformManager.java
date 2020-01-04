@@ -86,7 +86,9 @@ public class InformManager {
                             .setText(inform.message)
                             .setOnClickListener(() -> {
                                 informService.setStatus(inform, ApiInform.STATUS_VIEWED);
-                                activity.startActivity(new Intent(activity, RequestListActivity.class));
+
+                                if (inform.type.equals(ApiInform.TYPE_REQUEST) || inform.type.equals(ApiInform.TYPE_REQUEST_MESSAGE))
+                                    activity.startActivity(new Intent(activity, RequestListActivity.class));
                             })
                             .setPriority(false)
                             .setGroup("scheduleInform"));

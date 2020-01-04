@@ -1,6 +1,5 @@
 package com.dev.wedrive.service;
 
-import androidx.arch.core.util.Function;
 import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
@@ -22,6 +21,16 @@ public class RequestService {
                 if (response instanceof ApiResponse.Success) {
                     func.accept((ArrayList<ApiRequest>) response.getData());
                 }
+            }
+        });
+    }
+
+    public void getRequest(String uuid, final Consumer<ApiRequest> func) {
+        ApiService.getInstance().request().getInfo(uuid).enqueue(new Callback<ApiResponse<ApiRequest>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiRequest) response.getData());
             }
         });
     }

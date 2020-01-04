@@ -16,6 +16,9 @@ public interface ApiRequestInterface {
     @GET("/request")
     public Call<ApiResponse<ArrayList<ApiRequest>>> getRequests();
 
+    @GET("/request/info?expand=location.user")
+    public Call<ApiResponse<ApiRequest>> getInfo(@Query("request") String uuid);
+
     @POST("/request/create")
     public Call<ApiResponse<ApiRequest>> createRequest(@Query("location") String uuid, @Body ApiRequest apiRequest);
 

@@ -1,6 +1,5 @@
 package com.dev.wedrive.service;
 
-import androidx.arch.core.util.Function;
 import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;

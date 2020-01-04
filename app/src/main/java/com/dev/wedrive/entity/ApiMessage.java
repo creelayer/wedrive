@@ -1,5 +1,6 @@
 package com.dev.wedrive.entity;
 
+import com.dev.wedrive.MessageListActivity;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
@@ -15,6 +16,11 @@ public class ApiMessage {
     @SerializedName("uuid")
     @Getter
     public String uuid;
+
+    @SerializedName("user_id")
+    @Setter
+    @Getter
+    public int userId;
 
     @SerializedName("user")
     @Setter
@@ -39,9 +45,24 @@ public class ApiMessage {
     @Getter
     public String status;
 
+    @SerializedName("request_uuid")
+    @Setter
+    @Getter
+    public String requestUuid;
+
     @SerializedName("created_at")
     @Setter
     @Getter
     public Timestamp createdAt;
+
+    public ApiMessage() {
+    }
+
+    public ApiMessage(MessageListActivity activity, ApiUser recipient, ApiRequest request) {
+        message = activity.getMessageInp().getText().toString().trim();
+        recipientId = recipient.id;
+        if (request != null)
+            requestUuid = request.uuid;
+    }
 
 }

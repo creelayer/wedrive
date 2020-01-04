@@ -26,6 +26,7 @@ public class RequestListAdapter extends ListAdapter {
 
     public Button deniedBtn;
     public Button acceptBtn;
+    public Button messageBtn;
 
     public RequestListAdapter(Context context, ArrayList<ApiRequest> request, OnItemClickListener listener) {
         super(context, R.layout.adapter_request_list_item, request);
@@ -45,6 +46,7 @@ public class RequestListAdapter extends ListAdapter {
         TextView locationTime = convertView.findViewById(R.id.location_time);
         deniedBtn = convertView.findViewById(R.id.denied_btn);
         acceptBtn = convertView.findViewById(R.id.accept_btn);
+        messageBtn = convertView.findViewById(R.id.message_btn);
 
 
         ApiProfile profile = request.user.profile;
@@ -59,14 +61,15 @@ public class RequestListAdapter extends ListAdapter {
         requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
         routeName.setText(location.route.name);
         locationTime.setText(locationData.hour + ":" + locationData.min);
-        deniedBtn.setOnClickListener((v) -> listener.onItemClick(R.id.denied_btn, request, this));
-        acceptBtn.setOnClickListener((v) -> listener.onItemClick(R.id.accept_btn, request, this));
+        deniedBtn.setOnClickListener((v) -> listener.onItemClick(R.id.denied_btn, request));
+        acceptBtn.setOnClickListener((v) -> listener.onItemClick(R.id.accept_btn, request));
+        messageBtn.setOnClickListener((v) -> listener.onItemClick(R.id.message_btn, request));
 
         return convertView;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int id, ApiRequest item, RequestListAdapter requestListAdapter);
+        void onItemClick(int id, ApiRequest item);
     }
 
 }

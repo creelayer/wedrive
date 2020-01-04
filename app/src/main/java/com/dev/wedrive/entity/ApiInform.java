@@ -11,6 +11,8 @@ public class ApiInform {
 
     public static final String STATUS_VIEWED = "viewed";
     public static final String TYPE_REQUEST = "request";
+    public static final String TYPE_REQUEST_MESSAGE = "request_message";
+    public static final String TYPE_MESSAGE = "message";
 
     @SerializedName("uuid")
     @Getter
@@ -31,7 +33,7 @@ public class ApiInform {
     public String status;
 
     @SerializedName("type")
-    public String  type;
+    public String type;
 
     @SerializedName("created_at")
     @Setter

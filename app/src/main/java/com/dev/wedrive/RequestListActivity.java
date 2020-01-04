@@ -1,5 +1,6 @@
 package com.dev.wedrive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -26,17 +27,19 @@ public class RequestListActivity extends AppCompatActivity {
 
     }
 
-
     private void loadRequestList() {
         requestService.getRequests((requests) -> {
             ListView list = findViewById(R.id.request_list);
-            list.setAdapter(new RequestListAdapter(this, requests, (id, request, adapter) -> {
+            list.setAdapter(new RequestListAdapter(this, requests, (id, request) -> {
 
                 if (id == R.id.denied_btn)
                     requestService.setStatus(request, ApiRequest.STATUS_DENIED);
 
                 if (id == R.id.accept_btn)
                     requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED);
+
+                if (id == R.id.message_btn)
+                    startActivity(new Intent(this, MessageListActivity.class).putExtra("request", request.uuid));
 
             }));
         });

@@ -20,9 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RequestListActivity"
+        <activity android:name=".MessageListActivity"
+            android:label="Messages"
+            android:parentActivityName=".MapActivity"
+            ></activity>
+        <activity
+            android:name=".RequestListActivity"
             android:label="Request list"
-            android:parentActivityName=".MapActivity"></activity>
+            android:parentActivityName=".MapActivity" />
         <activity
             android:name=".ProfileEditActivity"
             android:label="Profile edit"

@@ -4,12 +4,14 @@ import com.dev.wedrive.Constants;
 import com.dev.wedrive.api.ApiCarInterface;
 import com.dev.wedrive.api.ApiInformInterface;
 import com.dev.wedrive.api.ApiLocationInterface;
+import com.dev.wedrive.api.ApiMessageInterface;
 import com.dev.wedrive.api.ApiProfileInterface;
 import com.dev.wedrive.api.ApiRequestInterface;
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.api.ApiRouteInterface;
 import com.dev.wedrive.api.ApiUserInterface;
+import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +52,7 @@ public class ApiService {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder newRequest = chain.request().newBuilder();
 
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
+                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
 
                 if (token != null) {
                     newRequest.addHeader("Authorization", "Bearer " + token.accessToken);
@@ -133,6 +135,13 @@ public class ApiService {
      */
     public ApiInformInterface inform() {
         return mRetrofit.create(ApiInformInterface.class);
+    }
+
+    /**
+     * @return
+     */
+    public ApiMessageInterface messages() {
+        return mRetrofit.create(ApiMessageInterface.class);
     }
 
 

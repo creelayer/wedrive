@@ -9,16 +9,39 @@ import com.dev.wedrive.entity.ApiUser;
 
 public class UserService {
 
+    public void current(final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+        ApiService.getInstance().user().getCurrentUser().enqueue(new Callback<ApiResponse<ApiUser>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiUser) response.getData());
+                else
+                    func2.accept(response.getError());
+            }
+        });
+    }
+
+    public void getUser(int id, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+        ApiService.getInstance().user().getInfo(id).enqueue(new Callback<ApiResponse<ApiUser>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiUser) response.getData());
+                else
+                    func2.accept(response.getError());
+            }
+        });
+    }
+
     public void login(ApiUser user, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
 
         ApiService.getInstance().user().login(user).enqueue(new Callback<ApiResponse<ApiUser>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
+                if (response instanceof ApiResponse.Success)
                     func.accept((ApiUser) response.getData());
-                } else {
+                else
                     func2.accept(response.getError());
-                }
             }
         });
     }

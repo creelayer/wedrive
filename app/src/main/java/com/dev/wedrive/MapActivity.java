@@ -93,6 +93,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         Button testBtn = findViewById(R.id.test_btn);
         testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
+
+
     }
 
 
@@ -123,7 +125,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             if (profile.image != null)
                 new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
-        }, (error) -> {});
+        }, (error) -> {
+        });
 
 
         map.setMyLocationEnabled(true);
@@ -157,7 +160,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onPause() {
         super.onPause();
         informManager.stop();
-        loaderLocationManager.stop();
+        if (loaderLocationManager != null)
+            loaderLocationManager.stop();
+
         locationManager.removeUpdates(locationListener);
     }
 

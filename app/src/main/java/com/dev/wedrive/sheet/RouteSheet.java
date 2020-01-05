@@ -15,6 +15,7 @@ import com.dev.wedrive.CarListActivity;
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
+import com.dev.wedrive.dialog.ConfirmDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiRequest;
@@ -131,13 +132,27 @@ public class RouteSheet extends Sheet {
     }
 
     private void changeRouteState(ApiRoute route) {
-        routeService.setStatus(route, route.status.equals(ApiRoute.STATUS_CURRENT) ? ApiRoute.STATUS_ACTIVE : ApiRoute.STATUS_CURRENT, (mRoute) -> {
-            this.route = mRoute;
-            routeStatus.setText(mRoute.status);
-            actionRouteBtn.setText(mRoute.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
-            actionRouteBtn.setOnClickListener((v) -> changeRouteState(mRoute));
-            getActivity().findViewById(R.id.lftControls).setVisibility(mRoute.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
-        });
+
+        new ConfirmDialog(getActivity())
+                .setHeaderText("Confirm")
+                .setMessageText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run message..." : "Stop message...")
+                .setOkListener((dialog) ->
+
+                    routeService.setStatus(route, route.status.equals(ApiRoute.STATUS_CURRENT) ? ApiRoute.STATUS_ACTIVE : ApiRoute.STATUS_CURRENT, (mRoute) -> {
+                        this.route = mRoute;
+                        routeStatus.setText(mRoute.status);
+                        actionRouteBtn.setText(mRoute.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
+                        actionRouteBtn.setOnClickListener((v) -> changeRouteState(mRoute));
+
+                        getActivity().findViewById(R.id.lftControls).setVisibility(mRoute.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
+                        dialog.cancel();
+                    })
+
+
+                )
+                .create()
+                .show();
+
     }
 
     private void sendRequest(ApiRequest request) {

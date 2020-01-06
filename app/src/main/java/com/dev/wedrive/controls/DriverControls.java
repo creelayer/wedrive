@@ -2,6 +2,7 @@ package com.dev.wedrive.controls;
 
 import android.content.Intent;
 
+import com.dev.wedrive.CarListActivity;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.RouteListActivity;
@@ -9,6 +10,7 @@ import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.dialog.CreateDriverLocationDialog;
 import com.dev.wedrive.entity.ApiLocation;
+import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.RouteLoader;
 import com.dev.wedrive.service.RouteService;
@@ -30,9 +32,17 @@ public class DriverControls implements ControlsInterface {
     }
 
     public ControlsInterface init() {
-        createControls();
-        createSheet();
-        createLoader();
+        routeService.getCurrentRoute((route) -> {
+            if (route == null)
+                activity.startActivity(new Intent(activity, RouteListActivity.class));
+            else if (route.car == null)
+                activity.startActivity(new Intent(activity, CarListActivity.class));
+            else {
+                createControls();
+                createSheet(route);
+                createLoader(route);
+            }
+        });
         return this;
     }
 
@@ -40,6 +50,8 @@ public class DriverControls implements ControlsInterface {
         routeService.getCurrentRoute((route) -> {
             if (route == null)
                 activity.startActivity(new Intent(activity, RouteListActivity.class));
+            else if (route.car == null)
+                activity.startActivity(new Intent(activity, CarListActivity.class));
             else
                 new CreateDriverLocationDialog(activity, new ApiLocation(latLng, route)).create().show();
 
@@ -61,26 +73,23 @@ public class DriverControls implements ControlsInterface {
         activity.setFragment(R.id.lftControls, new DriverRoutesFragment());
     }
 
-    private void createSheet() {
-        routeService.getCurrentRoute((route) -> {
+    private void createSheet(ApiRoute route) {
+        if (route == null)
+            return;
 
-            if (route == null)
-                return;
-
-            RouteSheet sheet = new RouteSheet();
-            sheet.setRoute(route);
-            activity.setFragment(R.id.btmControls, sheet);
-        });
+        RouteSheet sheet = new RouteSheet();
+        sheet.setRoute(route);
+        activity.setFragment(R.id.btmControls, sheet);
     }
 
-    private void createLoader() {
-        routeService.getCurrentRoute((route) -> {
-            if (route != null) {
-                loader.clear();
-                loader.add(new RouteLoader(route));
-                loader.load();
-            }
-        });
+    private void createLoader(ApiRoute route) {
+
+        if (route == null)
+            return;
+        loader.clear();
+        loader.add(new RouteLoader(route));
+        loader.load();
+
     }
 
 }

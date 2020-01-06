@@ -19,7 +19,7 @@ public interface ApiRouteInterface {
     @GET("/route/info?expand=car,user,request")
     public Call<ApiResponse<ApiRoute>> getRoute(@Query("route") String uuid);
 
-    @POST("/route/current")
+    @POST("/route/current?expand=car,user,request")
     public Call<ApiResponse<ApiRoute>> getCurrentRoute();
 
     @POST("/route/status")

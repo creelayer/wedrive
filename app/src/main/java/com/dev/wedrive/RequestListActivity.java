@@ -1,5 +1,6 @@
 package com.dev.wedrive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -54,21 +55,21 @@ public class RequestListActivity extends AppCompatActivity implements RequestLis
     @Override
     public void onItemClick(View view, int position) {
 
-        if(view.getId() == R.id.accept_btn)
+        if (view.getId() == R.id.accept_btn)
             new ConfirmDialog(this)
                     .setHeaderText("Confirm")
                     .setMessageText("Confirm accept click")
                     .setOkListener((dialog) ->
-                        requestService.setStatus(adapter.getItem(position), ApiRequest.STATUS_ACCEPTED, (request) -> {
-                            adapter.updateItem(position, request);
-                            dialog.cancel();
-                        })
+                            requestService.setStatus(adapter.getItem(position), ApiRequest.STATUS_ACCEPTED, (request) -> {
+                                adapter.updateItem(position, request);
+                                dialog.cancel();
+                            })
                     )
                     .create()
                     .show();
 
 
-        if(view.getId() == R.id.denied_btn)
+        if (view.getId() == R.id.denied_btn)
             new ConfirmDialog(this)
                     .setHeaderText("Confirm")
                     .setMessageText("Confirm denied click")
@@ -82,7 +83,7 @@ public class RequestListActivity extends AppCompatActivity implements RequestLis
                     .show();
 
 
-        if(view.getId() == R.id.cancel_btn)
+        if (view.getId() == R.id.cancel_btn)
             new ConfirmDialog(this)
                     .setHeaderText("Confirm")
                     .setMessageText("Confirm cancel click")
@@ -94,6 +95,9 @@ public class RequestListActivity extends AppCompatActivity implements RequestLis
                     )
                     .create()
                     .show();
+
+        if (view.getId() == R.id.message_btn)
+            startActivity(new Intent(this, MessageListActivity.class).putExtra("request", adapter.getItem(position).uuid));
 
     }
 

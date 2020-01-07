@@ -2,46 +2,96 @@ package com.dev.wedrive.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiCar;
 
 import java.util.ArrayList;
 
-public class CarListAdapter extends ListAdapter {
+import lombok.Setter;
+
+public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHolder> {
+
+    private LayoutInflater inflater;
 
     private Drawable activeRadioShape;
 
-    private final OnItemClickListener listener;
+    @Setter
+    private OnItemClickListener listener;
 
-    public CarListAdapter(Context context, ArrayList<ApiCar> cars, OnItemClickListener listener) {
-        super(context, R.layout.adapter_car_list_item, cars);
-        activeRadioShape = getContext().getDrawable(R.drawable.btn_radio_shape_checked);
-        this.listener = listener;
+    private ArrayList<ApiCar> cars;
+
+    // data is passed into the constructor
+    public CarListAdapter(Context context, ArrayList<ApiCar> cars) {
+        this.inflater = LayoutInflater.from(context);
+        activeRadioShape = context.getDrawable(R.drawable.btn_radio_shape_checked);
+        this.cars = cars;
     }
 
+    // total number of rows
     @Override
-    protected View populate(int position, View convertView) {
+    public int getItemCount() {
+        return cars.size();
+    }
 
-        ApiCar car = (ApiCar) getItem(position);
+    // convenience method for getting data at click position
+    public ApiCar getItem(int id) {
+        return cars.get(id);
+    }
 
-        convertView.findViewById(R.id.smContentView).setOnClickListener((v) -> listener.onItemClick(R.id.smContentView, car));
-        convertView.findViewById(R.id.list_item_edit).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_edit, car));
-        convertView.findViewById(R.id.list_item_delete).setOnClickListener((v) -> listener.onItemClick(R.id.list_item_delete, car));
+    // inflates the row layout from xml when needed
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.adapter_car_list_item, parent, false);
+        return new ViewHolder(view);
+    }
 
-        TextView name = convertView.findViewById(R.id.list_name);
-        name.setText(car.brand + " " + car.model);
+    // binds the data to the TextView in each row
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (car.active) {
-            convertView.findViewById(R.id.list_status).setBackground(activeRadioShape);
+        ApiCar car = cars.get(position);
+
+        holder.name.setText(car.brand + " " + car.model);
+
+        if (car.active)
+            holder.checkbox.setBackground(activeRadioShape);
+    }
+
+    // stores and recycles views as they are scrolled off screen
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        RelativeLayout content;
+        TextView name;
+        ImageView checkbox;
+        Button editBtn;
+        Button deleteBtn;
+
+        ViewHolder(View view) {
+            super(view);
+            content = view.findViewById(R.id.smContentView);
+            name = view.findViewById(R.id.list_name);
+            checkbox = view.findViewById(R.id.list_status);
+            editBtn = view.findViewById(R.id.list_item_edit);
+            deleteBtn = view.findViewById(R.id.list_item_delete);
+
+            content.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+            editBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+            deleteBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
         }
-
-        return convertView;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int id, ApiCar item);
+        void onItemClick(View view, int position);
     }
 }

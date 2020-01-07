@@ -85,7 +85,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
 
         holder.userName.setText(profile.name + " " + profile.lastName);
-        holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt).toString());
+        holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt));
         holder.requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
         holder.requestStatus.setText(request.status);
         holder.routeName.setText(location.route.name);

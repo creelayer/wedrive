@@ -97,7 +97,7 @@ public class RouteSheet extends Sheet {
         requestCancelBtn = view.findViewById(R.id.request_cancel_btn);
 
         routeService.getRoute(route != null ? route.uuid : location.route.uuid, (route) -> {
-            createRoute(route, location);
+            createRouteData(route, location);
             updateControlsState(route.request, location);
         });
 
@@ -122,6 +122,8 @@ public class RouteSheet extends Sheet {
 
         if (location == null) {
             requestInfo.setVisibility(View.GONE);
+            actionRouteBtn.setVisibility(View.VISIBLE);
+            changeCarBtn.setVisibility(View.VISIBLE);
         } else {
             actionRouteBtn.setVisibility(View.GONE);
             changeCarBtn.setVisibility(View.GONE);
@@ -175,7 +177,7 @@ public class RouteSheet extends Sheet {
         });
     }
 
-    private void createRoute(ApiRoute route, ApiLocation location) {
+    private void createRouteData(ApiRoute route, ApiLocation location) {
 
         if (route.user.profile.image != null)
             new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(route.user.profile.image, "sm"));

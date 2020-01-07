@@ -3,6 +3,8 @@ package com.dev.wedrive;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.ListView;
@@ -14,6 +16,7 @@ import com.dev.wedrive.service.RouteService;
 public class RouteListActivity extends AppCompatActivity {
 
     private RouteService routeService;
+    private RoutesListAdapter adapter;
 
     public RouteListActivity() {
         super();
@@ -39,22 +42,26 @@ public class RouteListActivity extends AppCompatActivity {
     private void loadRoutesList() {
         routeService.getMyRouts((routes) -> {
 
-            ListView list = findViewById(R.id.routes_list);
-            list.setAdapter(new RoutesListAdapter(this, routes, (id, route) -> {
+            // set up the RecyclerView
+            RecyclerView list = findViewById(R.id.routes_list);
+            list.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new RoutesListAdapter(this, routes);
+            adapter.setListener((view, position) -> {
 
-                if (id == R.id.smContentView)
+                ApiRoute route = adapter.getItem(position);
+
+                if (view.getId() == R.id.smContentView)
                     routeService.setStatus(route, ApiRoute.STATUS_CURRENT, (mRoute) -> finish());
 
-                if (id == R.id.list_item_delete)
+                if (view.getId() == R.id.list_item_delete)
                     routeService.deleteRoute(route, (mRoute) -> finish());
 
-                if (id == R.id.list_item_edit) {
-                    Intent intent = new Intent(this, CreateNewRouteActivity.class);
-                    intent.putExtra("uuid", route.uuid);
-                    startActivity(intent);
-                }
+                if (view.getId() == R.id.list_item_edit)
+                    startActivity(new Intent(this, CreateNewRouteActivity.class).putExtra("uuid", route.uuid));
 
-            }));
+            });
+
+            list.setAdapter(adapter);
         });
     }
 }

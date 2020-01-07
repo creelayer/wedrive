@@ -3,9 +3,10 @@ package com.dev.wedrive;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.wedrive.adapters.MessagesListAdapter;
 import com.dev.wedrive.entity.ApiMessage;
@@ -15,8 +16,6 @@ import com.dev.wedrive.service.MessagesService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,10 +30,18 @@ public class MessageListActivity extends AppCompatActivity {
     private Timer timer;
     private TimerTask timerTask;
 
+    @Getter
     private ApiUser user;
+
+    @Getter
     private ApiUser recipient;
+
+    @Getter
     private ApiRequest request;
+
     private ApiMessage state;
+
+    private MessagesListAdapter adapter;
 
     @Getter
     private EditText messageInp;
@@ -53,7 +60,7 @@ public class MessageListActivity extends AppCompatActivity {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                loadMessageList();
+                loadMessageList(user, recipient, request);
             }
         };
         timer.scheduleAtFixedRate(timerTask, 10000, 5000);
@@ -72,85 +79,68 @@ public class MessageListActivity extends AppCompatActivity {
 
         messageInp = findViewById(R.id.message_inp);
         messageBtn = findViewById(R.id.message_btn);
-        messageBtn.setOnClickListener((v) -> sendMessage());
+        messageBtn.setOnClickListener((v) -> sendMessage(new ApiMessage(this)));
 
         load();
     }
 
     private void load() {
 
-        Bundle bundle = getIntent().getExtras();
+        String requestUuid = getIntent().getStringExtra("request");
+
+        if (requestUuid == null)
+            return;
 
         userService.current((user) -> {
-
             this.user = user;
+            requestService.getRequest(requestUuid, (request) -> {
+                this.request = request;
 
-            if (bundle != null && bundle.getString("recipient") != null)
-                userService.getUser(Integer.parseInt(bundle.getString("recipient")), (mUser) -> {
-                    recipient = mUser;
-                    loadMessageList();
-                }, (error) -> {
-                });
+                if (request.userId == user.id)
+                    recipient = request.location.user;
+                else
+                    recipient = request.user;
 
-            if (bundle != null && bundle.getString("request") != null)
-                requestService.getRequest(bundle.getString("request"), (mRequest) -> {
-                    request = mRequest;
-                    if (request.userId == user.id)
-                        recipient = request.location.user;
-                    else
-                        recipient = request.user;
-                    loadMessageList();
-                });
+                loadMessageList(user, recipient, request);
+            });
 
         }, (error) -> {
         });
-
-
     }
 
-    private void sendMessage() {
+    private void sendMessage(ApiMessage message) {
 
-        if (recipient == null || user == null || messageInp.getText().toString().trim().equals(""))
+        if (message.recipientId == 0 || message.message.equals(""))
             return;
-
-        ApiMessage message = new ApiMessage(this, recipient, request);
 
         messagesService.sendMessage(message, (mMessage) -> {
             messageInp.setText("");
-            loadMessageList();
+            loadMessageList(user, recipient, request);
         });
 
     }
 
-    private void loadMessageList() {
+    private void loadMessageList(ApiUser user, ApiUser recipient, ApiRequest request) {
 
-        if (recipient == null || user == null)
+        if (recipient == null || user == null || request == null)
             return;
 
-        if (request != null) {
-            messagesService.getConversation(recipient, request, (messages) -> showList(messages));
-            messagesService.viewConversation(recipient, request);
-        } else {
-            messagesService.getConversation(recipient, (messages) -> showList(messages));
-            messagesService.viewConversation(recipient);
-        }
-    }
+        messagesService.getConversation(recipient, request, (messages) -> {
 
+            //    Collections.reverse(messages);
 
-    private void showList(ArrayList<ApiMessage> messages) {
+            if (adapter == null) {
+                RecyclerView list = findViewById(R.id.message_list);
+                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                linearLayoutManager.setReverseLayout(true);
+                list.setLayoutManager(linearLayoutManager);
+                adapter = new MessagesListAdapter(this, user, messages);
+                list.setAdapter(adapter);
+            } else
+                adapter.setMessages(messages).notifyDataSetChanged();
 
+        });
+        messagesService.viewConversation(recipient, request);
 
-        ApiMessage message = messages.get(1);
-
-        if (state != null && message != null && state.uuid.equals(message.uuid))
-            return;
-
-        state = message;
-
-        Collections.reverse(messages);
-        MessagesListAdapter adapter = new MessagesListAdapter(this, request.location.user, messages);
-        ListView list = findViewById(R.id.message_list);
-        list.post(() -> list.setSelection(adapter.getCount() - 1));
-        list.setAdapter(adapter);
     }
 }

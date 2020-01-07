@@ -20,7 +20,7 @@ public class ApiMessage {
     @SerializedName("user_id")
     @Setter
     @Getter
-    public int userId;
+    public int userId = 0;
 
     @SerializedName("user")
     @Setter
@@ -28,7 +28,7 @@ public class ApiMessage {
     public ApiUser user;
 
     @SerializedName("recipient_id")
-    public int recipientId;
+    public int recipientId = 0;
 
     @SerializedName("recipient")
     @Setter
@@ -38,7 +38,7 @@ public class ApiMessage {
     @SerializedName("message")
     @Setter
     @Getter
-    public String message;
+    public String message = "";
 
     @SerializedName("status")
     @Setter
@@ -58,11 +58,11 @@ public class ApiMessage {
     public ApiMessage() {
     }
 
-    public ApiMessage(MessageListActivity activity, ApiUser recipient, ApiRequest request) {
+    public ApiMessage(MessageListActivity activity) {
         message = activity.getMessageInp().getText().toString().trim();
-        recipientId = recipient.id;
-        if (request != null)
-            requestUuid = request.uuid;
+        recipientId = activity.getRecipient().getId();
+        if (activity.getRequest() != null)
+            requestUuid = activity.getRequest().uuid;
     }
 
 }

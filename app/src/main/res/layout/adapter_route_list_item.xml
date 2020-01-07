@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.tubb.smrv.SwipeHorizontalMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/message_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:sml_auto_open_percent="0.2"
-    app:sml_scroller_duration="250"
-    app:sml_scroller_interpolator="@android:anim/bounce_interpolator">
+    android:orientation="vertical">
 
-
-    <RelativeLayout
-        android:id="@id/smContentView"
+    <com.tubb.smrv.SwipeHorizontalMenuLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape_list_item">
-
-        <TextView
-            android:id="@+id/list_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Киев - Велики Васюки" />
-
-        <ImageView
-            android:id="@+id/list_status"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/btn_radio_shape" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@id/smMenuViewLeft"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        app:sml_auto_open_percent="0.2"
+        app:sml_scroller_duration="250"
+        app:sml_scroller_interpolator="@android:anim/bounce_interpolator">
 
-        <Button
-            android:id="@+id/list_item_delete"
+
+        <RelativeLayout
+            android:id="@id/smContentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_list_item">
+
+            <TextView
+                android:id="@+id/list_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Киев - Велики Васюки" />
+
+            <ImageView
+                android:id="@+id/list_status"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/btn_radio_shape" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@id/smMenuViewLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Delete" />
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/list_item_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Edit" />
+            <Button
+                android:id="@+id/list_item_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/list_item_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit" />
 
-</com.tubb.smrv.SwipeHorizontalMenuLayout>
+        </LinearLayout>
+
+    </com.tubb.smrv.SwipeHorizontalMenuLayout>
+</LinearLayout>

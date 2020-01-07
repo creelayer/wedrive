@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface ApiRouteInterface {
 
-    @GET("/route")
+    @GET("/route/my")
     public Call<ApiResponse<List<ApiRoute>>> getMyRoutes();
 
     @GET("/route/info?expand=car,user,request")

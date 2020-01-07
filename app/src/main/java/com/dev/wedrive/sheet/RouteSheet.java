@@ -139,15 +139,15 @@ public class RouteSheet extends Sheet {
                 .setMessageText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run message..." : "Stop message...")
                 .setOkListener((dialog) ->
 
-                    routeService.setStatus(route, route.status.equals(ApiRoute.STATUS_CURRENT) ? ApiRoute.STATUS_ACTIVE : ApiRoute.STATUS_CURRENT, (mRoute) -> {
-                        this.route = mRoute;
-                        routeStatus.setText(mRoute.status);
-                        actionRouteBtn.setText(mRoute.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
-                        actionRouteBtn.setOnClickListener((v) -> changeRouteState(mRoute));
+                        routeService.setStatus(route, route.status.equals(ApiRoute.STATUS_CURRENT) ? ApiRoute.STATUS_ACTIVE : ApiRoute.STATUS_CURRENT, (mRoute) -> {
+                            this.route = mRoute;
+                            routeStatus.setText(mRoute.status);
+                            actionRouteBtn.setText(mRoute.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
+                            actionRouteBtn.setOnClickListener((v) -> changeRouteState(mRoute));
 
-                        getActivity().findViewById(R.id.lftControls).setVisibility(mRoute.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
-                        dialog.cancel();
-                    })
+                            getActivity().findViewById(R.id.lftControls).setVisibility(mRoute.status.equals(ApiRoute.STATUS_ACTIVE) ? View.INVISIBLE : View.VISIBLE);
+                            dialog.cancel();
+                        })
 
 
                 )
@@ -182,17 +182,19 @@ public class RouteSheet extends Sheet {
         if (route.user.profile.image != null)
             new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(route.user.profile.image, "sm"));
 
-        if (route.car.image != null)
-            new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(route.car.image, "sm"));
-
         userName.setText(route.user.profile.name + " " + route.user.profile.lastName);
         routeName.setText(route.name);
         routeStatus.setText(route.status);
         actionRouteBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
         actionRouteBtn.setOnClickListener((v) -> changeRouteState(route));
-        carBrand.setText(route.car.brand);
-        carModel.setText(route.car.model);
-        carNumber.setText(route.car.number);
+
+        if (route.car != null) {
+            if (route.car.image != null)
+                new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(route.car.image, "sm"));
+            carBrand.setText(route.car.brand);
+            carModel.setText(route.car.model);
+            carNumber.setText(route.car.number);
+        }
 
         if (location != null) {
             DriverLocationData locationData = new DriverLocationData((LinkedTreeMap<String, String>) location.data);

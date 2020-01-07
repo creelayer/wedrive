@@ -9,6 +9,7 @@ import com.dev.wedrive.RouteListActivity;
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.dialog.CreateDriverLocationDialog;
+import com.dev.wedrive.dialog.InformDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.loaders.LoaderLocationManager;
@@ -48,24 +49,27 @@ public class DriverControls implements ControlsInterface {
 
     public void onMapLongClick(LatLng latLng) {
         routeService.getCurrentRoute((route) -> {
-            if (route == null)
-                activity.startActivity(new Intent(activity, RouteListActivity.class));
-            else if (route.car == null)
-                activity.startActivity(new Intent(activity, CarListActivity.class));
-            else
+            if (route.status.equals(ApiRoute.STATUS_CURRENT) || route.status.equals(ApiRoute.STATUS_ACTIVE))
                 new CreateDriverLocationDialog(activity, new ApiLocation(latLng, route)).create().show();
-
         });
     }
 
     public boolean onMarkerClick(Marker marker) {
 
-        String uuid = marker.getTag().toString();
-        RouteLoader routeLoader = (RouteLoader) loader.getLast();
-        LocationCollection locationCollection = routeLoader.getLocationCollection();
-        LocationAdapter locationAdapter = locationCollection.get(uuid);
+        routeService.getCurrentRoute((route) -> {
 
-        new CreateDriverLocationDialog(activity, locationAdapter.getLocation()).create().show();
+            if (!route.status.equals(ApiRoute.STATUS_CURRENT)) {
+                new InformDialog(activity).setHeaderText("Inform").setMessageText("Route is active. Only current route location can edit.").create().show();
+                return;
+            }
+
+            String uuid = marker.getTag().toString();
+            RouteLoader routeLoader = (RouteLoader) loader.getLast();
+            LocationCollection locationCollection = routeLoader.getLocationCollection();
+            LocationAdapter locationAdapter = locationCollection.get(uuid);
+            new CreateDriverLocationDialog(activity, locationAdapter.getLocation()).create().show();
+        });
+
         return true;
     }
 

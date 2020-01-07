@@ -1,10 +1,16 @@
 package com.dev.wedrive.adapters;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.R;
@@ -25,95 +31,131 @@ import java.util.ArrayList;
 
 import lombok.Setter;
 
-public class RequestListAdapter extends ListAdapter {
+public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder> {
 
+
+    private LayoutInflater inflater;
 
     private ApiUser user;
+    private ArrayList<ApiRequest> requests;
 
     @Setter
     private OnItemClickListener listener;
 
-    private Button acceptBtn;
-    private Button deniedBtn;
-    private Button cancelBtn;
 
-    public RequestListAdapter(Context context, ApiUser user, ArrayList<ApiRequest> request) {
-        super(context, R.layout.adapter_request_list_item, request);
+    // data is passed into the constructor
+    public RequestListAdapter(Context context, ApiUser user, ArrayList<ApiRequest> requests) {
+        this.inflater = LayoutInflater.from(context);
         this.user = user;
+        this.requests = requests;
     }
 
-    public RequestListAdapter(Context context, ApiUser user, ArrayList<ApiRequest> request, OnItemClickListener listener) {
-        super(context, R.layout.adapter_request_list_item, request);
-        this.listener = listener;
-        this.user = user;
-    }
-
+    // total number of rows
     @Override
-    protected View populate(int position, View convertView) {
+    public int getItemCount() {
+        return requests.size();
+    }
 
-        ApiRequest request = (ApiRequest) getItem(position);
+    // convenience method for getting data at click position
+    public ApiRequest getItem(int id) {
+        return requests.get(id);
+    }
 
-        ImageView userImage = convertView.findViewById(R.id.user_image);
-        TextView userName = convertView.findViewById(R.id.user_name);
-        TextView requestTime = convertView.findViewById(R.id.request_time);
-        TextView requestMessage = convertView.findViewById(R.id.request_message);
-        TextView requestStatus = convertView.findViewById(R.id.request_status);
-        TextView routeName = convertView.findViewById(R.id.route_name);
-        TextView locationTime = convertView.findViewById(R.id.location_time);
-        acceptBtn = convertView.findViewById(R.id.accept_btn);
-        deniedBtn = convertView.findViewById(R.id.denied_btn);
-        cancelBtn = convertView.findViewById(R.id.cancel_btn);
-        Button messageBtn = convertView.findViewById(R.id.message_btn);
+    public void updateItem(int id, ApiRequest request){
+        requests.set(id, request);
+        notifyItemChanged(id);
+    }
 
+    // inflates the row layout from xml when needed
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.adapter_request_list_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    // binds the data to the TextView in each row
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ApiRequest request = requests.get(position);
         ApiProfile profile = request.user.profile;
         ApiLocation location = request.location;
         DriverLocationData locationData = new DriverLocationData((LinkedTreeMap<String, String>) location.data);
 
         if (profile.image != null)
-            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+            new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
 
-        userName.setText(profile.name + " " + profile.lastName);
-        requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt).toString());
-        requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
-        requestStatus.setText(request.status);
-        routeName.setText(location.route.name);
-        locationTime.setText(locationData.hour + ":" + locationData.min);
-        acceptBtn.setOnClickListener((v) -> listener.onItemClick(R.id.accept_btn, request));
-        deniedBtn.setOnClickListener((v) -> listener.onItemClick(R.id.denied_btn, request));
-        cancelBtn.setOnClickListener((v) -> listener.onItemClick(R.id.cancel_btn, request));
-        messageBtn.setOnClickListener((v) -> listener.onItemClick(R.id.message_btn, request));
+        holder.userName.setText(profile.name + " " + profile.lastName);
+        holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt).toString());
+        holder.requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
+        holder.requestStatus.setText(request.status);
+        holder.routeName.setText(location.route.name);
+        holder.locationTime.setText(locationData.hour + ":" + locationData.min);
 
-        updateControlsState(request);
-
-        return convertView;
+        updateControlsState(holder, request);
     }
 
-    public void updateControlsState(ApiRequest request) {
+    public void updateControlsState(ViewHolder holder, ApiRequest request) {
 
-        cancelBtn.setVisibility(View.GONE);
-        acceptBtn.setVisibility(View.GONE);
-        deniedBtn.setVisibility(View.GONE);
+        holder.cancelBtn.setVisibility(View.GONE);
+        holder.acceptBtn.setVisibility(View.GONE);
+        holder.deniedBtn.setVisibility(View.GONE);
 
         if (request.status.equals(ApiRequest.STATUS_NEW)) {
             if (user.id == request.userId)
-                cancelBtn.setVisibility(View.VISIBLE);
+                holder.cancelBtn.setVisibility(View.VISIBLE);
             else {
-                acceptBtn.setVisibility(View.VISIBLE);
-                deniedBtn.setVisibility(View.VISIBLE);
+                holder.acceptBtn.setVisibility(View.VISIBLE);
+                holder.deniedBtn.setVisibility(View.VISIBLE);
             }
         }
 
         if (request.status.equals(ApiRequest.STATUS_ACCEPTED)) {
             if (user.id == request.userId)
-                cancelBtn.setVisibility(View.VISIBLE);
+                holder.cancelBtn.setVisibility(View.VISIBLE);
             else {
-                deniedBtn.setVisibility(View.VISIBLE);
+                holder.deniedBtn.setVisibility(View.VISIBLE);
             }
         }
     }
 
+    // stores and recycles views as they are scrolled off screen
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView userImage;
+        TextView userName;
+        TextView requestTime;
+        TextView requestMessage;
+        TextView requestStatus;
+        TextView routeName;
+        TextView locationTime;
+        Button acceptBtn;
+        Button deniedBtn;
+        Button cancelBtn;
+        Button messageBtn;
+
+        ViewHolder(View view) {
+            super(view);
+            userImage = view.findViewById(R.id.user_image);
+            userName = view.findViewById(R.id.user_name);
+            requestTime = view.findViewById(R.id.request_time);
+            requestMessage = view.findViewById(R.id.request_message);
+            requestStatus = view.findViewById(R.id.request_status);
+            routeName = view.findViewById(R.id.route_name);
+            locationTime = view.findViewById(R.id.location_time);
+            acceptBtn = view.findViewById(R.id.accept_btn);
+            deniedBtn = view.findViewById(R.id.denied_btn);
+            cancelBtn = view.findViewById(R.id.cancel_btn);
+            messageBtn = view.findViewById(R.id.message_btn);
+
+            acceptBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+            deniedBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+            cancelBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+            messageBtn.setOnClickListener((v) -> listener.onItemClick(v, getAdapterPosition()));
+
+        }
+    }
+
     public interface OnItemClickListener {
-        void onItemClick(int id, ApiRequest item);
+        void onItemClick(View view, int position);
     }
 
 }

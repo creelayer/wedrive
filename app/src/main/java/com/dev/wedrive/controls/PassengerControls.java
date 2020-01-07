@@ -56,7 +56,6 @@ public class PassengerControls implements ControlsInterface {
         sheet.setLocation(location);
         sheet.expand();
         activity.setFragment(R.id.btmControls, sheet);
-
     }
 
     private void createLoader() {

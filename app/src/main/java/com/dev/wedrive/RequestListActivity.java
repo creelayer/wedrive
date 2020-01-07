@@ -7,7 +7,9 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dev.wedrive.adapters.RequestListAdapter;
+import com.dev.wedrive.dialog.ConfirmDialog;
 import com.dev.wedrive.entity.ApiRequest;
+import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
 
@@ -40,13 +42,13 @@ public class RequestListActivity extends AppCompatActivity {
                 adapter.setListener((id, request) -> {
 
                     if (id == R.id.accept_btn)
-                        requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED, (mRequest) -> adapter.updateControlsState(mRequest));
+                        acceptClick(adapter, request);
 
                     if (id == R.id.denied_btn)
-                        requestService.setStatus(request, ApiRequest.STATUS_DENIED, (mRequest) -> adapter.updateControlsState(mRequest));
+                        deniedClick(adapter, request);
 
                     if (id == R.id.cancel_btn)
-                        requestService.setStatus(request, ApiRequest.STATUS_CANCELED, (mRequest) -> adapter.updateControlsState(mRequest));
+                        cancelClick(adapter, request);
 
                     if (id == R.id.message_btn)
                         startActivity(new Intent(this, MessageListActivity.class).putExtra("request", request.uuid));
@@ -60,7 +62,41 @@ public class RequestListActivity extends AppCompatActivity {
 
         }, (error) -> {
         });
+    }
 
+    private void acceptClick(RequestListAdapter adapter, ApiRequest request) {
+        new ConfirmDialog(this)
+                .setHeaderText("Confirm")
+                .setMessageText("Confirm accept click")
+                .setOkListener((dialog) -> {
+                    requestService.setStatus(request, ApiRequest.STATUS_ACCEPTED, (mRequest) -> adapter.updateControlsState(mRequest));
+                    dialog.cancel();
+                })
+                .create()
+                .show();
+    }
 
+    private void deniedClick(RequestListAdapter adapter, ApiRequest request) {
+        new ConfirmDialog(this)
+                .setHeaderText("Confirm")
+                .setMessageText("Confirm denied click")
+                .setOkListener((dialog) -> {
+                    requestService.setStatus(request, ApiRequest.STATUS_DENIED, (mRequest) -> adapter.updateControlsState(mRequest));
+                    dialog.cancel();
+                })
+                .create()
+                .show();
+    }
+
+    private void cancelClick(RequestListAdapter adapter, ApiRequest request) {
+        new ConfirmDialog(this)
+                .setHeaderText("Confirm")
+                .setMessageText("Confirm cancel click")
+                .setOkListener((dialog) -> {
+                    requestService.setStatus(request, ApiRequest.STATUS_CANCELED, (mRequest) -> adapter.updateControlsState(mRequest));
+                    dialog.cancel();
+                })
+                .create()
+                .show();
     }
 }

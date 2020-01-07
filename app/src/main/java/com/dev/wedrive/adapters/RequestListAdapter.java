@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.R;
+import com.dev.wedrive.dialog.ConfirmDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.entity.ApiRequest;
+import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.service.UserService;
@@ -55,6 +57,7 @@ public class RequestListAdapter extends ListAdapter {
         TextView userName = convertView.findViewById(R.id.user_name);
         TextView requestTime = convertView.findViewById(R.id.request_time);
         TextView requestMessage = convertView.findViewById(R.id.request_message);
+        TextView requestStatus = convertView.findViewById(R.id.request_status);
         TextView routeName = convertView.findViewById(R.id.route_name);
         TextView locationTime = convertView.findViewById(R.id.location_time);
         acceptBtn = convertView.findViewById(R.id.accept_btn);
@@ -72,6 +75,7 @@ public class RequestListAdapter extends ListAdapter {
         userName.setText(profile.name + " " + profile.lastName);
         requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt).toString());
         requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
+        requestStatus.setText(request.status);
         routeName.setText(location.route.name);
         locationTime.setText(locationData.hour + ":" + locationData.min);
         acceptBtn.setOnClickListener((v) -> listener.onItemClick(R.id.accept_btn, request));
@@ -86,23 +90,24 @@ public class RequestListAdapter extends ListAdapter {
 
     public void updateControlsState(ApiRequest request) {
 
-        if (user.id == request.userId) {
-            acceptBtn.setVisibility(View.GONE);
-            deniedBtn.setVisibility(View.GONE);
+        cancelBtn.setVisibility(View.GONE);
+        acceptBtn.setVisibility(View.GONE);
+        deniedBtn.setVisibility(View.GONE);
 
-            if (request.status.equals(ApiRequest.STATUS_CANCELED) || request.status.equals(ApiRequest.STATUS_DENIED))
-                cancelBtn.setVisibility(View.INVISIBLE);
-
-        } else {
-            cancelBtn.setVisibility(View.GONE);
-            if (request.status.equals(ApiRequest.STATUS_ACCEPTED)) {
-                acceptBtn.setVisibility(View.INVISIBLE);
+        if (request.status.equals(ApiRequest.STATUS_NEW)) {
+            if (user.id == request.userId)
+                cancelBtn.setVisibility(View.VISIBLE);
+            else {
+                acceptBtn.setVisibility(View.VISIBLE);
                 deniedBtn.setVisibility(View.VISIBLE);
             }
+        }
 
-            if (request.status.equals(ApiRequest.STATUS_DENIED)) {
-                acceptBtn.setVisibility(View.VISIBLE);
-                deniedBtn.setVisibility(View.INVISIBLE);
+        if (request.status.equals(ApiRequest.STATUS_ACCEPTED)) {
+            if (user.id == request.userId)
+                cancelBtn.setVisibility(View.VISIBLE);
+            else {
+                deniedBtn.setVisibility(View.VISIBLE);
             }
         }
     }

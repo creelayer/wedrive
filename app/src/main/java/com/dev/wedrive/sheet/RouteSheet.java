@@ -17,10 +17,8 @@ import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.dialog.ConfirmDialog;
 import com.dev.wedrive.entity.ApiLocation;
-import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
-import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.entity.DriverLocationData;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
@@ -77,7 +75,7 @@ public class RouteSheet extends Sheet {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.sheet_passenger_route, container, false);
+        View view = inflater.inflate(R.layout.sheet_route, container, false);
 
         userImage = view.findViewById(R.id.user_image);
         userName = view.findViewById(R.id.user_name);
@@ -127,6 +125,7 @@ public class RouteSheet extends Sheet {
         } else {
             actionRouteBtn.setVisibility(View.GONE);
             changeCarBtn.setVisibility(View.GONE);
+            requestInfo.setVisibility(View.VISIBLE);
         }
 
     }

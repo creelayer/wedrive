@@ -9,13 +9,16 @@ import lombok.Setter;
 
 public class ApiUser implements Serializable {
 
+
+    public static String STATUS_CREATED = "created";
+
     @SerializedName("id")
     @Getter
     public Integer id;
 
-    @SerializedName("email")
+    @SerializedName("phone")
     @Getter
-    public String email;
+    public String phone;
 
     @SerializedName("password")
     @Getter
@@ -25,6 +28,10 @@ public class ApiUser implements Serializable {
     @Getter
     public String authKey;
 
+    @SerializedName("status")
+    @Getter
+    public String status;
+
     @SerializedName("profile")
     @Setter
     @Getter
@@ -33,8 +40,8 @@ public class ApiUser implements Serializable {
     public ApiUser() {
     }
 
-    public ApiUser(String email, String password) {
-        this.email = email;
+    public ApiUser(String phone, String password) {
+        this.phone = phone;
         this.password = password;
     }
 

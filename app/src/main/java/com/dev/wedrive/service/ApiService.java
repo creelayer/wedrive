@@ -49,7 +49,8 @@ public class ApiService {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder newRequest = chain.request().newBuilder();
 
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
+                //TODO: delete
+               // token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
 
                 if (token != null)
                     newRequest.addHeader("Authorization", "Bearer " + token.accessToken);

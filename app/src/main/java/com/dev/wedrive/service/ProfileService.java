@@ -23,11 +23,11 @@ public class ProfileService {
         ApiService.getInstance().profile().getMyProfile().enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
+                if (response instanceof ApiResponse.Success)
                     func.accept((ApiProfile) response.getData());
-                } else {
+                 else
                     func2.accept(response.getError());
-                }
+
             }
         });
     }
@@ -41,11 +41,10 @@ public class ProfileService {
         ApiService.getInstance().profile().getMyProfile().enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
+                if (response instanceof ApiResponse.Success)
                     func.accept((ApiProfile) response.getData());
-                } else {
+                 else
                     func2.accept(response.getError());
-                }
             }
         });
     }
@@ -58,11 +57,10 @@ public class ProfileService {
         ApiService.getInstance().profile().updateProfile(profile).enqueue(new Callback<ApiResponse<ApiProfile>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
+                if (response instanceof ApiResponse.Success)
                     func.accept((ApiProfile) response.getData());
-                } else {
+                 else
                     func2.accept(response.getError());
-                }
             }
         });
     }
@@ -77,9 +75,9 @@ public class ProfileService {
             ApiService.getInstance().profile().uploadImage(multipartBody).enqueue(new Callback<ApiResponse<ApiProfile>>() {
                 @Override
                 public void onResult(ApiResponse response) {
-                    if (response instanceof ApiResponse.Success) {
+                    if (response instanceof ApiResponse.Success)
                         func.accept((ApiProfile) response.getData());
-                    }
+
                 }
             });
 

@@ -55,7 +55,6 @@ public class ConfirmDialog implements DialogInterface {
 
 
     public interface OnClickListener{
-
         public void onClick(AlertDialog dialog);
     }
 }

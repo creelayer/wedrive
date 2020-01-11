@@ -166,6 +166,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locationManager.removeUpdates(locationListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {

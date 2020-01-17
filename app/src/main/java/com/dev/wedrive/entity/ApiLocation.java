@@ -1,5 +1,7 @@
 package com.dev.wedrive.entity;
 
+import com.dev.wedrive.dialog.CreateDriverLocationDialog;
+import com.dev.wedrive.dialog.CreatePassengerLocationDialog;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.LinkedTreeMap;
@@ -48,6 +50,26 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @Getter
     public ApiRoute route;
 
+    @SerializedName("hour")
+    @Setter
+    @Getter
+    public int hour;
+
+    @SerializedName("min")
+    @Setter
+    @Getter
+    public int min;
+
+    @SerializedName("interval")
+    @Setter
+    @Getter
+    public int interval;
+
+    @SerializedName("message")
+    @Setter
+    @Getter
+    public String message;
+
     /**
      *
      */
@@ -55,12 +77,22 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
 
     }
 
+
     /**
      * @param latLng
      */
     public ApiLocation(LatLng latLng) {
-        this.latitude = latLng.latitude;
-        this.longitude = latLng.longitude;
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
+    }
+
+    /**
+     * @param latLng
+     */
+    public ApiLocation(LatLng latLng, String type) {
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
+        this.type = type;
     }
 
     /**
@@ -68,10 +100,23 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
      * @param route
      */
     public ApiLocation(LatLng latLng, ApiRoute route) {
-        this.routeUuid = route.uuid;
-        this.type = route.type + "_location";
-        this.latitude = latLng.latitude;
-        this.longitude = latLng.longitude;
+        routeUuid = route.uuid;
+        type = TypeInterface.TYPE_DRIVER_LOCATION;
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
+    }
+
+    public ApiLocation(CreateDriverLocationDialog dialog) {
+        hour = Integer.parseInt(dialog.getHour().getText().toString());
+        min = Integer.parseInt(dialog.getMinute().getText().toString());
+        interval = Integer.parseInt(dialog.getInterval().getText().toString());
+    }
+
+    public ApiLocation(CreatePassengerLocationDialog dialog) {
+        hour = Integer.parseInt(dialog.getHour().getText().toString());
+        min = Integer.parseInt(dialog.getMinute().getText().toString());
+        interval = Integer.parseInt(dialog.getInterval().getText().toString());
+        message = dialog.getMessage().getText().toString();
     }
 
     public LatLng getLatLng() {

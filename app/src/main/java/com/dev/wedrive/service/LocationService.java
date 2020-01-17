@@ -47,6 +47,21 @@ public class LocationService {
     }
 
     /**
+     * Receive active passenger location if that was created before.
+     * Only one active passenger location can be.
+     *
+     * @param func
+     */
+    public void getActivePassengerLocation(Consumer<ApiLocation> func){
+        ApiService.getInstance().location().getActivePassengerLocation().enqueue(new Callback<ApiResponse<ApiLocation>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                func.accept((ApiLocation) response.getData());
+            }
+        });
+    }
+
+    /**
      * @param location
      * @param func
      */
@@ -80,7 +95,6 @@ public class LocationService {
      * @param func
      */
     public void getNearestLocations(String type, final Consumer<ArrayList<ApiLocation>> func) {
-
         ApiService.getInstance().location().getNearestLocations(type).enqueue(new Callback<ApiResponse<ArrayList<ApiLocation>>>() {
             @Override
             public void onResult(ApiResponse response) {
@@ -104,7 +118,6 @@ public class LocationService {
                 }
             }
         });
-
     }
 
     /**

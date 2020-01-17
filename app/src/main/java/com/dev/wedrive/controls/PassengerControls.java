@@ -4,8 +4,12 @@ import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
+import com.dev.wedrive.dialog.CreateDriverLocationDialog;
+import com.dev.wedrive.dialog.CreatePassengerLocationDialog;
+import com.dev.wedrive.dialog.InformDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.entity.TypeInterface;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.NearestLoader;
 import com.dev.wedrive.service.LocationService;
@@ -33,6 +37,13 @@ public class PassengerControls implements ControlsInterface {
     }
 
     public void onMapLongClick(LatLng latLng) {
+
+        locationService.getActivePassengerLocation((location) -> {
+            if (location != null)
+                new InformDialog(activity).setHeaderText("Inform").setMessageText("You already have location. Please delete active location to add else.").create().show();
+            else
+                new CreatePassengerLocationDialog(activity, new ApiLocation(latLng, TypeInterface.TYPE_PASSENGER_LOCATION)).create().show();
+        });
 
     }
 

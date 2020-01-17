@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
         signUp = findViewById(R.id.sign_up_btn);
         signUp.setOnClickListener((v) -> startActivity(new Intent(this, RegistrationActivity.class)));
 
-//        startActivity(new Intent(this, MapActivity.class));
+      startActivity(new Intent(this, MapActivity.class));
 
     }
 

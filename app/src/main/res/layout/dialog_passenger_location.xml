@@ -121,6 +121,21 @@
 
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Direction" />
+
+            <EditText
+                android:id="@+id/location_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Where to drive?"
+                android:inputType="textMultiLine" />
+
             <Button
                 android:id="@+id/driver_location_ok_btn"
                 android:layout_width="match_parent"

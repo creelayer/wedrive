@@ -39,9 +39,6 @@ public class DriverLocationData {
     }
 
     public DriverLocationData(LinkedTreeMap<String, String> map){
-        this.hour =  map.get("hour");
-        this.min =  map.get("min");
-        this.gap = map.get("gap");
     }
 
 }

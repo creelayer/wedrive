@@ -10,9 +10,11 @@ import com.dev.wedrive.dialog.InformDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiProfile;
 import com.dev.wedrive.entity.TypeInterface;
+import com.dev.wedrive.loaders.ActiveLocationsLoader;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.NearestLoader;
 import com.dev.wedrive.service.LocationService;
+import com.dev.wedrive.service.RouteService;
 import com.dev.wedrive.sheet.RouteSheet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,32 +39,40 @@ public class PassengerControls implements ControlsInterface {
     }
 
     public void onMapLongClick(LatLng latLng) {
-
         locationService.getActivePassengerLocation((location) -> {
             if (location != null)
                 new InformDialog(activity).setHeaderText("Inform").setMessageText("You already have location. Please delete active location to add else.").create().show();
             else
                 new CreatePassengerLocationDialog(activity, new ApiLocation(latLng, TypeInterface.TYPE_PASSENGER_LOCATION)).create().show();
         });
-
     }
 
+    /**
+     * Get passenger active locations.
+     * Active locations is my own created location(passenger may create only one location) or drivers active route locations
+     *
+     * @param marker
+     * @return
+     */
     public boolean onMarkerClick(Marker marker) {
 
         String uuid = marker.getTag().toString();
-        NearestLoader nearestLoader = (NearestLoader) loader.getLast();
-        LocationCollection locationCollection = nearestLoader.getLocationCollection();
+        ActiveLocationsLoader activeLocationsLoader = (ActiveLocationsLoader) loader.getLast();
+        LocationCollection locationCollection = activeLocationsLoader.getLocationCollection();
         LocationAdapter locationAdapter = locationCollection.get(uuid);
         ApiLocation location = locationAdapter.getLocation();
 
-        nearestLoader.setActiveLocation(location).highlight();
-        createSheet(location);
+        activeLocationsLoader.setActiveLocation(location).highlight();
+
+        if (location.type.equals(TypeInterface.TYPE_PASSENGER_LOCATION))
+            new CreatePassengerLocationDialog(activity, location).create().show();
+        else
+            createSheet(location);
 
         return true;
     }
 
     private void createSheet(ApiLocation location) {
-
         RouteSheet sheet = new RouteSheet();
         sheet.setLocation(location);
         sheet.expand();
@@ -70,8 +80,6 @@ public class PassengerControls implements ControlsInterface {
     }
 
     private void createLoader() {
-        loader.clear();
-        loader.add(new NearestLoader(ApiProfile.TYPE_DRIVER));
-        loader.load();
+        loader.reset(new ActiveLocationsLoader());
     }
 }

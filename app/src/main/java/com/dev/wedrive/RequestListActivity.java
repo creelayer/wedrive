@@ -48,7 +48,6 @@ public class RequestListActivity extends AppCompatActivity implements RequestLis
             });
 
 
-        }, (error) -> {
         });
     }
 

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
+import com.dev.wedrive.loaders.ActiveLocationsLoader;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -50,9 +51,9 @@ public class CreatePassengerLocationDialog extends CreateDriverLocationDialog {
         delete.setOnClickListener((v) -> deleteLocation());
 
         if (location.getUuid() != null) {
-            hour.setText(location.hour);
-            minute.setText(location.min);
-            interval.setText(location.interval);
+            hour.setText(String.valueOf(location.hour));
+            minute.setText(String.valueOf(location.min));
+            interval.setText(String.valueOf(location.interval));
             message.setText(location.message);
         } else {
             delete.setVisibility(View.GONE);
@@ -64,7 +65,7 @@ public class CreatePassengerLocationDialog extends CreateDriverLocationDialog {
 
     private void deleteLocation() {
         locationService.deleteLocation(location, (location) -> {
-            mActivity.getLoaderLocationManager().load();
+            mActivity.getLoaderLocationManager().reset(new ActiveLocationsLoader());
             dialogBuilder.cancel();
         });
     }
@@ -79,7 +80,7 @@ public class CreatePassengerLocationDialog extends CreateDriverLocationDialog {
 
         if (location.getUuid() == null) {
             locationService.createLocation(location, (result) -> {
-                mActivity.getLoaderLocationManager().load();
+                mActivity.getLoaderLocationManager().reset(new ActiveLocationsLoader());
                 dialogBuilder.cancel();
             });
         } else {

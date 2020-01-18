@@ -11,14 +11,12 @@ import com.dev.wedrive.entity.ApiUser;
 
 public class UserService {
 
-    public void current(final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+    public void current(final Consumer<ApiUser> func) {
         ApiService.getInstance().user().getCurrentUser().enqueue(new Callback<ApiResponse<ApiUser>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success)
                     func.accept((ApiUser) response.getData());
-                else
-                    func2.accept(response.getError());
             }
         });
     }

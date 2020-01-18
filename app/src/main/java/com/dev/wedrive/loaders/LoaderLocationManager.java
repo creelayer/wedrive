@@ -23,6 +23,12 @@ public class LoaderLocationManager extends ArrayDeque<LoaderInterface> {
         return super.add(loader);
     }
 
+    public void reset(LoaderInterface loader) {
+        clear();
+        add(loader);
+        load();
+    }
+
     @Override
     public void clear() {
         super.clear();

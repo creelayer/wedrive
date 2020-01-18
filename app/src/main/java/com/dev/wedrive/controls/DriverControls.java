@@ -9,12 +9,16 @@ import com.dev.wedrive.RouteListActivity;
 import com.dev.wedrive.adapters.LocationAdapter;
 import com.dev.wedrive.collection.LocationCollection;
 import com.dev.wedrive.dialog.CreateDriverLocationDialog;
+import com.dev.wedrive.dialog.CreatePassengerLocationDialog;
 import com.dev.wedrive.dialog.InformDialog;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRoute;
+import com.dev.wedrive.entity.TypeInterface;
+import com.dev.wedrive.loaders.ActiveLocationsLoader;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.loaders.RouteLoader;
 import com.dev.wedrive.service.RouteService;
+import com.dev.wedrive.sheet.PassengerSheet;
 import com.dev.wedrive.sheet.RouteSheet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -54,21 +58,25 @@ public class DriverControls implements ControlsInterface {
         });
     }
 
+    /**
+     * Get driver active locations.
+     * Active locations is locations of my active route or passengers active locations
+     *
+     * @param marker
+     * @return
+     */
     public boolean onMarkerClick(Marker marker) {
 
-        routeService.getCurrentRoute((route) -> {
 
-            if (!route.status.equals(ApiRoute.STATUS_CURRENT)) {
-                new InformDialog(activity).setHeaderText("Inform").setMessageText("Route is active. Only current route location can edit.").create().show();
-                return;
-            }
+        String uuid = marker.getTag().toString();
+        ActiveLocationsLoader activeLocationsLoader = (ActiveLocationsLoader) loader.getLast();
+        LocationCollection locationCollection = activeLocationsLoader.getLocationCollection();
+        LocationAdapter locationAdapter = locationCollection.get(uuid);
+        ApiLocation location = locationAdapter.getLocation();
 
-            String uuid = marker.getTag().toString();
-            RouteLoader routeLoader = (RouteLoader) loader.getLast();
-            LocationCollection locationCollection = routeLoader.getLocationCollection();
-            LocationAdapter locationAdapter = locationCollection.get(uuid);
-            new CreateDriverLocationDialog(activity, locationAdapter.getLocation()).create().show();
-        });
+        activeLocationsLoader.setActiveLocation(location).highlight();
+
+        createSheet(location);
 
         return true;
     }
@@ -77,10 +85,22 @@ public class DriverControls implements ControlsInterface {
         activity.setFragment(R.id.lftControls, new DriverRoutesFragment());
     }
 
-    private void createSheet(ApiRoute route) {
-        if (route == null)
-            return;
+    private void createSheet(ApiLocation location) {
 
+        if (location.type.equals(TypeInterface.TYPE_DRIVER_LOCATION)) {
+            RouteSheet sheet = new RouteSheet();
+            sheet.setLocation(location);
+            activity.setFragment(R.id.btmControls, sheet);
+        } else {
+            PassengerSheet sheet = new PassengerSheet();
+            sheet.setLocation(location);
+            activity.setFragment(R.id.btmControls, sheet);
+        }
+
+
+    }
+
+    private void createSheet(ApiRoute route) {
         RouteSheet sheet = new RouteSheet();
         sheet.setRoute(route);
         activity.setFragment(R.id.btmControls, sheet);
@@ -90,10 +110,8 @@ public class DriverControls implements ControlsInterface {
 
         if (route == null)
             return;
-        loader.clear();
-        loader.add(new RouteLoader(route));
-        loader.load();
 
+        loader.reset(new ActiveLocationsLoader());
     }
 
 }

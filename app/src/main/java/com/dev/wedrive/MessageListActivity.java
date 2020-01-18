@@ -104,7 +104,6 @@ public class MessageListActivity extends AppCompatActivity {
                 loadMessageList(user, recipient, request);
             });
 
-        }, (error) -> {
         });
     }
 

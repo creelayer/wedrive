@@ -79,7 +79,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         ApiRequest request = requests.get(position);
         ApiProfile profile = request.user.profile;
         ApiLocation location = request.location;
-        DriverLocationData locationData = new DriverLocationData((LinkedTreeMap<String, String>) location.data);
+
 
         if (profile.image != null)
             new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
@@ -89,7 +89,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         holder.requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
         holder.requestStatus.setText(request.status);
         holder.routeName.setText(location.route.name);
-        holder.locationTime.setText(locationData.hour + ":" + locationData.min);
+        holder.locationTime.setText(location.hour + ":" + location.min);
 
         updateControlsState(holder, request);
     }

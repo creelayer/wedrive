@@ -16,10 +16,13 @@ public interface ApiLocationInterface {
     @GET("/location/nearest")
     public Call<ApiResponse<ArrayList<ApiLocation>>> getNearestLocations(@Query("type") String type);
 
+    @GET("/location/active")
+    public Call<ApiResponse<List<ApiLocation>>> getActiveLocations();
+
     @GET("/location/active-passenger-location")
     public Call<ApiResponse<ApiLocation>> getActivePassengerLocation();
 
-    @GET("/location/info?expand=route,user")
+    @GET("/location/info?expand=route,user,request")
     public Call<ApiResponse<ApiLocation>> getLocationInfo(@Query("location") String uuid);
 
     @POST("/location/position")

@@ -12,6 +12,11 @@ public class ApiCar {
     @Getter
     public String uuid;
 
+    @SerializedName("user_id")
+    @Setter
+    @Getter
+    public int userId;
+
     @SerializedName("user")
     @Setter
     @Getter

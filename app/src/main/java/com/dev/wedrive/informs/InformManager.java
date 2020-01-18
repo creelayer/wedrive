@@ -75,6 +75,7 @@ public class InformManager {
 
     public void start() {
 
+
         timerTask = new TimerTask() {
             @Override
             public void run() {

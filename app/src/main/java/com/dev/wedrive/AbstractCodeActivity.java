@@ -55,7 +55,7 @@ public abstract class AbstractCodeActivity extends AppCompatActivity {
         userService.current((user) -> {
             this.user = user;
             userService.getCode(user, (codeSession) -> codeId.setText(String.valueOf(codeSession.id)));
-        }, (e) -> finish());
+        });
     }
 
     protected void cleanCode() {

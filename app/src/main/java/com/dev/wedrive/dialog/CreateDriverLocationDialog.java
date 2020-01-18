@@ -10,7 +10,10 @@ import android.widget.Toast;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
+import com.dev.wedrive.loaders.ActiveLocationsLoader;
 import com.dev.wedrive.service.LocationService;
+import com.dev.wedrive.service.RouteService;
+import com.dev.wedrive.sheet.RouteSheet;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Max;
@@ -29,6 +32,7 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
     protected ApiLocation location;
 
     protected LocationService locationService;
+    protected RouteService routeService;
 
     protected AlertDialog dialogBuilder;
 
@@ -54,6 +58,7 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
         mActivity = activity;
         location = apiLocation;
         locationService = new LocationService();
+        routeService = new RouteService();
     }
 
     public AlertDialog create() {
@@ -77,9 +82,9 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
         delete.setOnClickListener((v) -> deleteLocation());
 
         if (location.getUuid() != null) {
-            hour.setText(location.hour);
-            minute.setText(location.min);
-            interval.setText(location.interval);
+            hour.setText(String.valueOf(location.hour));
+            minute.setText(String.valueOf(location.min));
+            interval.setText(String.valueOf(location.interval));
         } else {
             delete.setVisibility(View.GONE);
         }
@@ -89,10 +94,20 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
     }
 
     private void deleteLocation() {
-        locationService.deleteLocation(location, (location) -> {
-            mActivity.getLoaderLocationManager().load();
-            dialogBuilder.cancel();
-        });
+
+        locationService.deleteLocation(location, (location) ->
+
+                routeService.getCurrentRoute((route) -> {
+
+                    mActivity.getLoaderLocationManager().reset(new ActiveLocationsLoader());
+                    RouteSheet sheet = new RouteSheet();
+                    sheet.setRoute(route);
+                    mActivity.setFragment(R.id.btmControls, sheet);
+                    dialogBuilder.cancel();
+
+                })
+        );
+
     }
 
     @Override
@@ -104,7 +119,7 @@ public class CreateDriverLocationDialog implements DialogInterface, Validator.Va
 
         if (location.getUuid() == null) {
             locationService.createLocation(location, (result) -> {
-                mActivity.getLoaderLocationManager().load();
+                mActivity.getLoaderLocationManager().reset(new ActiveLocationsLoader());
                 dialogBuilder.cancel();
             });
         } else {

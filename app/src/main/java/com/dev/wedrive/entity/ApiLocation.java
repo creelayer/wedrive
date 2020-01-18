@@ -50,6 +50,11 @@ public class ApiLocation implements ApiLocationInterface, TypeInterface {
     @Getter
     public ApiRoute route;
 
+    @SerializedName("request")
+    @Setter
+    @Getter
+    public ApiRequest request;
+
     @SerializedName("hour")
     @Setter
     @Getter

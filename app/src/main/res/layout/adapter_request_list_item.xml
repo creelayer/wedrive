@@ -50,24 +50,37 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView23"
+            <LinearLayout
+                android:id="@+id/route_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Route"
-                android:textStyle="bold|italic" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/route_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Route name" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/route_name"
+                android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Route name" />
+                android:text="Location" />
 
             <TextView
                 android:id="@+id/location_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Location time" />
+                android:text="00:00" />
 
             <TextView
                 android:id="@+id/textView18"

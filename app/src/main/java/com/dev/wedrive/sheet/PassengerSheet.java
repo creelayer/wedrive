@@ -1,6 +1,5 @@
 package com.dev.wedrive.sheet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dev.wedrive.CarListActivity;
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
-import com.dev.wedrive.dialog.ConfirmDialog;
-import com.dev.wedrive.dialog.CreateDriverLocationDialog;
-import com.dev.wedrive.dialog.InformDialog;
-import com.dev.wedrive.entity.ApiCar;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
-import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.informs.InformMessage;
@@ -48,7 +41,6 @@ public class PassengerSheet extends Sheet {
 
     private LinearLayout locationInfo;
     private TextView locationTime;
-    private Button locationBtn;
     private ImageView userImage;
     private TextView userName;
 
@@ -78,7 +70,6 @@ public class PassengerSheet extends Sheet {
         userName = view.findViewById(R.id.user_name);
         locationInfo = view.findViewById(R.id.location_info);
         locationTime = view.findViewById(R.id.location_time);
-        locationBtn = view.findViewById(R.id.location_btn);
         requestInfo = view.findViewById(R.id.request_info);
         requestMessage = view.findViewById(R.id.request_message);
         requestStatus = view.findViewById(R.id.request_status);
@@ -89,7 +80,7 @@ public class PassengerSheet extends Sheet {
         userService.current((user) -> {
             locationService.getLocation(location.uuid, (location) -> {
                 this.location = location;
-                createUserLine(user);
+                createUserLine(user, location);
                 createLocationLine(user, location);
                 createRequestLine(user, location);
             });
@@ -154,12 +145,12 @@ public class PassengerSheet extends Sheet {
         });
     }
 
-    private void createUserLine(ApiUser user) {
+    private void createUserLine(ApiUser user, ApiLocation location) {
 
-        if (user.profile.image != null)
-            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(user.profile.image, "sm"));
+        if (location.user.profile.image != null)
+            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(location.user.profile.image, "sm"));
 
-        userName.setText(user.profile.name + " " + user.profile.lastName);
+        userName.setText(location.user.profile.name + " " + location.user.profile.lastName);
     }
 
 }

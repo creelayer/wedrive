@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,7 +62,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         return requests.get(id);
     }
 
-    public void updateItem(int id, ApiRequest request){
+    public void updateItem(int id, ApiRequest request) {
         requests.set(id, request);
         notifyItemChanged(id);
     }
@@ -88,10 +89,26 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt));
         holder.requestMessage.setText(request.message == null ? "Hello! How about new passenger?" : request.message.message);
         holder.requestStatus.setText(request.status);
-        holder.routeName.setText(location.route.name);
         holder.locationTime.setText(location.hour + ":" + location.min);
 
+
+        if (location.route != null) {
+            holder.routeName.setText(location.route.name);
+            holder.routeInfo.setVisibility(View.VISIBLE);
+        } else
+            holder.routeInfo.setVisibility(View.GONE);
+
+        createRouteLine(holder, location.route);
+
         updateControlsState(holder, request);
+    }
+
+    public void createRouteLine(ViewHolder holder, ApiRoute route) {
+        if (route != null) {
+            holder.routeName.setText(route.name);
+            holder.routeName.setVisibility(View.VISIBLE);
+        } else
+            holder.routeName.setVisibility(View.GONE);
     }
 
     public void updateControlsState(ViewHolder holder, ApiRequest request) {
@@ -125,6 +142,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         TextView requestTime;
         TextView requestMessage;
         TextView requestStatus;
+        LinearLayout routeInfo;
         TextView routeName;
         TextView locationTime;
         Button acceptBtn;
@@ -139,6 +157,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             requestTime = view.findViewById(R.id.request_time);
             requestMessage = view.findViewById(R.id.request_message);
             requestStatus = view.findViewById(R.id.request_status);
+            routeInfo = view.findViewById(R.id.route_info);
             routeName = view.findViewById(R.id.route_name);
             locationTime = view.findViewById(R.id.location_time);
             acceptBtn = view.findViewById(R.id.accept_btn);

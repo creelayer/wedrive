@@ -50,7 +50,7 @@ public class ApiService {
                 Request.Builder newRequest = chain.request().newBuilder();
 
                 //TODO: delete
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_2");
+                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
 
                 if (token != null)
                     newRequest.addHeader("Authorization", "Bearer " + token.accessToken);

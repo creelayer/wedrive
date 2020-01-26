@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -19,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
+import com.dev.wedrive.service.NotificationManager;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.informs.InformManager;
@@ -32,6 +35,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -92,7 +97,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navType = headerView.findViewById(R.id.nav_type);
 
         Button testBtn = findViewById(R.id.test_btn);
-        testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
+       // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
+
+        testBtn.setOnClickListener((v) -> {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationManager.CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("My notification")
+                    .setContentText("Much longer text that cannot fit one line...")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("Much longer text that cannot fit one line2..."))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+            notificationManager.notify(1, builder.build());
+
+        });
+
+
 
 
     }

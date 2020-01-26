@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1094692869608",
+    "firebase_url": "https://wedrive-edd8a.firebaseio.com",
+    "project_id": "wedrive-edd8a",
+    "storage_bucket": "wedrive-edd8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094692869608:android:3c02ff340260e90d5a805d",
+        "android_client_info": {
+          "package_name": "com.dev.wedrive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094692869608-v48liq8higehbdehg3b4us46v8n83h51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev.wedrive",
+            "certificate_hash": "2ae543a44d10881272d79e34e9596ab5f2cde541"
+          }
+        },
+        {
+          "client_id": "1094692869608-8djn2m4bai8pmphfpmosjuj6vkkuatum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXwlDE1HpQ-_a42cAgpcQAhsn2susHxn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094692869608-8djn2m4bai8pmphfpmosjuj6vkkuatum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

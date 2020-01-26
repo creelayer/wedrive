@@ -1,6 +1,10 @@
 package com.dev.wedrive;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -59,8 +63,26 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
         signUp = findViewById(R.id.sign_up_btn);
         signUp.setOnClickListener((v) -> startActivity(new Intent(this, RegistrationActivity.class)));
 
-      startActivity(new Intent(this, MapActivity.class));
 
+        createNotificationChanel();
+
+        startActivity(new Intent(this, MapActivity.class));
+
+    }
+
+    private void createNotificationChanel() {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(com.dev.wedrive.service.NotificationManager.CHANNEL_ID, "My channel",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("My channel description");
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(false);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 

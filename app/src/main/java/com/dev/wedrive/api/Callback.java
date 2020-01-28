@@ -23,6 +23,8 @@ public abstract class Callback<T> implements retrofit2.Callback<T> {
                 JSONObject jObjError = new JSONObject(data);
                 error.setName(jObjError.getJSONObject("data").getString("name"));
                 error.setMessage(jObjError.getJSONObject("data").getString("message"));
+                error.setStatus(Integer.valueOf(jObjError.getJSONObject("data").getString("status")));
+
             } catch (Exception e) {}
 
             ApiResponse.Fail fail = new ApiResponse.Fail(error);
@@ -32,7 +34,6 @@ public abstract class Callback<T> implements retrofit2.Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-
     }
 
     public abstract void onResult(ApiResponse response);

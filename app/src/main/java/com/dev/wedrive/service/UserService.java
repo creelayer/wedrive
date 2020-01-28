@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public void getUser(int id, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
-        ApiService.getInstance().user().getInfo(id).enqueue(new Callback<ApiResponse<ApiUser>>() {
+        ApiService.getInstance().user().getUser(id).enqueue(new Callback<ApiResponse<ApiUser>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success)
@@ -33,14 +33,14 @@ public class UserService {
         });
     }
 
-    public void login(ApiUser user, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
-        ApiService.getInstance().user().login(user).enqueue(new Callback<ApiResponse<ApiUser>>() {
+    public void login(ApiUser user, final Consumer<ApiToken> func, final Consumer<ApiResponseError> func2) {
+        ApiService.getInstance().user().login(user).enqueue(new Callback<ApiResponse<ApiToken>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    ApiUser user = (ApiUser) response.getData();
-                    ApiService.getInstance().setToken(new ApiToken(user.authKey));
-                    func.accept(user);
+                    ApiToken token = (ApiToken) response.getData();
+                    ApiService.getInstance().setToken(token);
+                    func.accept(token);
                 } else {
                     ApiService.getInstance().setToken(null);
                     func2.accept(response.getError());

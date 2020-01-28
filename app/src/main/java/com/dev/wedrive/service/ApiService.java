@@ -2,21 +2,18 @@ package com.dev.wedrive.service;
 
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.api.ApiCarInterface;
+import com.dev.wedrive.api.ApiDeviceTokenInterface;
 import com.dev.wedrive.api.ApiInformInterface;
 import com.dev.wedrive.api.ApiLocationInterface;
 import com.dev.wedrive.api.ApiMessageInterface;
 import com.dev.wedrive.api.ApiProfileInterface;
 import com.dev.wedrive.api.ApiRequestInterface;
 import com.dev.wedrive.api.ApiResponse;
-import com.dev.wedrive.api.ApiResponseError;
 import com.dev.wedrive.api.ApiRouteInterface;
 import com.dev.wedrive.api.ApiUserInterface;
-import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -50,10 +47,10 @@ public class ApiService {
                 Request.Builder newRequest = chain.request().newBuilder();
 
                 //TODO: delete
-                token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
+                // token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
 
                 if (token != null)
-                    newRequest.addHeader("Authorization", "Bearer " + token.accessToken);
+                    newRequest.addHeader("Authorization", "Bearer " + token.code);
 
 
                 return chain.proceed(newRequest.build());
@@ -141,6 +138,13 @@ public class ApiService {
         return mRetrofit.create(ApiMessageInterface.class);
     }
 
+    /**
+     * @return
+     */
+    public ApiDeviceTokenInterface deviceToken() {
+        return mRetrofit.create(ApiDeviceTokenInterface.class);
+    }
+
 
     /**
      * @param response
@@ -151,26 +155,28 @@ public class ApiService {
         return (T) response.body().getData();
     }
 
-    /**
-     * @param response
-     * @return
-     */
-    public static ApiResponseError parseError(Response response) {
-
-        ApiResponseError error = new ApiResponseError();
 
 
-        try {
-            JSONObject jObjError = new JSONObject(response.errorBody().string());
-
-            error.setName(jObjError.getJSONObject("data").getString("name"));
-            error.setMessage(jObjError.getJSONObject("data").getString("message"));
-
-        } catch (Exception e) {
-
-        }
-
-        return error;
-    }
+//    /**
+//     * @param response
+//     * @return
+//     */
+//    public static ApiResponseError parseError(Response response) {
+//
+//        ApiResponseError error = new ApiResponseError();
+//
+//        try {
+//            JSONObject jObjError = new JSONObject(response.errorBody().string());
+//
+//            error.setName(jObjError.getJSONObject("data").getString("name"));
+//            error.setMessage(jObjError.getJSONObject("data").getString("message"));
+//            error.setStatus(Integer.valueOf(jObjError.getJSONObject("data").getString("message")));
+//
+//        } catch (Exception e) {
+//
+//        }
+//
+//        return error;
+//    }
 
 }

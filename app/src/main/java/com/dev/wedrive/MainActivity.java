@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.UserService;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -64,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
         signUp.setOnClickListener((v) -> startActivity(new Intent(this, RegistrationActivity.class)));
 
 
-        createNotificationChanel();
+        //createNotificationChanel();
 
-        startActivity(new Intent(this, MapActivity.class));
+        //  startActivity(new Intent(this, MapActivity.class));
 
     }
 
@@ -89,12 +91,13 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
     @Override
     public void onValidationSucceeded() {
         ApiUser data = new ApiUser(phone.getText().toString(), password.getText().toString());
-        userService.login(data, (user) -> {
-            if (user.status.equals(ApiUser.STATUS_CREATED))
-                startActivity(new Intent(this, ConfirmRegistrationActivity.class));
-            else
-                startActivity(new Intent(this, TypeActivity.class));
-
+        userService.login(data, (token) -> {
+            userService.getUser(token.userId, (user) -> {
+                if (user.status.equals(ApiUser.STATUS_CREATED))
+                    startActivity(new Intent(this, ConfirmRegistrationActivity.class));
+                else
+                    startActivity(new Intent(this, TypeActivity.class));
+            }, (error) -> password.setError(error.getMessage()));
         }, (error) -> password.setError(error.getMessage()));
     }
 

@@ -13,6 +13,10 @@ public class ApiResponseError {
     @Setter
     public String message;
 
+    @Getter
+    @Setter
+    public int status;
+
     public ApiResponseError(){
 
     }

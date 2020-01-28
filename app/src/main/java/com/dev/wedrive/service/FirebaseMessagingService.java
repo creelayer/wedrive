@@ -3,15 +3,19 @@ package com.dev.wedrive.service;
 
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
-import com.dev.wedrive.R;
+import com.dev.wedrive.entity.ApiDeviceToken;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
-    public static final String TAG = "FCM";
+    public static final String TAG = "FCMee";
+
+    public DeviceTokenService deviceTokenService;
+
+    public FirebaseMessagingService() {
+        super();
+        deviceTokenService = new DeviceTokenService();
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -20,7 +24,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-
 
 
         // Check if message contains a data payload.
@@ -68,10 +71,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-       // sendRegistrationToServer(token);
+        ApiDeviceToken apiDeviceToken = new ApiDeviceToken();
+        apiDeviceToken.token = token;
+        deviceTokenService.add(apiDeviceToken, (deviceToken) -> {
+
+        });
     }
 
 }

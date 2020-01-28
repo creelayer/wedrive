@@ -5,14 +5,19 @@ import com.google.gson.annotations.SerializedName;
 public class ApiToken {
 
 
-    @SerializedName("access-token")
-    public String accessToken;
+    @SerializedName("user_id")
+    public int userId;
 
-    public ApiToken(){
+    @SerializedName(value = "access-token", alternate = "code")
+    public String code;
 
+    @SerializedName("refresh")
+    public String refresh;
+
+    public ApiToken() {
     }
 
-    public ApiToken(String token){
-        this.accessToken = token;
+    public ApiToken(String token) {
+        this.code = token;
     }
 }

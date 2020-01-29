@@ -13,7 +13,7 @@ import com.dev.wedrive.adapters.RoutesListAdapter;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.service.RouteService;
 
-public class RouteListActivity extends AppCompatActivity {
+public class RouteListActivity extends AbstractAuthActivity {
 
     private RouteService routeService;
     private RoutesListAdapter adapter;

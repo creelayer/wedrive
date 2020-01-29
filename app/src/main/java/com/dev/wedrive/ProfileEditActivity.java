@@ -23,7 +23,7 @@ import java.util.List;
 
 import lombok.Getter;
 
-public class ProfileEditActivity extends AbstractActivity implements Validator.ValidationListener {
+public class ProfileEditActivity extends AbstractAuthActivity implements Validator.ValidationListener {
 
 
     private Validator validator;

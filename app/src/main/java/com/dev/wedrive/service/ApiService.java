@@ -8,7 +8,6 @@ import com.dev.wedrive.api.ApiLocationInterface;
 import com.dev.wedrive.api.ApiMessageInterface;
 import com.dev.wedrive.api.ApiProfileInterface;
 import com.dev.wedrive.api.ApiRequestInterface;
-import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.ApiRouteInterface;
 import com.dev.wedrive.api.ApiUserInterface;
 import com.dev.wedrive.entity.ApiToken;
@@ -23,7 +22,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -34,9 +32,11 @@ public class ApiService {
 
     private static ApiService apiServiceInstance;
 
-    @Setter
     @Getter
     private ApiToken token;
+
+    @Setter
+    protected OnTokenChange onTokenChangeListener;
 
     private ApiService() {
 
@@ -71,112 +71,57 @@ public class ApiService {
                 .build();
     }
 
-    /**
-     * @return
-     */
     public static ApiService getInstance() {
-        if (apiServiceInstance == null) {
+        if (apiServiceInstance == null)
             apiServiceInstance = new ApiService();
-        }
 
         return apiServiceInstance;
     }
 
-    /**
-     * @return
-     */
+    public void setToken(ApiToken token) {
+        this.token = token;
+        if (onTokenChangeListener != null)
+            onTokenChangeListener.onChange(token);
+    }
+
+    public interface OnTokenChange {
+         void onChange(ApiToken token);
+    }
+
     public ApiRouteInterface route() {
         return mRetrofit.create(ApiRouteInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiCarInterface car() {
         return mRetrofit.create(ApiCarInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiLocationInterface location() {
         return mRetrofit.create(ApiLocationInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiProfileInterface profile() {
         return mRetrofit.create(ApiProfileInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiUserInterface user() {
         return mRetrofit.create(ApiUserInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiRequestInterface request() {
         return mRetrofit.create(ApiRequestInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiInformInterface inform() {
         return mRetrofit.create(ApiInformInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiMessageInterface messages() {
         return mRetrofit.create(ApiMessageInterface.class);
     }
 
-    /**
-     * @return
-     */
     public ApiDeviceTokenInterface deviceToken() {
         return mRetrofit.create(ApiDeviceTokenInterface.class);
     }
-
-
-    /**
-     * @param response
-     * @param <T>
-     * @return
-     */
-    public static <T> T getData(Response<ApiResponse<T>> response) {
-        return (T) response.body().getData();
-    }
-
-
-
-//    /**
-//     * @param response
-//     * @return
-//     */
-//    public static ApiResponseError parseError(Response response) {
-//
-//        ApiResponseError error = new ApiResponseError();
-//
-//        try {
-//            JSONObject jObjError = new JSONObject(response.errorBody().string());
-//
-//            error.setName(jObjError.getJSONObject("data").getString("name"));
-//            error.setMessage(jObjError.getJSONObject("data").getString("message"));
-//            error.setStatus(Integer.valueOf(jObjError.getJSONObject("data").getString("message")));
-//
-//        } catch (Exception e) {
-//
-//        }
-//
-//        return error;
-//    }
 
 }

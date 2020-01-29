@@ -22,11 +22,14 @@ public interface ApiUserInterface {
     public Call<ApiResponse<ApiCode>> getCode(@Query("user") int id);
 
     @POST("/security/register")
-    public Call<ApiResponse<ApiUser>> register(@Body ApiUser user);
+    public Call<ApiResponse<ApiToken>> register(@Body ApiUser user);
 
     @POST("/security/confirm-registration")
     public Call<ApiResponse<ApiUser>> confirmRegistration(@Query("user") int id, @Body ApiCode code);
 
     @POST("/security/login")
     public Call<ApiResponse<ApiToken>> login(@Body ApiUser user);
+
+    @POST("/security/refresh")
+    public Call<ApiResponse<ApiToken>> refreshToken(@Body ApiToken token);
 }

@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.UserService;
 
-public abstract class AbstractCodeActivity extends AppCompatActivity {
-
+public abstract class AbstractCodeActivity extends AbstractAuthActivity {
 
     protected UserService userService;
 
@@ -23,8 +23,6 @@ public abstract class AbstractCodeActivity extends AppCompatActivity {
     EditText cn5;
     Button sendBtn;
     Button generateBtn;
-
-    ApiUser user;
 
     public AbstractCodeActivity() {
         this.userService = new UserService();
@@ -45,18 +43,12 @@ public abstract class AbstractCodeActivity extends AppCompatActivity {
         sendBtn = findViewById(R.id.code_btn);
         generateBtn = findViewById(R.id.code_generate_btn);
         sendBtn.setOnClickListener((v) -> send(getInputCode()));
-        generateBtn.setOnClickListener((v) -> userService.getCode(user, (codeSession) -> codeId.setText(codeSession.id)));
+        generateBtn.setOnClickListener((v) -> userService.getCode(ApiService.getInstance().getToken(), (codeSession) -> codeId.setText(codeSession.id)));
 
-        load();
+        userService.getCode(ApiService.getInstance().getToken(), (codeSession) -> codeId.setText(String.valueOf(codeSession.id)));
 
     }
 
-    private void load() {
-        userService.current((user) -> {
-            this.user = user;
-            userService.getCode(user, (codeSession) -> codeId.setText(String.valueOf(codeSession.id)));
-        });
-    }
 
     protected void cleanCode() {
         cn1.setText("");

@@ -1,6 +1,11 @@
 package com.dev.wedrive.api;
 
+import com.dev.wedrive.entity.ApiToken;
+import com.dev.wedrive.service.ApiService;
+
 import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -25,10 +30,27 @@ public abstract class Callback<T> implements retrofit2.Callback<T> {
                 error.setMessage(jObjError.getJSONObject("data").getString("message"));
                 error.setStatus(Integer.valueOf(jObjError.getJSONObject("data").getString("status")));
 
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
-            ApiResponse.Fail fail = new ApiResponse.Fail(error);
-            onResult(fail);
+            if (error.status == HttpURLConnection.HTTP_UNAUTHORIZED && ApiService.getInstance().getToken() != null) {
+
+                ApiService.getInstance().user().refreshToken(ApiService.getInstance().getToken()).enqueue(new Callback<ApiResponse<ApiToken>>() {
+                    @Override
+                    public void onResult(ApiResponse response) {
+                        if (response instanceof ApiResponse.Success) {
+                            ApiToken token = (ApiToken) response.getData();
+                            ApiService.getInstance().setToken(token);
+                        } else
+                            ApiService.getInstance().setToken(null);
+                    }
+                });
+
+            } else {
+                ApiResponse.Fail fail = new ApiResponse.Fail(error);
+                onResult(fail);
+            }
+
         }
     }
 

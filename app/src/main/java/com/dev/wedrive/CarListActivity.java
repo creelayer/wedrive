@@ -14,7 +14,7 @@ import com.dev.wedrive.adapters.RoutesListAdapter;
 import com.dev.wedrive.entity.ApiCar;
 import com.dev.wedrive.service.CarService;
 
-public class CarListActivity extends AppCompatActivity {
+public class CarListActivity extends AbstractAuthActivity {
 
     protected CarService carService;
     private CarListAdapter adapter;

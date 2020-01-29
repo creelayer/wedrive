@@ -3,20 +3,15 @@ package com.dev.wedrive;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.UserService;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -24,7 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements Validator.ValidationListener {
+public class MainActivity extends AbstractActivity implements Validator.ValidationListener {
 
 
     protected UserService userService;
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
         signIn.setOnClickListener((v) -> validator.validate());
 
         signUp = findViewById(R.id.sign_up_btn);
-        signUp.setOnClickListener((v) -> startActivity(new Intent(this, RegistrationActivity.class)));
+        signUp.setOnClickListener((v) -> goToAndFinish(RegistrationActivity.class));
 
 
         //createNotificationChanel();
@@ -94,9 +89,9 @@ public class MainActivity extends AppCompatActivity implements Validator.Validat
         userService.login(data, (token) -> {
             userService.getUser(token.userId, (user) -> {
                 if (user.status.equals(ApiUser.STATUS_CREATED))
-                    startActivity(new Intent(this, ConfirmRegistrationActivity.class));
+                    goToAndFinish(ConfirmRegistrationActivity.class);
                 else
-                    startActivity(new Intent(this, TypeActivity.class));
+                    goToAndFinish(TypeActivity.class);
             }, (error) -> password.setError(error.getMessage()));
         }, (error) -> password.setError(error.getMessage()));
     }

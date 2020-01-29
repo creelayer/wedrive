@@ -14,7 +14,7 @@ import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
 
-public class RequestListActivity extends AppCompatActivity implements RequestListAdapter.OnItemClickListener {
+public class RequestListActivity extends AbstractAuthActivity implements RequestListAdapter.OnItemClickListener {
 
     private UserService userService;
     private RequestService requestService;

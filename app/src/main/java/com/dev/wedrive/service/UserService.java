@@ -41,34 +41,32 @@ public class UserService {
                     ApiToken token = (ApiToken) response.getData();
                     ApiService.getInstance().setToken(token);
                     func.accept(token);
-                } else {
-                    ApiService.getInstance().setToken(null);
+                } else
                     func2.accept(response.getError());
-                }
+
             }
         });
     }
 
-    public void register(ApiUser user, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+    public void register(ApiUser user, final Consumer<ApiToken> func, final Consumer<ApiResponseError> func2) {
 
-        ApiService.getInstance().user().register(user).enqueue(new Callback<ApiResponse<ApiUser>>() {
+        ApiService.getInstance().user().register(user).enqueue(new Callback<ApiResponse<ApiToken>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
-                    ApiUser user = (ApiUser) response.getData();
-                    ApiService.getInstance().setToken(new ApiToken(user.authKey));
-                    func.accept(user);
-                } else {
-                    ApiService.getInstance().setToken(null);
+                    ApiToken token = (ApiToken) response.getData();
+                    ApiService.getInstance().setToken(token);
+                    func.accept(token);
+                } else
                     func2.accept(response.getError());
-                }
+
             }
         });
     }
 
-    public void confirmRegistration(ApiUser user, ApiCode apiCode, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+    public void confirmRegistration(ApiToken token, ApiCode apiCode, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
 
-        ApiService.getInstance().user().confirmRegistration(user.id, apiCode).enqueue(new Callback<ApiResponse<ApiUser>>() {
+        ApiService.getInstance().user().confirmRegistration(token.userId, apiCode).enqueue(new Callback<ApiResponse<ApiUser>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success)
@@ -79,9 +77,10 @@ public class UserService {
         });
     }
 
-    public void getCode(ApiUser user, final Consumer<ApiCode> func) {
 
-        ApiService.getInstance().user().getCode(user.id).enqueue(new Callback<ApiResponse<ApiCode>>() {
+    public void getCode(ApiToken token, final Consumer<ApiCode> func) {
+
+        ApiService.getInstance().user().getCode(token.userId).enqueue(new Callback<ApiResponse<ApiCode>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success)

@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 import lombok.Getter;
 
-public class MessageListActivity extends AppCompatActivity {
+public class MessageListActivity extends AbstractAuthActivity {
 
     private MessagesService messagesService;
     private RequestService requestService;

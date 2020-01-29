@@ -14,7 +14,7 @@ import com.dev.wedrive.RouteListActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DriverRoutesFragment extends Fragment implements View.OnClickListener {
+public class DriverRoutesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,16 +22,8 @@ public class DriverRoutesFragment extends Fragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_driver_routes, container, false);
 
-        view.findViewById(R.id.route_list_btn).setOnClickListener(this);
+        view.findViewById(R.id.route_list_btn).setOnClickListener((v) -> startActivity(new Intent(getActivity(), RouteListActivity.class)));
 
         return view;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.route_list_btn) {
-            startActivity(new Intent(getActivity(), RouteListActivity.class));
-        }
     }
 }

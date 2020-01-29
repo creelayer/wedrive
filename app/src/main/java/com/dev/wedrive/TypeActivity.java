@@ -8,9 +8,13 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.entity.ApiToken;
+import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.ProfileService;
 
-public class TypeActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.Observable;
+
+public class TypeActivity extends AbstractAuthActivity implements View.OnClickListener {
 
 
     private ProfileService profileService;
@@ -45,11 +49,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.type_passenger_btn)
             profile.type = ApiProfile.TYPE_PASSENGER;
 
-        profileService.updateProfile(profile, (apiProfile) -> {
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }, (error) -> {
+        profileService.updateProfile(profile, (apiProfile) -> goToAndFinish(MapActivity.class), (error) -> {
         });
     }
+
 }

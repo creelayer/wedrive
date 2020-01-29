@@ -1,6 +1,5 @@
 package com.dev.wedrive;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -19,7 +18,7 @@ public class RegistrationActivity extends MainActivity {
     @Override
     public void onValidationSucceeded() {
         ApiUser newUser = new ApiUser(phone.getText().toString(), password.getText().toString());
-        userService.register(newUser, (user) -> startActivity(new Intent(this, ConfirmRegistrationActivity.class)), (e) ->
+        userService.register(newUser, (token) -> goToAndFinish(ConfirmRegistrationActivity.class), (e) ->
                 Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         );
     }

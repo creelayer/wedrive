@@ -1,6 +1,7 @@
 package com.dev.wedrive;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
 
@@ -14,6 +15,13 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     protected int PICK_IMAGE_REQUEST = 1;
     protected static final int STORAGE_PERMISSION_CODE = 123;
+
+    protected void goToAndFinish(Class activity){
+        Intent intent = new Intent(this, activity);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     //Requesting permission
     protected void requestStoragePermission() {

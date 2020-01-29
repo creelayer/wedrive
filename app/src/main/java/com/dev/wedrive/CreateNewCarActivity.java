@@ -24,7 +24,7 @@ import java.util.List;
 
 import lombok.Getter;
 
-public class CreateNewCarActivity extends AbstractActivity implements Validator.ValidationListener {
+public class CreateNewCarActivity extends AbstractAuthActivity implements Validator.ValidationListener {
 
     private Validator validator;
 

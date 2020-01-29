@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
+import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.NotificationManager;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
@@ -44,7 +45,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     public final int MIN_TIME = 10000;
     public final int MIN_DISTANCE = 10;
@@ -108,18 +109,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
        // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
 
         testBtn.setOnClickListener((v) -> {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationManager.CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("My notification")
-                    .setContentText("Much longer text that cannot fit one line...")
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText("Much longer text that cannot fit one line2..."))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            ApiService.getInstance().setToken(null);
 
-// notificationId is a unique int for each notification that you must define
-            notificationManager.notify(1, builder.build());
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationManager.CHANNEL_ID)
+//                    .setSmallIcon(R.mipmap.ic_launcher)
+//                    .setContentTitle("My notification")
+//                    .setContentText("Much longer text that cannot fit one line...")
+//                    .setStyle(new NotificationCompat.BigTextStyle()
+//                            .bigText("Much longer text that cannot fit one line2..."))
+//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//// notificationId is a unique int for each notification that you must define
+//            notificationManager.notify(1, builder.build());
 
         });
 

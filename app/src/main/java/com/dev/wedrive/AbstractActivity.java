@@ -1,26 +1,13 @@
 package com.dev.wedrive;
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.dev.wedrive.service.NotificationMessagingService;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import lombok.NonNull;
 

@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +18,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
-import com.dev.wedrive.service.ApiService;
-import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.informs.InformManager;
 import com.dev.wedrive.loaders.LoaderLocationManager;
+import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
+import com.dev.wedrive.util.DownloadImageTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,7 +32,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -79,11 +77,6 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        String t = FirebaseInstanceId.getInstance().getToken();
-
-        Log.d("dddd", t);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
@@ -100,29 +93,9 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
         navType = headerView.findViewById(R.id.nav_type);
 
         Button testBtn = findViewById(R.id.test_btn);
-       // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
+        // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
 
-        testBtn.setOnClickListener((v) -> {
-
-            ApiService.getInstance().setToken(null);
-
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationManager.CHANNEL_ID)
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-//                    .setContentTitle("My notification")
-//                    .setContentText("Much longer text that cannot fit one line...")
-//                    .setStyle(new NotificationCompat.BigTextStyle()
-//                            .bigText("Much longer text that cannot fit one line2..."))
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//
-//// notificationId is a unique int for each notification that you must define
-//            notificationManager.notify(1, builder.build());
-
-        });
-
-
-
+        testBtn.setOnClickListener((v) -> ApiService.getInstance().setToken(null));
 
     }
 

@@ -1,9 +1,5 @@
 package com.dev.wedrive;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +9,7 @@ import android.widget.Toast;
 import com.dev.wedrive.entity.ApiDeviceToken;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.DeviceTokenService;
-import com.dev.wedrive.service.NotificationMessagingService;
 import com.dev.wedrive.service.UserService;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -68,7 +62,7 @@ public class MainActivity extends AbstractActivity implements Validator.Validati
         signUp = findViewById(R.id.sign_up_btn);
         signUp.setOnClickListener((v) -> goToAndFinish(RegistrationActivity.class));
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((instanceIdResult -> this.deviceToken = instanceIdResult.getToken()));
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((instanceIdResult -> this.deviceToken = instanceIdResult.getToken())); TODO:uncomment push
 
     }
 

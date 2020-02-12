@@ -3,19 +3,21 @@ package com.dev.wedrive.service;
 
 import android.util.Log;
 
-import com.dev.wedrive.entity.ApiDeviceToken;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+public class NotificationMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     public static final String TAG = "FCMee";
 
+    public static final String  CHANNEL_ID = "notification_chanel";
+
     public DeviceTokenService deviceTokenService;
 
-    public FirebaseMessagingService() {
+    public NotificationMessagingService() {
         super();
         deviceTokenService = new DeviceTokenService();
     }
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -62,20 +64,32 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     */
-    @Override
-    public void onNewToken(String token) {
-        Log.d(TAG, "Refreshed token: " + token);
+//    /**
+//     * Called if InstanceID token is updated. This may occur if the security of
+//     * the previous token had been compromised. Note that this is called when the InstanceID token
+//     * is initially generated so this is where you would retrieve the token.
+//     */
+//    @Override
+//    public void onNewToken(String token) {
+//        deviceTokenService.add(new ApiDeviceToken(token), (deviceToken) -> {});
+//    }
 
-        ApiDeviceToken apiDeviceToken = new ApiDeviceToken();
-        apiDeviceToken.token = token;
-        deviceTokenService.add(apiDeviceToken, (deviceToken) -> {
 
-        });
-    }
+//    public void createNotificationChanel() {
+//
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            NotificationChannel channel = new NotificationChannel(NotificationMessagingService.CHANNEL_ID, "App notification",
+//                    NotificationManager.IMPORTANCE_HIGH);
+//            channel.setDescription("Add app notification permission");
+//            channel.enableLights(true);
+//            channel.setLightColor(Color.RED);
+//            channel.enableVibration(false);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
+
 
 }

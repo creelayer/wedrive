@@ -10,8 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dev.wedrive.entity.ApiDeviceToken;
 import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.service.DeviceTokenService;
+import com.dev.wedrive.service.NotificationMessagingService;
 import com.dev.wedrive.service.UserService;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -23,8 +27,11 @@ public class MainActivity extends AbstractActivity implements Validator.Validati
 
 
     protected UserService userService;
+    protected DeviceTokenService deviceTokenService;
 
     private Validator validator;
+
+    private String deviceToken;
 
     @NotEmpty
     protected EditText phone;
@@ -33,13 +40,14 @@ public class MainActivity extends AbstractActivity implements Validator.Validati
     @Password(min = 4)
     protected EditText password;
 
-
     protected Button signIn;
     protected Button signUp;
 
     public MainActivity() {
         super();
         this.userService = new UserService();
+        this.deviceTokenService = new DeviceTokenService();
+
     }
 
     @Override
@@ -60,33 +68,18 @@ public class MainActivity extends AbstractActivity implements Validator.Validati
         signUp = findViewById(R.id.sign_up_btn);
         signUp.setOnClickListener((v) -> goToAndFinish(RegistrationActivity.class));
 
-
-        //createNotificationChanel();
-
-        //  startActivity(new Intent(this, MapActivity.class));
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((instanceIdResult -> this.deviceToken = instanceIdResult.getToken()));
 
     }
-
-    private void createNotificationChanel() {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(com.dev.wedrive.service.NotificationManager.CHANNEL_ID, "My channel",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("My channel description");
-            channel.enableLights(true);
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(false);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
 
     @Override
     public void onValidationSucceeded() {
         ApiUser data = new ApiUser(phone.getText().toString(), password.getText().toString());
         userService.login(data, (token) -> {
+
+            deviceTokenService.add(new ApiDeviceToken(this.deviceToken), (deviceToken) -> {
+            });
+
             userService.getUser(token.userId, (user) -> {
                 if (user.status.equals(ApiUser.STATUS_CREATED))
                     goToAndFinish(ConfirmRegistrationActivity.class);

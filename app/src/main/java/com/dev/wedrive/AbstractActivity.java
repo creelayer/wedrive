@@ -1,13 +1,26 @@
 package com.dev.wedrive;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.dev.wedrive.service.NotificationMessagingService;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import lombok.NonNull;
 
@@ -16,7 +29,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     protected int PICK_IMAGE_REQUEST = 1;
     protected static final int STORAGE_PERMISSION_CODE = 123;
 
-    protected void goToAndFinish(Class activity){
+    protected void goToAndFinish(Class activity) {
         Intent intent = new Intent(this, activity);
         //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

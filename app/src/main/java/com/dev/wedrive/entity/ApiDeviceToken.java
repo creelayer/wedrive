@@ -28,4 +28,8 @@ public class ApiDeviceToken {
     public ApiDeviceToken() {
     }
 
+    public ApiDeviceToken(String token) {
+        this.token = token;
+    }
+
 }

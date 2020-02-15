@@ -19,4 +19,10 @@
     <string name="invalid_phone">Невірно вказаний номер</string>
 
 
+    <string name="pin_title">Валідація телефону</string>
+    <string name="pin_sub_title">Введіть код з SMS. Сессія: %1$s</string>
+    <string name="pin_button">Підтвердити</string>
+    <string name="pin_resend">Відправити ще раз? </string>
+    <string name="pin_resend_wait">Відправити ще раз через: %1$s сек </string>
+
 </resources>

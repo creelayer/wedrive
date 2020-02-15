@@ -40,14 +40,16 @@ public class ApiService {
 
     private ApiService() {
 
+        //TODO: delete
+        token = new ApiToken("okV64Ws26Tp4U8dx1hwSpj-EFlZlwHPx9QVaWuoBEnb4FjtLKhMxOmrgAWWC1mkZ");
+        token.userId = 2;
+
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
         Interceptor headerInterceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder newRequest = chain.request().newBuilder();
-
-                //TODO: delete
-                // token = new ApiToken("0eHLTLNOcozQZ8cgQqk3jdiv375gw0_1");
 
                 if (token != null)
                     newRequest.addHeader("Authorization", "Bearer " + token.code);

@@ -101,4 +101,15 @@ public class UserService {
         });
     }
 
+    public void generateCode(ApiToken token, final Consumer<ApiCode> func) {
+
+        ApiService.getInstance().user().getCode(token.userId).enqueue(new Callback<ApiResponse<ApiCode>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCode) response.getData());
+            }
+        });
+    }
+
 }

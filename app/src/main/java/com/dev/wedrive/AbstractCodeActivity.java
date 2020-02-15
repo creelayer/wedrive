@@ -1,73 +1,150 @@
 package com.dev.wedrive;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.text.Editable;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.entity.ApiToken;
 import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.UserService;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public abstract class AbstractCodeActivity extends AbstractAuthActivity {
 
+    public static int CODE_GENERATE_WAIT_SEC = 60;
     protected UserService userService;
 
-    TextView codeId;
-    EditText cn1;
-    EditText cn2;
-    EditText cn3;
-    EditText cn4;
-    EditText cn5;
-    Button sendBtn;
-    Button generateBtn;
+    protected CountDownTimer waiter;
+
+    ArrayList<EditText> inputs;
+
+    protected TextView subTitle;
+    protected TextView resendButton;
+    protected Button verifyBtn;
+
 
     public AbstractCodeActivity() {
         this.userService = new UserService();
     }
+
+    public abstract void send(String code);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
 
-        codeId = findViewById(R.id.code_id);
-        cn1 = findViewById(R.id.cn1);
-        cn2 = findViewById(R.id.cn2);
-        cn3 = findViewById(R.id.cn3);
-        cn4 = findViewById(R.id.cn4);
-        cn5 = findViewById(R.id.cn5);
+        subTitle = findViewById(R.id.pin_sub_title);
+        resendButton = findViewById(R.id.pin_resend);
+        verifyBtn = findViewById(R.id.pin_verify_btn);
+        verifyBtn.setOnClickListener((v) -> send(""));
 
-        sendBtn = findViewById(R.id.code_btn);
-        generateBtn = findViewById(R.id.code_generate_btn);
-        sendBtn.setOnClickListener((v) -> send(getInputCode()));
-        generateBtn.setOnClickListener((v) -> userService.getCode(ApiService.getInstance().getToken(), (codeSession) -> codeId.setText(codeSession.id)));
+        inputs = new ArrayList<>();
+        inputs.add(findViewById(R.id.cn1));
+        inputs.add(findViewById(R.id.cn2));
+        inputs.add(findViewById(R.id.cn3));
+        inputs.add(findViewById(R.id.cn4));
 
-        userService.getCode(ApiService.getInstance().getToken(), (codeSession) -> codeId.setText(String.valueOf(codeSession.id)));
+        for (int i = 0; i < inputs.size(); i++) {
+            inputs.get(i).addTextChangedListener(new TextWatcher(i + 1));
+            inputs.get(i).setOnFocusChangeListener(new FocusWatcher());
+        }
+
+
+        generateNewCode(null);
 
     }
 
 
-    protected void cleanCode() {
-        cn1.setText("");
-        cn2.setText("");
-        cn3.setText("");
-        cn4.setText("");
-        cn5.setText("");
+    public void enableVerifyButton(boolean state) {
+
+        if (verifyBtn == null)
+            verifyBtn = findViewById(R.id.pin_verify_btn);
+
+//        if (!state)
+//            verifyBtn.setAlpha((float) 0.5);
+//        else
+//            verifyBtn.setAlpha(1);
+
+        verifyBtn.setEnabled(state);
     }
 
-    protected String getInputCode() {
-        String code = "";
-        code += cn1.getText().toString();
-        code += cn2.getText().toString();
-        code += cn3.getText().toString();
-        code += cn4.getText().toString();
-        code += cn5.getText().toString();
 
-        return code;
+    public void generateNewCode(View v) {
+        subTitle.setText(getResources().getString(R.string.pin_sub_title, ""));
+        userService.getCode(ApiService.getInstance().getToken(), (codeSession) -> {
+            subTitle.setText(getResources().getString(R.string.pin_sub_title, String.valueOf(codeSession.id)));
+            runCodeGenerateWaiter();
+        });
     }
 
-    public abstract void send(String code);
+    private void runCodeGenerateWaiter() {
+
+        if (waiter != null)
+            return;
+
+        waiter = new CountDownTimer(CODE_GENERATE_WAIT_SEC * 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                resendButton.setText(getResources().getString(R.string.pin_resend_wait, String.valueOf(millisUntilFinished / 1000 - CODE_GENERATE_WAIT_SEC / 1000)));
+                resendButton.setEnabled(false);
+            }
+
+            public void onFinish() {
+                resendButton.setText(getResources().getString(R.string.pin_resend));
+                resendButton.setEnabled(true);
+                waiter = null;
+            }
+        }.start();
+    }
+
+    protected class FocusWatcher implements View.OnFocusChangeListener {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus)
+                ((EditText) v).setText("");
+
+            enableVerifyButton(false);
+        }
+    }
+
+    protected class TextWatcher implements android.text.TextWatcher {
+
+        private int next;
+
+        private TextWatcher(int next) {
+            this.next = next;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            if (count > 0 && next < inputs.size())
+                inputs.get(next).requestFocus();
+
+            for (int i = 0; i < inputs.size(); i++)
+                if (inputs.get(i).getText().length() == 0)
+                    return;
+
+            enableVerifyButton(true);
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+    }
 }

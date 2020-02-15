@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,8 +37,6 @@ public class MessageListActivity extends AbstractAuthActivity {
 
     @Getter
     private ApiRequest request;
-
-    private ApiMessage state;
 
     private MessagesListAdapter adapter;
 

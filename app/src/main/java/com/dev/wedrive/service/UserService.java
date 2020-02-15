@@ -33,6 +33,18 @@ public class UserService {
         });
     }
 
+    public void getUser(String phone, final Consumer<ApiUser> func, final Consumer<ApiResponseError> func2) {
+        ApiService.getInstance().user().getUser(phone).enqueue(new Callback<ApiResponse<ApiUser>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiUser) response.getData());
+                else
+                    func2.accept(response.getError());
+            }
+        });
+    }
+
     public void login(ApiUser user, final Consumer<ApiToken> func, final Consumer<ApiResponseError> func2) {
         ApiService.getInstance().user().login(user).enqueue(new Callback<ApiResponse<ApiToken>>() {
             @Override

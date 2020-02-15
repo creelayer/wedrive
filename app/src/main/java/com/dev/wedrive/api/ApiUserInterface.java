@@ -18,6 +18,9 @@ public interface ApiUserInterface {
     @GET("/user/view")
     public Call<ApiResponse<ApiUser>> getUser(@Query("user") int id);
 
+    @GET("/user/find")
+    public Call<ApiResponse<ApiUser>> getUser(@Query("phone") String phone);
+
     @GET("/security/code")
     public Call<ApiResponse<ApiCode>> getCode(@Query("user") int id);
 

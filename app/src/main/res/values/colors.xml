@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryDark">#FFC107</color>
-    <color name="yellow">#FFC107</color>
-    <color name="white">#FFF</color>
-    <color name="buttonDarkDb">#1f2534</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#fcbe07</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="formButton">#1f2534</color>
+    <color name="inputBorderColor">#efeff4</color>
+
+
 </resources>
+

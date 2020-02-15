@@ -2,40 +2,38 @@ package com.dev.wedrive;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.dev.wedrive.entity.ApiDeviceToken;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.DeviceTokenService;
 import com.dev.wedrive.service.UserService;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.hbb20.CountryCodePicker;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
-import java.util.List;
-
-public class MainActivity extends AbstractActivity implements Validator.ValidationListener {
+public class MainActivity extends AbstractActivity {
 
 
     protected UserService userService;
     protected DeviceTokenService deviceTokenService;
 
-    private Validator validator;
+    private ViewFlipper loginFlipper;
 
-    private String deviceToken;
+    public CountryCodePicker ccpInput;
 
     @NotEmpty
-    protected EditText phone;
+    @Length(min = 9, max = 9)
+    protected EditText phoneInput;
 
     @NotEmpty
     @Password(min = 4)
-    protected EditText password;
+    protected EditText passwordInput;
 
-    protected Button signIn;
-    protected Button signUp;
 
     public MainActivity() {
         super();
@@ -50,51 +48,61 @@ public class MainActivity extends AbstractActivity implements Validator.Validati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+        loginFlipper = findViewById(R.id.loginFlipper);
 
-        phone = findViewById(R.id.phone);
-        password = findViewById(R.id.password);
+        ccpInput = findViewById(R.id.ccp);
+        phoneInput = findViewById(R.id.phone);
+        passwordInput = findViewById(R.id.password);
 
-        signIn = findViewById(R.id.sign_in_btn);
-        signIn.setOnClickListener((v) -> validator.validate());
-
-        signUp = findViewById(R.id.sign_up_btn);
-        signUp.setOnClickListener((v) -> goToAndFinish(RegistrationActivity.class));
-
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((instanceIdResult -> this.deviceToken = instanceIdResult.getToken())); TODO:uncomment push
+       // FirebaseApp.initializeApp(this);
 
     }
 
-    @Override
-    public void onValidationSucceeded() {
-        ApiUser data = new ApiUser(phone.getText().toString(), password.getText().toString());
-        userService.login(data, (token) -> {
+    public void showPasswordInput(View view) {
 
-            deviceTokenService.add(new ApiDeviceToken(this.deviceToken), (deviceToken) -> {
-            });
+        String ccp = ccpInput.getDefaultCountryCode();
+        String phone = phoneInput.getText().toString();
 
-            userService.getUser(token.userId, (user) -> {
-                if (user.status.equals(ApiUser.STATUS_CREATED))
-                    goToAndFinish(ConfirmRegistrationActivity.class);
-                else
-                    goToAndFinish(TypeActivity.class);
-            }, (error) -> password.setError(error.getMessage()));
-        }, (error) -> password.setError(error.getMessage()));
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-
-            String message = error.getCollatedErrorMessage(this);
-
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
+        if (phone.isEmpty()) {
+            phoneInput.setError(getResources().getString(R.string.error_empty));
+            return;
         }
+
+        userService.getUser(ccp + phone, (user) -> loginFlipper.showNext(), (error) -> phoneInput.setError(error.getMessage()));
+
+    }
+
+    public void login(View view) {
+
+        String ccp = ccpInput.getDefaultCountryCode();
+        String phone = phoneInput.getText().toString();
+        String password = passwordInput.getText().toString();
+
+        if (password.isEmpty()) {
+            phoneInput.setError(getResources().getString(R.string.error_empty));
+            return;
+        }
+
+        ApiUser data = new ApiUser(ccp + phone, password);
+
+        userService.login(data, (token) ->
+
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((instanceIdResult ->
+
+                                deviceTokenService.add(new ApiDeviceToken(instanceIdResult.getToken()), (deviceToken) ->
+
+                                        userService.getUser(token.userId, (user) -> {
+                                            if (user.status.equals(ApiUser.STATUS_CREATED))
+                                                goToAndFinish(ConfirmRegistrationActivity.class);
+                                            else
+                                                goToAndFinish(TypeActivity.class);
+                                        }, (error) -> phoneInput.setError(error.getMessage()))
+
+                                )
+
+                        ))
+
+                , (error) -> passwordInput.setError(error.getMessage()));
+
     }
 }

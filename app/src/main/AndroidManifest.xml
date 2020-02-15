@@ -64,11 +64,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapActivity"
-            android:theme="@style/NoActionBar" />
+            android:name=".MapActivity" />
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/MainLayout">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

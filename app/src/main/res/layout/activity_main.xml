@@ -4,58 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:background="#fcbe07"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/main_background_yellow_city2_c" />
+
     <androidx.cardview.widget.CardView
+        style="@style/LoginBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/loginBox"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="8dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.396">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            style="@style/p20">
 
-            <EditText
-                android:id="@+id/phone"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="+380636308315"
-                android:inputType="textEmailAddress"
-                android:text="+380636308315" />
 
-            <EditText
-                android:id="@+id/password"
+            <TextView
+                style="@style/LoginBoxTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:text="1234" />
+                android:text="@string/login_title" />
 
 
-
-
-            <Button
-                android:id="@+id/sign_in_btn"
+            <ViewFlipper
+                android:id="@+id/loginFlipper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sign in"
-                android:theme="@style/formButtonDark" />
+                android:layout_height="match_parent"
+                android:inAnimation="@android:anim/slide_in_left"
+                android:outAnimation="@android:anim/slide_out_right"
+                android:layout_marginBottom="10dp"
+                >
 
-            <Button
-                android:id="@+id/sign_up_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SignUp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <EditText
+                            android:id="@+id/phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/input_bg_rounded"
+                            android:ems="10"
+                            android:inputType="phone"
+                            android:paddingStart="100dp"
+                            android:textSize="18sp" />
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            app:ccp_customMasterCountries="UA"
+                            app:ccp_defaultLanguage="UKRAINIAN"
+                            app:ccp_defaultNameCode="UA"
+                            app:ccp_showNameCode="false" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/button2"
+                        style="@style/LoginBoxButton"
+                        android:layout_width="match_parent"
+                        android:onClick="showPasswordInput"
+                        android:text="Далі" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_bg_rounded"
+                        android:ems="10"
+                        android:hint="Пароль"
+                        android:inputType="textPassword"
+                        android:paddingStart="100dp"
+                        android:textSize="18sp" />
+
+                    <Button
+                        style="@style/LoginBoxButton"
+                        android:layout_width="match_parent"
+                        android:onClick="login"
+                        android:text="Вхід" />
+
+                </LinearLayout>
+            </ViewFlipper>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegistrationActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -43,7 +43,7 @@
                 style="@style/LoginBoxTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/login_title" />
+                android:text="@string/register_title" />
 
 
             <ViewFlipper
@@ -99,8 +99,8 @@
                         style="@style/LoginBoxSubButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="goToRegistration"
-                        android:text="@string/registration" />
+                        android:onClick="goToLogin"
+                        android:text="@string/go_to_login" />
 
                 </LinearLayout>
 
@@ -124,7 +124,7 @@
                     <Button
                         style="@style/LoginBoxButton"
                         android:layout_width="match_parent"
-                        android:onClick="login"
+                        android:onClick="register"
                         android:text="@string/sign_in" />
 
                     <TextView
@@ -132,8 +132,8 @@
                         style="@style/LoginBoxSubButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="showPhoneInput"
-                        android:text="@string/back_to_login" />
+                        android:onClick="goToLogin"
+                        android:text="@string/go_to_login" />
 
                 </LinearLayout>
             </ViewFlipper>

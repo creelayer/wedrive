@@ -9,7 +9,6 @@ import com.dev.wedrive.entity.ApiDeviceToken;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.DeviceTokenService;
 import com.dev.wedrive.service.UserService;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hbb20.CountryCodePicker;
 import com.mobsandgeeks.saripaar.annotation.Length;
@@ -19,19 +18,21 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 public class MainActivity extends AbstractActivity {
 
 
+    protected static int PASSWORD_MIN_LEN = 4;
+
+    protected int activityId = R.layout.activity_main;
+
     protected UserService userService;
     protected DeviceTokenService deviceTokenService;
 
-    private ViewFlipper loginFlipper;
+    protected ViewFlipper loginFlipper;
 
     public CountryCodePicker ccpInput;
 
     @NotEmpty
-    @Length(min = 9, max = 9)
     protected EditText phoneInput;
 
     @NotEmpty
-    @Password(min = 4)
     protected EditText passwordInput;
 
 
@@ -46,15 +47,13 @@ public class MainActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(activityId);
 
         loginFlipper = findViewById(R.id.loginFlipper);
 
         ccpInput = findViewById(R.id.ccp);
         phoneInput = findViewById(R.id.phone);
         passwordInput = findViewById(R.id.password);
-
-       // FirebaseApp.initializeApp(this);
 
     }
 
@@ -72,6 +71,10 @@ public class MainActivity extends AbstractActivity {
 
     }
 
+    public void showPhoneInput(View view) {
+        loginFlipper.showPrevious();
+    }
+
     public void login(View view) {
 
         String ccp = ccpInput.getDefaultCountryCode();
@@ -79,7 +82,12 @@ public class MainActivity extends AbstractActivity {
         String password = passwordInput.getText().toString();
 
         if (password.isEmpty()) {
-            phoneInput.setError(getResources().getString(R.string.error_empty));
+            passwordInput.setError(getResources().getString(R.string.error_empty));
+            return;
+        }
+
+        if (password.length() < PASSWORD_MIN_LEN) {
+            passwordInput.setError(getResources().getString(R.string.error_len, String.valueOf(PASSWORD_MIN_LEN)));
             return;
         }
 
@@ -104,5 +112,9 @@ public class MainActivity extends AbstractActivity {
 
                 , (error) -> passwordInput.setError(error.getMessage()));
 
+    }
+
+    public void goToRegistration(View view){
+        goToAndFinish(RegistrationActivity.class);
     }
 }

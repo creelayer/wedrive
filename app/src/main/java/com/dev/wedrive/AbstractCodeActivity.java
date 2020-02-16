@@ -5,8 +5,11 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.wedrive.entity.ApiToken;
@@ -22,6 +25,7 @@ public abstract class AbstractCodeActivity extends AbstractAuthActivity {
     public static int CODE_GENERATE_WAIT_SEC = 60;
     protected UserService userService;
 
+    protected Animation animation;
     protected CountDownTimer waiter;
 
     ArrayList<EditText> inputs;
@@ -29,6 +33,7 @@ public abstract class AbstractCodeActivity extends AbstractAuthActivity {
     protected TextView subTitle;
     protected TextView resendButton;
     protected Button verifyBtn;
+    protected LinearLayout codeLayout;
 
 
     public AbstractCodeActivity() {
@@ -42,10 +47,13 @@ public abstract class AbstractCodeActivity extends AbstractAuthActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
 
+        animation = AnimationUtils.loadAnimation(this, R.anim.code_wrong_shape);
+
+        codeLayout = findViewById(R.id.code_layout);
         subTitle = findViewById(R.id.pin_sub_title);
         resendButton = findViewById(R.id.pin_resend);
         verifyBtn = findViewById(R.id.pin_verify_btn);
-        verifyBtn.setOnClickListener((v) -> send(""));
+        verifyBtn.setOnClickListener((v) -> send(getInputCode()));
 
         inputs = new ArrayList<>();
         inputs.add(findViewById(R.id.cn1));
@@ -63,16 +71,35 @@ public abstract class AbstractCodeActivity extends AbstractAuthActivity {
 
     }
 
+    protected void clear() {
+
+        for (EditText view : inputs)
+            view.setText("");
+
+        inputs.get(0).requestFocus();
+
+        codeLayout.startAnimation(animation);
+    }
+
+    protected String getInputCode() {
+
+        String code = "";
+
+        for (EditText view : inputs)
+            code += view.getText().toString();
+
+        return code;
+    }
 
     public void enableVerifyButton(boolean state) {
 
         if (verifyBtn == null)
             verifyBtn = findViewById(R.id.pin_verify_btn);
 
-//        if (!state)
-//            verifyBtn.setAlpha((float) 0.5);
-//        else
-//            verifyBtn.setAlpha(1);
+        if (!state)
+            verifyBtn.setAlpha((float) 0.5);
+        else
+            verifyBtn.setAlpha(1);
 
         verifyBtn.setEnabled(state);
     }
@@ -130,8 +157,8 @@ public abstract class AbstractCodeActivity extends AbstractAuthActivity {
             if (count > 0 && next < inputs.size())
                 inputs.get(next).requestFocus();
 
-            for (int i = 0; i < inputs.size(); i++)
-                if (inputs.get(i).getText().length() == 0)
+            for (EditText view : inputs)
+                if (view.getText().length() == 0)
                     return;
 
             enableVerifyButton(true);

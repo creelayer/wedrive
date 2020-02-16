@@ -28,7 +28,7 @@ public interface ApiUserInterface {
     public Call<ApiResponse<ApiToken>> register(@Body ApiUser user);
 
     @POST("/security/confirm-registration")
-    public Call<ApiResponse<ApiUser>> confirmRegistration(@Query("user") int id, @Body ApiCode code);
+    public Call<ApiResponse<ApiUser>> confirmRegistration(@Body ApiCode code);
 
     @POST("/security/login")
     public Call<ApiResponse<ApiToken>> login(@Body ApiUser user);

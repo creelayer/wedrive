@@ -11,9 +11,7 @@ import com.dev.wedrive.service.DeviceTokenService;
 import com.dev.wedrive.service.UserService;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hbb20.CountryCodePicker;
-import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 
 public class MainActivity extends AbstractActivity {
 
@@ -54,8 +52,6 @@ public class MainActivity extends AbstractActivity {
         ccpInput = findViewById(R.id.ccp);
         phoneInput = findViewById(R.id.phone);
         passwordInput = findViewById(R.id.password);
-
-        goToAndFinish(ConfirmRegistrationActivity.class);
 
     }
 
@@ -116,7 +112,7 @@ public class MainActivity extends AbstractActivity {
 
     }
 
-    public void goToRegistration(View view){
+    public void goToRegistration(View view) {
         goToAndFinish(RegistrationActivity.class);
     }
 }

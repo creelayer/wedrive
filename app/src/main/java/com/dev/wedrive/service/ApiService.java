@@ -41,7 +41,7 @@ public class ApiService {
     private ApiService() {
 
         //TODO: delete
-        token = new ApiToken("okV64Ws26Tp4U8dx1hwSpj-EFlZlwHPx9QVaWuoBEnb4FjtLKhMxOmrgAWWC1mkZ");
+        token = new ApiToken("qzF-kg8YlrRTLTh5ZF3KBj2DO-QPcf2avzl__iS-YuBp4KsW4ZUaWbo16oyVruQ5");
         token.userId = 2;
 
 

@@ -8,6 +8,10 @@
 
     <string name="user_exist">Користувач вже зареєстрований в платформі</string>
 
+
+    <string name="menu_profile">Профіль</string>
+    <string name="menu_log_out">Вихід</string>
+
     <string name="login_title"><b>Авторизація</b> за номером телефону</string>
     <string name="register_title"><b>Реєстрація</b> нового користувача</string>
     <string name="registration">Реєстрація в платформі</string>

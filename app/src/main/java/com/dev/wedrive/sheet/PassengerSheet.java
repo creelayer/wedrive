@@ -147,8 +147,8 @@ public class PassengerSheet extends Sheet {
 
     private void createUserLine(ApiUser user, ApiLocation location) {
 
-        if (location.user.profile.image != null)
-            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(location.user.profile.image, "sm"));
+//        if (location.user.profile.image != null)
+//            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(location.user.profile.image, "sm"));
 
         userName.setText(location.user.profile.name + " " + location.user.profile.lastName);
     }

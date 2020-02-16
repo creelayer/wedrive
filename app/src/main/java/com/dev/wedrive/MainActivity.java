@@ -53,6 +53,8 @@ public class MainActivity extends AbstractActivity {
         phoneInput = findViewById(R.id.phone);
         passwordInput = findViewById(R.id.password);
 
+        goToAndFinish(MapActivity.class);
+
     }
 
     public void showPasswordInput(View view) {
@@ -112,7 +114,7 @@ public class MainActivity extends AbstractActivity {
 
     }
 
-    public void goToRegistration(View view) {
+    public void goToRegistration(View view){
         goToAndFinish(RegistrationActivity.class);
     }
 }

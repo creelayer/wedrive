@@ -23,6 +23,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
         finish();
     }
 
+    protected void goTo(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+    }
+
     //Requesting permission
     protected void requestStoragePermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)

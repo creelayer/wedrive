@@ -128,8 +128,8 @@ public class CreateNewCarActivity extends AbstractAuthActivity implements Valida
             color.setText(car.color);
             number.setText(car.number);
 
-            if (car.image != null)
-                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
+//            if (car.image != null)
+//                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
 
         });
     }
@@ -148,8 +148,9 @@ public class CreateNewCarActivity extends AbstractAuthActivity implements Valida
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
-            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) ->
-                    new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm")));
+            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) ->{}
+                   // new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"))
+                    );
 
     }
 }

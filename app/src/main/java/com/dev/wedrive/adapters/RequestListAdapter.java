@@ -82,8 +82,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         ApiLocation location = request.location;
 
 
-        if (profile.image != null)
-            new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+//        if (profile.image != null)
+//            new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
 
         holder.userName.setText(profile.name + " " + profile.lastName);
         holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt));

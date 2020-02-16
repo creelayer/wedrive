@@ -24,7 +24,7 @@ import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
-import com.dev.wedrive.util.DownloadImageTask;
+import com.dev.wedrive.util.ProfileImageUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -126,7 +126,11 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
             navType.setText(profile.type);
 
             if (profile.image != null)
-                new DownloadImageTask(navImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+                ProfileImageUtil
+                        .get()
+                        .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
+                        .into(navImage);
+
         }, (error) -> {
         });
 
@@ -185,19 +189,18 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
         controller.onMapLongClick(latLng);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_profile_edit)
+            goTo(ProfileEditActivity.class);
 
-        } else if (id == R.id.nav_profile_edit) {
-            startActivity(new Intent(this, ProfileEditActivity.class));
-        }
+        if (id == R.id.nav_log_out)
+            ApiService.getInstance().setToken(null);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -232,4 +235,9 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
 
         }
     };
+
+
+    public void startProfileActivity() {
+
+    }
 }

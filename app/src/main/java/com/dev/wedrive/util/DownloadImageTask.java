@@ -3,17 +3,25 @@ package com.dev.wedrive.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.InputStream;
 
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-    ImageView bmImage;
+public  class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
+    private String url;
+
+    private DownloadComplete listener;
+
+    @Setter
+    @Accessors(chain = true)
+    private boolean circular = false;
+
+
+    public DownloadImageTask(String url) {
+        this.url = url;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -23,13 +31,27 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             InputStream in = new java.net.URL(urldisplay).openStream();
             bmp = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.e("aaaa", e.getMessage());
             e.printStackTrace();
         }
         return bmp;
     }
 
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+
+    public void execute(DownloadComplete listener){
+        this.listener = listener;
+        super.execute(url);
     }
+
+
+
+    protected void onPostExecute(Bitmap bitmap) {
+        listener.ready(bitmap);
+    }
+
+
+    public interface DownloadComplete{
+        public void ready(Bitmap bitmap);
+    }
+
+
 }

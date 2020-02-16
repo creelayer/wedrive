@@ -107,8 +107,9 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
             phone.setText(profile.phone);
             email.setText(profile.email);
 
-            if (profile.image != null)
-                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+            //TODO: image
+//            if (profile.image != null)
+//                new DownloadImageTask(getResources(), image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
         }, (error) -> {
         });
     }
@@ -127,8 +128,9 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) ->
-                    new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
+            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) ->{}
+                    //TODO: image
+//                    new DownloadImageTask(getResources(), image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
             );
         }
     }

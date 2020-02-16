@@ -224,8 +224,8 @@ public class RouteSheet extends Sheet {
 
     private void createCarLine(ApiUser user, ApiCar car) {
 
-        if (car.image != null)
-            new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
+//        if (car.image != null)
+//            new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
 
         carBrand.setText(car.brand);
         carModel.setText(car.model);
@@ -240,8 +240,8 @@ public class RouteSheet extends Sheet {
 
     private void createRouteLine(ApiUser user, ApiRoute route) {
 
-        if (user.profile.image != null)
-            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(user.profile.image, "sm"));
+//        if (user.profile.image != null)
+//            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(user.profile.image, "sm"));
 
         userName.setText(user.profile.name + " " + user.profile.lastName);
         routeName.setText(route.name);

@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
-    <group android:checkableBehavior="single">
+    <group  android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_request"
+            android:icon="@drawable/ic_bookmark_outline"
+            android:title="@string/menu_request" />
+
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_comment"
+            android:title="@string/menu_chat" />
+
         <item
             android:id="@+id/nav_profile_edit"
-            android:icon="@drawable/shape_list_item"
+            android:icon="@drawable/ic_user_circle"
             android:title="@string/menu_profile" />
+
         <item
             android:id="@+id/nav_log_out"
-            android:icon="@drawable/ic_car"
+            android:icon="@drawable/ic_login"
             android:title="@string/menu_log_out" />
     </group>
 

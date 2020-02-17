@@ -10,7 +10,14 @@
 
 
     <string name="menu_profile">Профіль</string>
+    <string name="menu_request">Замовлення</string>
+    <string name="menu_chat">Повідомлення</string>
     <string name="menu_log_out">Вихід</string>
+
+    <string name="wallet">На рахунку</string>
+    <string name="total_earned">Зароблено</string>
+    <string name="order_count">Поїздок</string>
+    <string name="rating">Рейтинг</string>
 
     <string name="login_title"><b>Авторизація</b> за номером телефону</string>
     <string name="register_title"><b>Реєстрація</b> нового користувача</string>

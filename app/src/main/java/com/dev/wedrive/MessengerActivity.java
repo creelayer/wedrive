@@ -3,10 +3,12 @@ package com.dev.wedrive;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ViewFlipper;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev.wedrive.adapters.MessagesChatListAdapter;
 import com.dev.wedrive.adapters.MessagesListAdapter;
 import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiRequest;
@@ -20,7 +22,7 @@ import java.util.TimerTask;
 
 import lombok.Getter;
 
-public class MessageListActivity extends AbstractAuthActivity {
+public class MessengerActivity extends AbstractAuthActivity {
 
     private MessagesService messagesService;
     private RequestService requestService;
@@ -38,13 +40,16 @@ public class MessageListActivity extends AbstractAuthActivity {
     @Getter
     private ApiRequest request;
 
-    private MessagesListAdapter adapter;
+    protected ViewFlipper messengerFlipper;
+
+    private MessagesChatListAdapter messagesChatAdapter;
+    private MessagesListAdapter messagesAdapter;
 
     @Getter
     private EditText messageInp;
     private Button messageBtn;
 
-    public MessageListActivity() {
+    public MessengerActivity() {
         messagesService = new MessagesService();
         requestService = new RequestService();
         userService = new UserService();
@@ -54,18 +59,18 @@ public class MessageListActivity extends AbstractAuthActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                loadMessageList(user, recipient, request);
-            }
-        };
-        timer.scheduleAtFixedRate(timerTask, 10000, 5000);
+//        timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                loadMessageList(user, recipient, request);
+//            }
+//        };
+//        timer.scheduleAtFixedRate(timerTask, 10000, 5000);
     }
 
     @Override
     protected void onPause() {
-        timerTask.cancel();
+//        timerTask.cancel();
         super.onPause();
     }
 
@@ -74,11 +79,48 @@ public class MessageListActivity extends AbstractAuthActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
+        messengerFlipper = findViewById(R.id.messengerFlipper);
+
         messageInp = findViewById(R.id.message_inp);
         messageBtn = findViewById(R.id.message_btn);
         messageBtn.setOnClickListener((v) -> sendMessage(new ApiMessage(this)));
+        loadConversationsList();
+        //  load();
+    }
 
-        load();
+    private void loadConversationsList() {
+        messagesService.getConversations((chats) -> {
+            if (messagesChatAdapter == null) {
+                RecyclerView list = findViewById(R.id.message_chats_list);
+                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                linearLayoutManager.setReverseLayout(true);
+                list.setLayoutManager(linearLayoutManager);
+                messagesChatAdapter = new MessagesChatListAdapter(this, chats);
+                list.setAdapter(messagesChatAdapter);
+            } else
+                messagesChatAdapter.setChats(chats).notifyDataSetChanged();
+        });
+    }
+
+    private void loadMessageList(ApiUser user, ApiUser recipient, ApiRequest request) {
+
+        if (recipient == null || user == null || request == null)
+            return;
+
+        messagesService.getConversation(recipient, request, (messages) -> {
+            if (messagesAdapter == null) {
+                RecyclerView list = findViewById(R.id.message_list);
+                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                linearLayoutManager.setReverseLayout(true);
+                list.setLayoutManager(linearLayoutManager);
+                messagesAdapter = new MessagesListAdapter(this, user, messages);
+                list.setAdapter(messagesAdapter);
+            } else
+                messagesAdapter.setMessages(messages).notifyDataSetChanged();
+        });
+
+        messagesService.viewConversation(recipient, request);
+
     }
 
     private void load() {
@@ -113,30 +155,6 @@ public class MessageListActivity extends AbstractAuthActivity {
             messageInp.setText("");
             loadMessageList(user, recipient, request);
         });
-
-    }
-
-    private void loadMessageList(ApiUser user, ApiUser recipient, ApiRequest request) {
-
-        if (recipient == null || user == null || request == null)
-            return;
-
-        messagesService.getConversation(recipient, request, (messages) -> {
-
-            //    Collections.reverse(messages);
-
-            if (adapter == null) {
-                RecyclerView list = findViewById(R.id.message_list);
-                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setReverseLayout(true);
-                list.setLayoutManager(linearLayoutManager);
-                adapter = new MessagesListAdapter(this, user, messages);
-                list.setAdapter(adapter);
-            } else
-                adapter.setMessages(messages).notifyDataSetChanged();
-
-        });
-        messagesService.viewConversation(recipient, request);
 
     }
 }

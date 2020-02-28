@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,7 +95,7 @@ public class RequestListActivity extends AbstractAuthActivity implements Request
                     .show();
 
         if (view.getId() == R.id.message_btn)
-            startActivity(new Intent(this, MessageListActivity.class).putExtra("request", adapter.getItem(position).uuid));
+            startActivity(new Intent(this, MessengerActivity.class).putExtra("request", adapter.getItem(position).uuid));
 
     }
 

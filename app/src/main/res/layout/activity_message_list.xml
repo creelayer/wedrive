@@ -4,36 +4,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/message_list"
+    <ViewFlipper
+        android:id="@+id/messengerFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/message_chats_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/message_inp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="2dp"/>
+            android:visibility="visible">
 
-        <EditText
-            android:id="@+id/message_inp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/message_btn"
-            android:layout_marginBottom="0dp"
-            android:ems="10"
-            android:hint="Message..."
-            android:inputType="textPersonName" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/message_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/message_inp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="2dp" />
 
-        <Button
-            android:id="@+id/message_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="4dp"
-            android:text="Send" />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/message_inp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/message_btn"
+                android:layout_marginBottom="0dp"
+                android:ems="10"
+                android:hint="Message..."
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/message_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="4dp"
+                android:text="Send" />
+        </RelativeLayout>
+
+    </ViewFlipper>
 
 </FrameLayout>

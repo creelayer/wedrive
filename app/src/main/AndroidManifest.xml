@@ -21,7 +21,7 @@
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".ConfirmRegistrationActivity" />
         <activity
-            android:name=".MessageListActivity"
+            android:name=".MessengerActivity"
             android:label="Messages"
             android:parentActivityName=".MapActivity" />
         <activity

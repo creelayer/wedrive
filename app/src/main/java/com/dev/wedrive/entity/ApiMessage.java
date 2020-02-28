@@ -1,6 +1,6 @@
 package com.dev.wedrive.entity;
 
-import com.dev.wedrive.MessageListActivity;
+import com.dev.wedrive.MessengerActivity;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
@@ -58,7 +58,7 @@ public class ApiMessage {
     public ApiMessage() {
     }
 
-    public ApiMessage(MessageListActivity activity) {
+    public ApiMessage(MessengerActivity activity) {
         message = activity.getMessageInp().getText().toString().trim();
         recipientId = activity.getRecipient().getId();
         if (activity.getRequest() != null)

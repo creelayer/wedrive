@@ -1,6 +1,7 @@
 package com.dev.wedrive.api;
 
 import com.dev.wedrive.entity.ApiMessage;
+import com.dev.wedrive.entity.ApiMessageChat;
 
 import java.util.List;
 
@@ -11,6 +12,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiMessageInterface {
+
+
+    @GET("/message/conversations?expand=recipient")
+    public Call<ApiResponse<List<ApiMessageChat>>> getConversations();
+
 
     @GET("/message/conversation?expand=created_at")
     public Call<ApiResponse<List<ApiMessage>>> getConversation(@Query("recipient") int id);

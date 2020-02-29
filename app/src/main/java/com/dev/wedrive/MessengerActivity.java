@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dev.wedrive.adapters.MessagesChatListAdapter;
 import com.dev.wedrive.adapters.MessagesListAdapter;
 import com.dev.wedrive.entity.ApiMessage;
+import com.dev.wedrive.entity.ApiMessageChat;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.MessagesService;
@@ -77,15 +78,14 @@ public class MessengerActivity extends AbstractAuthActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_list);
+        setContentView(R.layout.activity_messenger);
 
         messengerFlipper = findViewById(R.id.messengerFlipper);
-
         messageInp = findViewById(R.id.message_inp);
         messageBtn = findViewById(R.id.message_btn);
-        messageBtn.setOnClickListener((v) -> sendMessage(new ApiMessage(this)));
+
         loadConversationsList();
-        //  load();
+
     }
 
     private void loadConversationsList() {
@@ -93,58 +93,80 @@ public class MessengerActivity extends AbstractAuthActivity {
             if (messagesChatAdapter == null) {
                 RecyclerView list = findViewById(R.id.message_chats_list);
                 final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setReverseLayout(true);
                 list.setLayoutManager(linearLayoutManager);
                 messagesChatAdapter = new MessagesChatListAdapter(this, chats);
+                messagesChatAdapter.setListener((v, position) -> loadConversation(messagesChatAdapter.getItem(position)));
                 list.setAdapter(messagesChatAdapter);
             } else
                 messagesChatAdapter.setChats(chats).notifyDataSetChanged();
         });
     }
 
-    private void loadMessageList(ApiUser user, ApiUser recipient, ApiRequest request) {
+    private void loadConversation(ApiMessageChat chat) {
 
-        if (recipient == null || user == null || request == null)
-            return;
+        messagesService.getConversation(chat, (messages) -> {
 
-        messagesService.getConversation(recipient, request, (messages) -> {
-            if (messagesAdapter == null) {
-                RecyclerView list = findViewById(R.id.message_list);
-                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                linearLayoutManager.setReverseLayout(true);
-                list.setLayoutManager(linearLayoutManager);
-                messagesAdapter = new MessagesListAdapter(this, user, messages);
-                list.setAdapter(messagesAdapter);
-            } else
+            if (messagesAdapter == null)
+                messagesService.getConversationInfo(chat, (info) -> {
+                    RecyclerView list = findViewById(R.id.message_list);
+                    final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                    linearLayoutManager.setReverseLayout(true);
+                    list.setLayoutManager(linearLayoutManager);
+                    messagesAdapter = new MessagesListAdapter(this, info.recipient, messages);
+                    list.setAdapter(messagesAdapter);
+                    messengerFlipper.showNext();
+                    messageBtn.setOnClickListener((v) -> sendMessage(new ApiMessage(info.recipient, messageInp.getText().toString())));
+                });
+            else
                 messagesAdapter.setMessages(messages).notifyDataSetChanged();
-        });
 
-        messagesService.viewConversation(recipient, request);
+        });
 
     }
 
-    private void load() {
+//    private void loadMessageList(ApiUser user, ApiUser recipient, ApiRequest request) {
+//
+//        if (recipient == null || user == null || request == null)
+//            return;
+//
+//        messagesService.getConversation(recipient, request, (messages) -> {
+//            if (messagesAdapter == null) {
+//                RecyclerView list = findViewById(R.id.message_list);
+//                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//                linearLayoutManager.setReverseLayout(true);
+//                list.setLayoutManager(linearLayoutManager);
+//                messagesAdapter = new MessagesListAdapter(this, user, messages);
+//                list.setAdapter(messagesAdapter);
+//            } else
+//                messagesAdapter.setMessages(messages).notifyDataSetChanged();
+//        });
+//
+//        messagesService.viewConversation(recipient, request);
+//
+//    }
 
-        String requestUuid = getIntent().getStringExtra("request");
-
-        if (requestUuid == null)
-            return;
-
-        userService.current((user) -> {
-            this.user = user;
-            requestService.getRequest(requestUuid, (request) -> {
-                this.request = request;
-
-                if (request.userId == user.id)
-                    recipient = request.location.user;
-                else
-                    recipient = request.user;
-
-                loadMessageList(user, recipient, request);
-            });
-
-        });
-    }
+//    private void load() {
+//
+//        String requestUuid = getIntent().getStringExtra("request");
+//
+//        if (requestUuid == null)
+//            return;
+//
+//        userService.current((user) -> {
+//            this.user = user;
+//            requestService.getRequest(requestUuid, (request) -> {
+//                this.request = request;
+//
+//                if (request.userId == user.id)
+//                    recipient = request.location.user;
+//                else
+//                    recipient = request.user;
+//
+//                loadMessageList(user, recipient, request);
+//            });
+//
+//        });
+//    }
 
     private void sendMessage(ApiMessage message) {
 
@@ -153,7 +175,7 @@ public class MessengerActivity extends AbstractAuthActivity {
 
         messagesService.sendMessage(message, (mMessage) -> {
             messageInp.setText("");
-            loadMessageList(user, recipient, request);
+            loadConversation(mMessage.chat);
         });
 
     }

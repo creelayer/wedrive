@@ -27,8 +27,9 @@ public class MessagesService {
         });
     }
 
-    public void getConversation(ApiUser recipient, final Consumer<ArrayList<ApiMessage>> func) {
-        ApiService.getInstance().messages().getConversation(recipient.id).enqueue(new Callback<ApiResponse<List<ApiMessage>>>() {
+
+    public void getConversation(ApiMessageChat chat, final Consumer<ArrayList<ApiMessage>> func) {
+        ApiService.getInstance().messages().getConversation(chat.uuid).enqueue(new Callback<ApiResponse<List<ApiMessage>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {
@@ -38,34 +39,55 @@ public class MessagesService {
         });
     }
 
-    public void getConversation(ApiUser recipient, ApiRequest request, final Consumer<ArrayList<ApiMessage>> func) {
-        ApiService.getInstance().messages().getConversation(recipient.id, request.uuid).enqueue(new Callback<ApiResponse<List<ApiMessage>>>() {
+    public void getConversationInfo(ApiMessageChat chat, final Consumer<ApiMessageChat> func) {
+        ApiService.getInstance().messages().getConversationInfo(chat.uuid).enqueue(new Callback<ApiResponse<ApiMessageChat>>() {
             @Override
             public void onResult(ApiResponse response) {
-                if (response instanceof ApiResponse.Success) {
-                    func.accept((ArrayList<ApiMessage>) response.getData());
-                }
+                func.accept((ApiMessageChat) response.getData());
             }
         });
     }
 
-    public void viewConversation(ApiUser sender) {
-        ApiService.getInstance().messages().viewConversation(sender.id).enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResult(ApiResponse response) {
 
-            }
-        });
-    }
-
-    public void viewConversation(ApiUser sender, ApiRequest request) {
-        ApiService.getInstance().messages().viewConversation(sender.id, request.uuid).enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResult(ApiResponse response) {
-
-            }
-        });
-    }
+//    public void getConversation(ApiUser recipient, final Consumer<ArrayList<ApiMessage>> func) {
+//        ApiService.getInstance().messages().getConversation(recipient.id).enqueue(new Callback<ApiResponse<List<ApiMessage>>>() {
+//            @Override
+//            public void onResult(ApiResponse response) {
+//                if (response instanceof ApiResponse.Success) {
+//                    func.accept((ArrayList<ApiMessage>) response.getData());
+//                }
+//            }
+//        });
+//    }
+//
+//    public void getConversation(ApiUser recipient, ApiRequest request, final Consumer<ArrayList<ApiMessage>> func) {
+//        ApiService.getInstance().messages().getConversation(recipient.id, request.uuid).enqueue(new Callback<ApiResponse<List<ApiMessage>>>() {
+//            @Override
+//            public void onResult(ApiResponse response) {
+//                if (response instanceof ApiResponse.Success) {
+//                    func.accept((ArrayList<ApiMessage>) response.getData());
+//                }
+//            }
+//        });
+//    }
+//
+//    public void viewConversation(ApiUser sender) {
+//        ApiService.getInstance().messages().viewConversation(sender.id).enqueue(new Callback<ApiResponse>() {
+//            @Override
+//            public void onResult(ApiResponse response) {
+//
+//            }
+//        });
+//    }
+//
+//    public void viewConversation(ApiUser sender, ApiRequest request) {
+//        ApiService.getInstance().messages().viewConversation(sender.id, request.uuid).enqueue(new Callback<ApiResponse>() {
+//            @Override
+//            public void onResult(ApiResponse response) {
+//
+//            }
+//        });
+//    }
 
     public void sendMessage(ApiMessage message, final Consumer<ApiMessage> func) {
         ApiService.getInstance().messages().createMessage(message).enqueue(new Callback<ApiResponse<ApiMessage>>() {

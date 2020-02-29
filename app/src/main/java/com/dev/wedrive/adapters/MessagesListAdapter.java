@@ -55,23 +55,21 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ApiMessage message = messages.get(position);
-
-        holder.messageItem.setText(message.message);
-        holder.messageTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(message.createdAt));
-
-        holder.messageItem.setTextAlignment(message.userId == recipient.id ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
+        holder.listItemMessage.setText(message.message);
+        holder.listItemMessage.setTextAlignment(message.userId == recipient.id ?   View.TEXT_ALIGNMENT_TEXT_START :  View.TEXT_ALIGNMENT_TEXT_END);
+        holder.listItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(message.createdAt));
     }
 
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView messageItem;
-        TextView messageTime;
+
+        TextView listItemMessage;
+        TextView listItemTime;
 
         ViewHolder(View view) {
             super(view);
-            messageItem = view.findViewById(R.id.list_item_message);
-            messageTime = view.findViewById(R.id.list_item_time);
+            listItemMessage = view.findViewById(R.id.list_item_message);
+            listItemTime = view.findViewById(R.id.list_item_time);
         }
     }
 }

@@ -50,6 +50,11 @@ public class ApiMessage {
     @Getter
     public String requestUuid;
 
+    @SerializedName("chat")
+    @Setter
+    @Getter
+    public ApiMessageChat chat;
+
     @SerializedName("created_at")
     @Setter
     @Getter
@@ -58,11 +63,10 @@ public class ApiMessage {
     public ApiMessage() {
     }
 
-    public ApiMessage(MessengerActivity activity) {
-        message = activity.getMessageInp().getText().toString().trim();
-        recipientId = activity.getRecipient().getId();
-        if (activity.getRequest() != null)
-            requestUuid = activity.getRequest().uuid;
+    public ApiMessage(ApiUser recipient, String message) {
+        this.recipientId = recipient.getId();
+        this.message = message.trim();
+
     }
 
 }

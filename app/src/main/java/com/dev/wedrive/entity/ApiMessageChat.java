@@ -16,7 +16,17 @@ public class ApiMessageChat {
     @SerializedName("user_id")
     @Setter
     @Getter
-    public int userId = 0;
+    public int userId;
+
+    @SerializedName("user")
+    @Setter
+    @Getter
+    public ApiUser user;
+
+    @SerializedName("recipient")
+    @Setter
+    @Getter
+    public ApiUser recipient;
 
     @SerializedName("message_uuid")
     @Setter

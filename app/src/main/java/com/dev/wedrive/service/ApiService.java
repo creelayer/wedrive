@@ -44,6 +44,14 @@ public class ApiService {
         token = new ApiToken("4lNNZIlFlW9uEiJgKNALaiDyXBpC1dChiqZdW44H-QNJKkvv86Fs5Jq_FeYZQUrt");
         token.userId = 2;
 
+//        //TODO: delete
+//        token = new ApiToken("rggF3it2gbaWiQNmsIrLLgriU-S71o5evimoG61tSwy-Iry8Xuc0j3TnumDZLd1h");
+//        token.userId = 1;
+//
+//        //TODO: delete
+//        token = new ApiToken("1uc_mJm824imz15nvF99NrGlab-0bPtaYmZLebQi7u9_sq2Qh510NIczB9vhwfXd");
+//        token.userId = 25;
+
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
         Interceptor headerInterceptor = new Interceptor() {

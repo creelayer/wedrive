@@ -3,6 +3,8 @@ package com.dev.wedrive;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,9 +16,11 @@ import com.dev.wedrive.entity.ApiMessage;
 import com.dev.wedrive.entity.ApiMessageChat;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.service.MessagesService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
+import com.dev.wedrive.util.ProfileImageUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,19 +36,16 @@ public class MessengerActivity extends AbstractAuthActivity {
     private Timer timer;
     private TimerTask timerTask;
 
-    @Getter
-    private ApiUser user;
-
-    @Getter
-    private ApiUser recipient;
-
-    @Getter
-    private ApiRequest request;
-
     protected ViewFlipper messengerFlipper;
 
     private MessagesChatListAdapter messagesChatAdapter;
     private MessagesListAdapter messagesAdapter;
+
+
+    private Button messageHeaderBackBtn;
+    private ImageView messageHeaderImage;
+    private TextView messageHeaderName;
+    private TextView messageHeaderTime;
 
     @Getter
     private EditText messageInp;
@@ -81,8 +82,18 @@ public class MessengerActivity extends AbstractAuthActivity {
         setContentView(R.layout.activity_messenger);
 
         messengerFlipper = findViewById(R.id.messengerFlipper);
+        messageHeaderBackBtn = findViewById(R.id.message_header_back_btn);
+        messageHeaderImage = findViewById(R.id.message_header_image);
+        messageHeaderName = findViewById(R.id.message_header_name);
+        messageHeaderTime = findViewById(R.id.message_header_time);
         messageInp = findViewById(R.id.message_inp);
         messageBtn = findViewById(R.id.message_btn);
+
+
+        messageHeaderBackBtn.setOnClickListener((v) -> {
+            messagesAdapter = null;
+            messengerFlipper.showPrevious();
+        });
 
         loadConversationsList();
 
@@ -108,6 +119,15 @@ public class MessengerActivity extends AbstractAuthActivity {
 
             if (messagesAdapter == null)
                 messagesService.getConversationInfo(chat, (info) -> {
+
+                    if (info.recipient.profile.image != null)
+                        ProfileImageUtil
+                                .get()
+                                .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(info.recipient.profile.image, "sm"))
+                                .into(messageHeaderImage);
+
+                    messageHeaderName.setText(info.recipient.profile.name + info.recipient.profile.lastName);
+
                     RecyclerView list = findViewById(R.id.message_list);
                     final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                     linearLayoutManager.setReverseLayout(true);

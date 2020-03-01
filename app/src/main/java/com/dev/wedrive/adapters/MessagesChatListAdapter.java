@@ -63,16 +63,16 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ApiMessageChat chat = chats.get(position);
 
-        holder.listItemName.setText(chat.message.recipient.profile.name);
+        holder.listItemName.setText(chat.recipient.profile.name);
         holder.listItemMessage.setText(chat.message.message);
         holder.listItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(chat.updatedAt));
 
         holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
 
-        if (chat.message.recipient.profile.image != null)
+        if (chat.recipient.profile.image != null)
             ProfileImageUtil
                     .get()
-                    .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(chat.message.recipient.profile.image, "sm"))
+                    .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(chat.recipient.profile.image, "sm"))
                     .into(holder.listItemImage);
 
     }

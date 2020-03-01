@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 public interface ApiMessageInterface {
 
 
-    @GET("/message/conversations?expand=message.recipient")
+    @GET("/message/conversations?expand=recipient,message")
     public Call<ApiResponse<List<ApiMessageChat>>> getConversations();
 
     @GET("/message/conversation")

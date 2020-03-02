@@ -65,7 +65,7 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
 
         holder.listItemName.setText(chat.recipient.profile.name);
         holder.listItemMessage.setText(chat.message.message);
-        holder.listItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(chat.updatedAt));
+        holder.listItemTime.setText(new SimpleDateFormat("HH:mm").format(chat.updatedAt));
 
         holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
 

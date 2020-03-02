@@ -57,7 +57,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         ApiMessage message = messages.get(position);
         holder.listItemMessage.setText(message.message);
         holder.listItemMessage.setTextAlignment(message.userId == recipient.id ?   View.TEXT_ALIGNMENT_TEXT_START :  View.TEXT_ALIGNMENT_TEXT_END);
-        holder.listItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(message.createdAt));
+        holder.listItemTime.setText(new SimpleDateFormat("HH:mm").format(message.createdAt));
     }
 
 

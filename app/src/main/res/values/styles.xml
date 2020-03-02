@@ -12,6 +12,10 @@
 
     </style>
 
+    <style name="p10">
+        <item name="android:padding">10dp</item>
+    </style>
+
     <style name="p20">
         <item name="android:padding">20dp</item>
     </style>
@@ -33,6 +37,9 @@
         <item name="android:layout_marginLeft">0dp</item>
         <item name="android:background">@drawable/btn_dark_bg_rounded</item>
     </style>
+
+
+    <!--Nav-->
 
     <style name="Nav">
         <item name="android:textSize">16sp</item>
@@ -78,6 +85,9 @@
         <item name="android:paddingBottom">0dp</item>
     </style>
 
+    <!--Nav-End-->
+
+    <!--Login pages-->
 
     <style name="LoginBox">
         <item name="android:layout_margin">20dp</item>
@@ -93,6 +103,35 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <!--Login pages end-->
+
+    <!--Messenger-->
+
+    <style name="Messenger">
+    </style>
+
+    <style name="Messenger.ChatList">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Messenger.ChatListContent">
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="Messenger.UserName">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Messenger.Message">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@color/message_grey_text</item>
+    </style>
+
+    <!--Messenger end-->
 
     <style name="TextCenterButton">
         <item name="android:layout_marginTop">20dp</item>

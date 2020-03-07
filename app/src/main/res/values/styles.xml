@@ -126,9 +126,19 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Messenger.Item">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
     <style name="Messenger.Message">
-        <item name="android:paddingRight">10dp</item>
         <item name="android:textColor">@color/message_grey_text</item>
+    </style>
+
+    <style name="Messenger.Time">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@color/message_grey_time</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!--Messenger end-->

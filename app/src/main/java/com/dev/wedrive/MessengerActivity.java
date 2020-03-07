@@ -3,6 +3,7 @@ package com.dev.wedrive;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -42,14 +43,14 @@ public class MessengerActivity extends AbstractAuthActivity {
     private MessagesListAdapter messagesAdapter;
 
 
-    private Button messageHeaderBackBtn;
+    private ImageButton messageHeaderBackBtn;
     private ImageView messageHeaderImage;
     private TextView messageHeaderName;
     private TextView messageHeaderTime;
 
     @Getter
     private EditText messageInp;
-    private Button messageBtn;
+    private ImageButton messageBtn;
 
     public MessengerActivity() {
         messagesService = new MessagesService();

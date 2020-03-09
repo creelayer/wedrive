@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Messenger;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -93,9 +94,9 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
         navType = headerView.findViewById(R.id.nav_type);
 
         Button testBtn = findViewById(R.id.test_btn);
-        // testBtn.setOnClickListener((v) -> startActivity(new Intent(this, RequestListActivity.class)));
+         testBtn.setOnClickListener((v) -> goTo(MessengerActivity.class));
 
-        testBtn.setOnClickListener((v) -> ApiService.getInstance().setToken(null));
+        //testBtn.setOnClickListener((v) -> ApiService.getInstance().setToken(null));
 
     }
 

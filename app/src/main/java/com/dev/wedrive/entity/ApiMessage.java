@@ -1,6 +1,5 @@
 package com.dev.wedrive.entity;
 
-import com.dev.wedrive.MessengerActivity;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;

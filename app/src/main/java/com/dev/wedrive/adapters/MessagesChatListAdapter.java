@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.wedrive.Constants;
 import com.dev.wedrive.R;
-import com.dev.wedrive.entity.ApiCar;
 import com.dev.wedrive.entity.ApiMessageChat;
+import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.helpers.FileHelper;
+import com.dev.wedrive.helpers.MessengerHelper;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.util.ProfileImageUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatListAdapter.ViewHolder> {
 
@@ -31,14 +31,14 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
     @Setter
     private OnItemClickListener listener;
 
-    @Accessors(chain = true)
-    @Setter
     private ArrayList<ApiMessageChat> chats;
 
-    // data is passed into the constructor
-    public MessagesChatListAdapter(Context context, ArrayList<ApiMessageChat> chats) {
+    private ApiUser user;
+
+    public MessagesChatListAdapter(Context context, ArrayList<ApiMessageChat> chats, ApiUser user) {
         this.inflater = LayoutInflater.from(context);
         this.chats = chats;
+        this.user = user;
     }
 
     // total number of rows
@@ -62,10 +62,9 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ApiMessageChat chat = chats.get(position);
-
-        holder.listItemName.setText(chat.recipient.profile.name);
-        holder.listItemMessage.setText(chat.message.message);
-        holder.listItemTime.setText(new SimpleDateFormat("HH:mm").format(chat.updatedAt));
+        holder.listItemName.setText(UserHelper.getName(chat.recipient));
+        holder.listItemMessage.setText(MessengerHelper.formatChatMessage(chat.message, user));
+        holder.listItemTime.setText(MessengerHelper.formatShortTime(chat.updatedAt));
 
         holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
 
@@ -77,6 +76,10 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
 
     }
 
+    public void update(ArrayList<ApiMessageChat> chats){
+        this.chats = chats;
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

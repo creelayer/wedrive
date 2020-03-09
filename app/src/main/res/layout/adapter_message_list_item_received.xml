@@ -6,9 +6,10 @@
 
     <LinearLayout
         android:id="@+id/list_item"
-        style="@style/Messenger.Item"
+        style="@style/Messenger.Item.Received"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="right"
         android:orientation="vertical">
 
         <TextView

@@ -36,4 +36,5 @@
     <string name="pin_resend">Відправити ще раз? </string>
     <string name="pin_resend_wait">Відправити ще раз через: %1$s сек </string>
 
+    <string name="message_input_placeholder">Повідомлення...</string>
 </resources>

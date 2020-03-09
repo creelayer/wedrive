@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/list_item_message"
-            style="@style/Messenger.Message"
+            style="@style/Messenger.ChatListMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/list_item_name"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/list_item_time"
-            style="@style/Messenger.Message"
+            style="@style/Messenger.ChatListContent.Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

@@ -25,6 +25,7 @@ import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
+import com.dev.wedrive.sheet.PassengerSheet;
 import com.dev.wedrive.util.ProfileImageUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -116,6 +117,13 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
         this.map = map;
         mapService = new MapService(map);
         loaderLocationManager = new LoaderLocationManager(mapService);
+
+
+
+
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(50.217120, 30.234984), ZOOM));
+
+
 
         profileService = new ProfileService();
         profileService.getMyProfile((profile) -> {

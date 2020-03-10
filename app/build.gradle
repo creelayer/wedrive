@@ -46,4 +46,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.tubb.smrv:swipemenu-recyclerview:5.4.8'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 }

@@ -17,12 +17,14 @@ import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.helpers.FileHelper;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.informs.InformMessage;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.RouteService;
 import com.dev.wedrive.service.UserService;
 import com.dev.wedrive.util.DownloadImageTask;
+import com.dev.wedrive.util.ProfileImageUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import lombok.Getter;
@@ -35,14 +37,17 @@ public class PassengerSheet extends Sheet {
     protected UserService userService;
     protected LocationService locationService;
 
+
+    private View view;
+
     @Setter
     @Getter
     private ApiLocation location;
 
     private LinearLayout locationInfo;
     private TextView locationTime;
-    private ImageView userImage;
-    private TextView userName;
+
+
 
     private LinearLayout requestInfo;
     private EditText requestMessageInp;
@@ -64,10 +69,9 @@ public class PassengerSheet extends Sheet {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.sheet_passenger, container, false);
+        view = inflater.inflate(R.layout.sheet_passenger, container, false);
 
-        userImage = view.findViewById(R.id.user_image);
-        userName = view.findViewById(R.id.user_name);
+
         locationInfo = view.findViewById(R.id.location_info);
         locationTime = view.findViewById(R.id.location_time);
         requestInfo = view.findViewById(R.id.request_info);
@@ -147,10 +151,11 @@ public class PassengerSheet extends Sheet {
 
     private void createUserLine(ApiUser user, ApiLocation location) {
 
-//        if (location.user.profile.image != null)
-//            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(location.user.profile.image, "sm"));
+        ImageView userImage = view.findViewById(R.id.user_image);
+        TextView userName = view.findViewById(R.id.user_name);
 
-        userName.setText(location.user.profile.name + " " + location.user.profile.lastName);
+        UserHelper.setAvatarImage(location.user, userImage);
+        userName.setText(UserHelper.getName(location.user));
     }
 
 }

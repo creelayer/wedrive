@@ -16,8 +16,13 @@
 
     <string name="wallet">На рахунку</string>
     <string name="total_earned">Зароблено</string>
-    <string name="order_count">Поїздок</string>
     <string name="rating">Рейтинг</string>
+    <string name="location_time">Час</string>
+    <string name="passenger_count">Пасажирів</string>
+    <string name="trip_count">Поїздок</string>
+    <string name="send_request">Відправити запит</string>
+
+
 
     <string name="login_title"><b>Авторизація</b> за номером телефону</string>
     <string name="register_title"><b>Реєстрація</b> нового користувача</string>
@@ -35,6 +40,8 @@
     <string name="pin_button">Підтвердити</string>
     <string name="pin_resend">Відправити ще раз? </string>
     <string name="pin_resend_wait">Відправити ще раз через: %1$s сек </string>
+
+
 
     <string name="message_input_placeholder">Повідомлення...</string>
 </resources>

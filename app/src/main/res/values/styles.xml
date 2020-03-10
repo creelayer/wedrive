@@ -56,32 +56,31 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Nav.Title">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
+
+    <style name="Nav.LocationContent">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
-    <style name="Nav.Widget"></style>
-
-    <style name="Nav.Widget.Row">
-        <item name="android:paddingRight">30dp</item>
-    </style>
-
-    <style name="Nav.Widget.Icon">
+    <style name="Nav.Icon">
+        <item name="android:alpha">1</item>
         <item name="android:layout_marginBottom">6dp</item>
     </style>
 
-    <style name="Nav.Widget.Text">
+    <style name="Nav.InfoText">
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Nav.Widget.SubText">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/dark_yellow</item>
+    <style name="Nav.InfoSubText">
+        <item name="android:alpha">0.2</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
+
 
     <style name="Nav.Status">
         <item name="android:textColor">@color/colorPrimaryDark</item>
@@ -190,6 +189,9 @@
 
     <!--Messenger end-->
 
+
+    <!--Pin page-->
+
     <style name="TextCenterButton">
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:textAlignment">center</item>
@@ -213,5 +215,52 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <!--Pin page end-->
+
+
+    <!--Sheet slide-->
+
+    <style name="Sheet"/>
+
+    <style name="Sheet.LocationInfoMessage">
+        <item name="android:background">@drawable/message_text_bg</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="Sheet.LocationCardInfo">
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="cardBackgroundColor">@color/yellow</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="Sheet.LocationContent">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="Sheet.LocationIcon">
+        <item name="android:alpha">0.2</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="Sheet.LocationInfoText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Sheet.LocationInfoSubText">
+        <item name="android:alpha">0.2</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!--Sheet slide end-->
 
 </resources>

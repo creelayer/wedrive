@@ -50,6 +50,29 @@
     </style>
 
 
+    <style name="StatusRoundedWhite">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@drawable/status_rounded_bg_white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="StatusRoundedYellow" parent="StatusRoundedWhite">
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:background">@drawable/status_rounded_bg_yellow</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+
     <!--Nav-->
 
     <style name="Nav">
@@ -79,18 +102,6 @@
         <item name="android:alpha">0.2</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
-    </style>
-
-
-    <style name="Nav.Status">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:background">@drawable/nav_status_bg_rounded</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:paddingTop">0dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingBottom">0dp</item>
     </style>
 
     <!--Nav-End-->
@@ -167,6 +178,7 @@
     </style>
 
     <style name="Messenger.Message">
+        <item name="android:background">@drawable/message_text_bg</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -182,9 +194,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
-        <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:layout_marginEnd">10dp</item>
     </style>
 
     <!--Messenger end-->
@@ -225,6 +235,7 @@
     <style name="Sheet.LocationInfoMessage">
         <item name="android:background">@drawable/message_text_bg</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
 
@@ -234,7 +245,8 @@
         <item name="cardBackgroundColor">@color/yellow</item>
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">10dp</item>
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="Sheet.LocationContent">
@@ -259,6 +271,22 @@
         <item name="android:alpha">0.2</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Sheet.SuccessBtn">
+        <item name="android:background">@drawable/btn_yellow_bg_rounded</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/formButton</item>
+    </style>
+
+    <style name="Sheet.CancelBtn">
+        <item name="android:background">@drawable/btn_dark_bg_rounded</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <!--Sheet slide end-->

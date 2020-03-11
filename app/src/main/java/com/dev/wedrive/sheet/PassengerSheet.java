@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dev.wedrive.Constants;
@@ -48,14 +49,6 @@ public class PassengerSheet extends Sheet {
     private TextView locationTime;
 
 
-
-    private LinearLayout requestInfo;
-    private EditText requestMessageInp;
-    private TextView requestStatus;
-    private TextView requestMessage;
-    private Button requestBtn;
-    private Button requestCancelBtn;
-
     public PassengerSheet() {
         super();
         routeService = new RouteService();
@@ -74,12 +67,7 @@ public class PassengerSheet extends Sheet {
 
         locationInfo = view.findViewById(R.id.location_info);
         locationTime = view.findViewById(R.id.location_time);
-        requestInfo = view.findViewById(R.id.request_info);
-        requestMessage = view.findViewById(R.id.request_message);
-        requestStatus = view.findViewById(R.id.request_status);
-        requestMessageInp = view.findViewById(R.id.request_message_inp);
-        requestBtn = view.findViewById(R.id.request_btn);
-        requestCancelBtn = view.findViewById(R.id.request_cancel_btn);
+
 
         userService.current((user) -> {
             locationService.getLocation(location.uuid, (location) -> {
@@ -102,6 +90,15 @@ public class PassengerSheet extends Sheet {
 
     private void createRequestLine(ApiUser user, ApiLocation location) {
 
+        LinearLayout requestInfo = view.findViewById(R.id.request_info);
+        RelativeLayout requestUserInfo = view.findViewById(R.id.request_user_info);
+        ImageView userImage = view.findViewById(R.id.request_user_image);
+        TextView userName = view.findViewById(R.id.request_user_name);
+        TextView requestMessage = view.findViewById(R.id.request_message);
+        EditText requestMessageInp = view.findViewById(R.id.request_message_inp);
+        Button requestBtn = view.findViewById(R.id.request_btn);
+        Button requestCancelBtn = view.findViewById(R.id.request_cancel_btn);
+
         requestInfo.setVisibility(View.GONE);
 
         if (!user.id.equals(location.userId)) {
@@ -109,17 +106,18 @@ public class PassengerSheet extends Sheet {
             requestInfo.setVisibility(View.VISIBLE);
 
             if (location.request != null) {
+
+                requestUserInfo.setVisibility(View.VISIBLE);
                 requestCancelBtn.setVisibility(View.VISIBLE);
-                requestStatus.setVisibility(View.VISIBLE);
-                requestMessage.setVisibility(View.VISIBLE);
                 requestBtn.setVisibility(View.GONE);
                 requestMessageInp.setVisibility(View.GONE);
 
+                UserHelper.setAvatarImage(location.request.user, userImage);
+                userName.setText(UserHelper.getName(location.request.user));
                 requestMessage.setText(location.request.message.message);
                 requestCancelBtn.setOnClickListener((v) -> cancelRequest(location.request));
             } else {
-                requestStatus.setVisibility(View.GONE);
-                requestMessage.setVisibility(View.GONE);
+                requestUserInfo.setVisibility(View.GONE);
                 requestCancelBtn.setVisibility(View.GONE);
                 requestBtn.setVisibility(View.VISIBLE);
                 requestMessageInp.setVisibility(View.VISIBLE);

@@ -23,6 +23,7 @@ import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.UserService;
 import com.dev.wedrive.util.DownloadImageTask;
@@ -50,13 +51,12 @@ public class RouteSheet extends Sheet {
     @Getter
     private ApiRoute route;
 
-    private TextView routeName;
-    private TextView routeStatus;
+    private View view;
+
     private LinearLayout locationInfo;
     private TextView locationTime;
     private Button locationBtn;
-    private ImageView userImage;
-    private TextView userName;
+
     private ImageView carImage;
     private TextView carBrand;
     private TextView carModel;
@@ -84,12 +84,8 @@ public class RouteSheet extends Sheet {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.sheet_route, container, false);
+        view = inflater.inflate(R.layout.sheet_route, container, false);
 
-        userImage = view.findViewById(R.id.user_image);
-        userName = view.findViewById(R.id.user_name);
-        routeName = view.findViewById(R.id.route_name);
-        routeStatus = view.findViewById(R.id.route_status);
         locationInfo = view.findViewById(R.id.location_info);
         locationTime = view.findViewById(R.id.location_time);
         locationBtn = view.findViewById(R.id.location_btn);
@@ -240,10 +236,13 @@ public class RouteSheet extends Sheet {
 
     private void createRouteLine(ApiUser user, ApiRoute route) {
 
-//        if (user.profile.image != null)
-//            new DownloadImageTask(userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(user.profile.image, "sm"));
+        ImageView userImage = view.findViewById(R.id.user_image);
+        TextView userName = view.findViewById(R.id.user_name);
+        TextView routeName = view.findViewById(R.id.route_name);
+        TextView routeStatus = view.findViewById(R.id.route_status);
 
-        userName.setText(user.profile.name + " " + user.profile.lastName);
+        UserHelper.setAvatarImage(user, userImage);
+        userName.setText(UserHelper.getName(user));
         routeName.setText(route.name);
         routeStatus.setText(route.status);
 

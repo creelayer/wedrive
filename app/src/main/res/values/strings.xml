@@ -18,9 +18,16 @@
     <string name="total_earned">Зароблено</string>
     <string name="rating">Рейтинг</string>
     <string name="location_time">Час</string>
+    <string name="location_time_delay">Затримка</string>
+    <string name="location_update">Змінити локацію</string>
     <string name="passenger_count">Пасажирів</string>
     <string name="trip_count">Поїздок</string>
+    <string name="payment">Оплата</string>
+    <string name="price">Вартість</string>
+    <string name="pay_cash">Готівка</string>
+    <string name="pay_card">Картка</string>
     <string name="send_request">Відправити запит</string>
+    <string name="cancel_request">Відмінити запит</string>
 
 
 

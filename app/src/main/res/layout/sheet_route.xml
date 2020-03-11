@@ -12,175 +12,249 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/user_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/googleg_standard_color_18" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/btn_radio_shape" />
 
                 <TextView
                     android:id="@+id/user_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/user_image"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toEndOf="@+id/user_image"
                     android:layout_weight="1"
                     android:text="Full name" />
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Route"
-                    android:textStyle="bold|italic" />
-
-                <TextView
                     android:id="@+id/route_name"
+                    style="@style/Sheet.LocationInfoMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Name" />
+                    android:layout_below="@+id/user_name"
+                    android:layout_alignStart="@+id/user_name"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Hi! Some went to Kiev?" />
 
                 <TextView
                     android:id="@+id/route_status"
-                    android:layout_width="match_parent"
+                    style="@style/StatusRoundedYellow"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_weight="1"
-                    android:text="Route status" />
+                    android:text="Status" />
 
-                <LinearLayout
-                    android:id="@+id/location_info"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/location_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/message_grey_line" />
+
+                <androidx.gridlayout.widget.GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <Button
-                        android:id="@+id/location_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Change location"
-                        android:visibility="gone" />
+                    app:columnCount="3">
 
                     <TextView
                         android:id="@+id/textView15"
-                        android:layout_width="match_parent"
+                        style="@style/Sheet.LocationInfoSubText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Location time" />
+                        android:text="@string/location_time"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
+
+                    <TextView
+                        android:id="@+id/textView33"
+                        style="@style/Sheet.LocationInfoSubText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        style="@style/Sheet.LocationInfoSubText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location_time_delay"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
 
                     <TextView
                         android:id="@+id/location_time"
-                        android:layout_width="match_parent"
+                        style="@style/Sheet.LocationInfoText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="00:00" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/car_change_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Change car"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Car"
-                    android:textStyle="bold|italic" />
-
-                <TextView
-                    android:id="@+id/car_model"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Model" />
-
-                <ImageView
-                    android:id="@+id/car_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/googleg_standard_color_18" />
-
-                <TextView
-                    android:id="@+id/car_brand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Brand" />
-
-                <TextView
-                    android:id="@+id/car_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Number" />
-
-                <Button
-                    android:id="@+id/route_action_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Run"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/request_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                        android:text="00:00"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
 
                     <TextView
-                        android:id="@+id/request_status"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textView24"
+                        style="@style/Sheet.LocationInfoText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Request on route sended" />
+                        android:text="50 грн"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
 
                     <TextView
-                        android:id="@+id/request_message"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textView28"
+                        style="@style/Sheet.LocationInfoText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Request message" />
+                        android:text="+10 хв"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center" />
 
-                    <EditText
-                        android:id="@+id/request_message_inp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Message to driver"
-                        android:inputType="textMultiLine" />
+                </androidx.gridlayout.widget.GridLayout>
 
-                    <Button
-                        android:id="@+id/request_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Send request" />
+                <Button
+                    android:id="@+id/location_btn"
+                    style="@style/Sheet.SuccessBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/location_update"
+                    android:visibility="gone" />
 
-                    <Button
-                        android:id="@+id/request_cancel_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Cancel request" />
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/message_grey_line" />
 
-                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/car_change_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Change car"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Car"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/car_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Model" />
+
+            <ImageView
+                android:id="@+id/car_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/googleg_standard_color_18" />
+
+            <TextView
+                android:id="@+id/car_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Brand" />
+
+            <TextView
+                android:id="@+id/car_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Number" />
+
+            <Button
+                android:id="@+id/route_action_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Run"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/request_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/request_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Request on route sended" />
+
+                <TextView
+                    android:id="@+id/request_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Request message" />
+
+                <EditText
+                    android:id="@+id/request_message_inp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Message to driver"
+                    android:inputType="textMultiLine" />
+
+                <Button
+                    android:id="@+id/request_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send request" />
+
+                <Button
+                    android:id="@+id/request_cancel_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel request" />
 
             </LinearLayout>
 

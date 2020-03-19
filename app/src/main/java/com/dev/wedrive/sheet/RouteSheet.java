@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -217,7 +218,7 @@ public class RouteSheet extends Sheet {
         TextView carBrand = view.findViewById(R.id.car_brand);
         TextView carModel = view.findViewById(R.id.car_model);
         TextView carNumber = view.findViewById(R.id.car_number);
-        Button changeCarBtn = view.findViewById(R.id.car_change_btn);
+        ImageButton changeCarBtn = view.findViewById(R.id.car_change_btn);
 
         CarHelper.setCarImage(car, carImage);
         carBrand.setText(car.brand);

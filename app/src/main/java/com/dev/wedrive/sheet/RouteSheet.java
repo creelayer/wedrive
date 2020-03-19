@@ -23,6 +23,7 @@ import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.ApiUser;
+import com.dev.wedrive.helpers.CarHelper;
 import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.UserService;
@@ -57,11 +58,7 @@ public class RouteSheet extends Sheet {
     private TextView locationTime;
     private Button locationBtn;
 
-    private ImageView carImage;
-    private TextView carBrand;
-    private TextView carModel;
-    private TextView carNumber;
-    private Button changeCarBtn;
+
     private Button routeActionBtn;
 
     private LinearLayout requestInfo;
@@ -89,11 +86,7 @@ public class RouteSheet extends Sheet {
         locationInfo = view.findViewById(R.id.location_info);
         locationTime = view.findViewById(R.id.location_time);
         locationBtn = view.findViewById(R.id.location_btn);
-        carImage = view.findViewById(R.id.car_image);
-        carBrand = view.findViewById(R.id.car_brand);
-        carModel = view.findViewById(R.id.car_model);
-        carNumber = view.findViewById(R.id.car_number);
-        changeCarBtn = view.findViewById(R.id.car_change_btn);
+
         routeActionBtn = view.findViewById(R.id.route_action_btn);
         requestInfo = view.findViewById(R.id.request_info);
         requestMessage = view.findViewById(R.id.request_message);
@@ -220,9 +213,13 @@ public class RouteSheet extends Sheet {
 
     private void createCarLine(ApiUser user, ApiCar car) {
 
-//        if (car.image != null)
-//            new DownloadImageTask(carImage).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
+        ImageView carImage = view.findViewById(R.id.car_image);
+        TextView carBrand = view.findViewById(R.id.car_brand);
+        TextView carModel = view.findViewById(R.id.car_model);
+        TextView carNumber = view.findViewById(R.id.car_number);
+        Button changeCarBtn = view.findViewById(R.id.car_change_btn);
 
+        CarHelper.setCarImage(car, carImage);
         carBrand.setText(car.brand);
         carModel.setText(car.model);
         carNumber.setText(car.number);
@@ -247,7 +244,7 @@ public class RouteSheet extends Sheet {
         routeStatus.setText(route.status);
 
         if (user.id.equals(route.userId)) {
-            routeActionBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? "Run" : "Stop");
+            routeActionBtn.setText(route.status.equals(ApiRoute.STATUS_CURRENT) ? getResources().getString(R.string.run_route) : getResources().getString(R.string.stop_route));
             routeActionBtn.setOnClickListener((v) -> changeRouteState(user, route));
             routeActionBtn.setVisibility(View.VISIBLE);
         }

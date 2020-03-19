@@ -14,6 +14,10 @@
     <string name="menu_chat">Повідомлення</string>
     <string name="menu_log_out">Вихід</string>
 
+    <string name="edit">Редагувати</string>
+    <string name="change">Змінити</string>
+    <string name="run_route">Поіхали</string>
+    <string name="stop_route">Завершити</string>
     <string name="wallet">На рахунку</string>
     <string name="total_earned">Зароблено</string>
     <string name="rating">Рейтинг</string>
@@ -22,7 +26,7 @@
     <string name="location_update">Змінити локацію</string>
     <string name="passenger_count">Пасажирів</string>
     <string name="trip_count">Поїздок</string>
-    <string name="payment">Оплата</string>
+    <string name="payment">Розрахунок</string>
     <string name="price">Вартість</string>
     <string name="pay_cash">Готівка</string>
     <string name="pay_card">Картка</string>

@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiCar;
+import com.dev.wedrive.helpers.CarHelper;
 
 import java.util.ArrayList;
 
@@ -62,7 +63,10 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
 
         ApiCar car = cars.get(position);
 
-        holder.name.setText(car.brand + " " + car.model);
+        CarHelper.setCarImage(car, holder.image);
+        holder.model.setText(car.model);
+        holder.brand.setText(car.brand);
+        holder.number.setText(car.number);
 
         if (car.active)
             holder.checkbox.setBackground(activeRadioShape);
@@ -72,15 +76,21 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout content;
-        TextView name;
+        ImageView image;
+        TextView model;
+        TextView brand;
+        TextView number;
         ImageView checkbox;
-        Button editBtn;
-        Button deleteBtn;
+        ImageButton editBtn;
+        ImageButton deleteBtn;
 
         ViewHolder(View view) {
             super(view);
             content = view.findViewById(R.id.smContentView);
-            name = view.findViewById(R.id.list_name);
+            image = view.findViewById(R.id.car_image);
+            model = view.findViewById(R.id.car_model);
+            brand = view.findViewById(R.id.car_brand);
+            number = view.findViewById(R.id.car_number);
             checkbox = view.findViewById(R.id.list_status);
             editBtn = view.findViewById(R.id.list_item_edit);
             deleteBtn = view.findViewById(R.id.list_item_delete);

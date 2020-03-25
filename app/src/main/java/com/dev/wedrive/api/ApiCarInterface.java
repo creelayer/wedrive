@@ -28,6 +28,9 @@ public interface ApiCarInterface {
     public Call<ApiResponse<ApiCar>> setActive(@Query("car") String uuid);
 
     @POST("/car/create")
+    public Call<ApiResponse<ApiCar>> createCar();
+
+    @POST("/car/create")
     public Call<ApiResponse<ApiCar>> createCar(@Body ApiCar apiCar);
 
     @POST("/car/update")

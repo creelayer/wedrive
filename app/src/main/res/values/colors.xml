@@ -10,6 +10,8 @@
     <color name="dark_yellow">#ccae2a</color>
     <color name="grey">#B4B4B4</color>
 
+    <color name="bg_grey">#F7F6F6</color>
+
     <color name="message_yellow_bg">#FADB63</color>
     <color name="message_grey_text">#8F8E8E</color>
     <color name="message_grey_time">#B4B4B4</color>

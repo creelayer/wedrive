@@ -37,7 +37,7 @@
         <item name="android:layout_height">42dp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:layout_marginTop">20dp</item>
-        <item name="android:background">@drawable/btn_yellow_bg_rounded</item>
+        <item name="android:background">@drawable/btn_bg_yellow_rounded</item>
     </style>
 
 
@@ -46,7 +46,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:background">@drawable/btn_dark_bg_rounded</item>
+        <item name="android:background">@drawable/btn_bg_dark_rounded</item>
     </style>
 
 
@@ -105,6 +105,42 @@
     </style>
 
     <!--Nav-End-->
+
+
+    <!--Form-->
+
+    <style name="Form"/>
+
+    <style name="Form.Label">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="Form.Input">
+        <item name="android:background">@drawable/message_input_bg</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="Form.Btn">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/formButton</item>
+    </style>
+
+    <style name="Form.Btn.SuccessBtn">
+        <item name="android:background">@drawable/btn_bg_yellow_rounded</item>
+    </style>
+
+    <!--Form end-->
 
     <!--Login pages-->
 
@@ -273,16 +309,11 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="Sheet.SuccessBtn">
-        <item name="android:background">@drawable/btn_yellow_bg_rounded</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/formButton</item>
+    <style name="Sheet.SuccessBtn" parent="Form.Btn.SuccessBtn">
     </style>
 
     <style name="Sheet.CancelBtn">
-        <item name="android:background">@drawable/btn_dark_bg_rounded</item>
+        <item name="android:background">@drawable/btn_bg_dark_rounded</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
@@ -290,5 +321,33 @@
     </style>
 
     <!--Sheet slide end-->
+
+    <!--Car list-->
+    <style name="CarList"/>
+
+    <style name="CarList.ItemAction">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="CarList.ItemBg">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="CarList.AddCarBtn">
+        <item name="android:background">@drawable/btn_add_car</item>
+    </style>
+
+    <style name="CarList.ActionBtn">
+        <item name="android:background">@drawable/btn_bg_yellow_rounded</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!--Car end-->
+
+
 
 </resources>

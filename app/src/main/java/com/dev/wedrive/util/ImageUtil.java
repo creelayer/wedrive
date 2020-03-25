@@ -7,29 +7,27 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
-public class ProfileImageUtil  {
+public class ImageUtil {
 
-    private static ProfileImageUtil profileImageUtil;
+    private static ImageUtil imageUtil;
 
     private Transformation transformation;
 
-
-    private ProfileImageUtil(){
-
+    private ImageUtil(){
         transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
-                .borderWidthDp(2)
+                .borderWidthDp(3)
                 .cornerRadiusDp(50)
                 .oval(false)
                 .build();
     }
 
-    public static ProfileImageUtil get() {
+    public static ImageUtil get() {
 
-        if (profileImageUtil == null)
-            profileImageUtil = new ProfileImageUtil();
+        if (imageUtil == null)
+            imageUtil = new ImageUtil();
 
-        return profileImageUtil;
+        return imageUtil;
     }
 
     public RequestCreator load(String url){

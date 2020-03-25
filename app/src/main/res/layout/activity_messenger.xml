@@ -38,9 +38,11 @@
                     app:srcCompat="@drawable/ic_chevron_left" />
 
                 <View
+                    android:id="@+id/divider4"
                     android:layout_width="match_parent"
-                    android:layout_height="1dip"
+                    android:layout_height="1.1dp"
                     android:layout_alignParentBottom="true"
+                    android:layout_weight="1"
                     android:background="@color/message_grey_line" />
 
             </RelativeLayout>

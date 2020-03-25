@@ -46,6 +46,16 @@ public class CarService {
         });
     }
 
+    public void createCar(Consumer<ApiCar> func) {
+        ApiService.getInstance().car().createCar().enqueue(new Callback<ApiResponse<ApiCar>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success)
+                    func.accept((ApiCar) response.getData());
+            }
+        });
+    }
+
     public void createCar(ApiCar car, Consumer<ApiCar> func) {
         ApiService.getInstance().car().createCar(car).enqueue(new Callback<ApiResponse<ApiCar>>() {
             @Override

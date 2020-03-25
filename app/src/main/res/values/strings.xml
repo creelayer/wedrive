@@ -32,6 +32,9 @@
     <string name="pay_card">Картка</string>
     <string name="send_request">Відправити запит</string>
     <string name="cancel_request">Відмінити запит</string>
+    <string name="save_btn">Зберегти</string>
+    <string name="edit_btn">Редагувати</string>
+    <string name="delete_btn">Видалити</string>
 
 
 
@@ -52,6 +55,12 @@
     <string name="pin_resend">Відправити ще раз? </string>
     <string name="pin_resend_wait">Відправити ще раз через: %1$s сек </string>
 
+
+    <string name="car_brand">Бренд</string>
+    <string name="car_model">Модель</string>
+    <string name="car_year">Год</string>
+    <string name="car_color">Цвет</string>
+    <string name="car_number">Номер</string>
 
 
     <string name="message_input_placeholder">Повідомлення...</string>

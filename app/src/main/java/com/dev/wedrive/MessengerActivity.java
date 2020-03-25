@@ -19,7 +19,7 @@ import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.service.MessagesService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
-import com.dev.wedrive.util.ProfileImageUtil;
+import com.dev.wedrive.util.ImageUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -123,7 +123,7 @@ public class MessengerActivity extends AbstractAuthActivity {
             if (messagesList == null) {
                 messagesService.getConversationInfo(chat, (info) -> {
                     if (info.recipient.profile.image != null)
-                        ProfileImageUtil
+                        ImageUtil
                                 .get()
                                 .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(info.recipient.profile.image, "sm"))
                                 .into(messageHeaderImage);

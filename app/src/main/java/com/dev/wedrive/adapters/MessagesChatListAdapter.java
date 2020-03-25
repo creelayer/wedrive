@@ -18,7 +18,7 @@ import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.helpers.MessengerHelper;
 import com.dev.wedrive.helpers.UserHelper;
-import com.dev.wedrive.util.ProfileImageUtil;
+import com.dev.wedrive.util.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
         holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
 
         if (chat.recipient.profile.image != null)
-            ProfileImageUtil
+            ImageUtil
                     .get()
                     .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(chat.recipient.profile.image, "sm"))
                     .into(holder.listItemImage);

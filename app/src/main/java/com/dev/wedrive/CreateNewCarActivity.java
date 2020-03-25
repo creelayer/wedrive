@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dev.wedrive.entity.ApiCar;
+import com.dev.wedrive.helpers.CarHelper;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.service.CarService;
@@ -85,14 +86,28 @@ public class CreateNewCarActivity extends AbstractAuthActivity implements Valida
         Button okBtn = findViewById(R.id.car_save_btn);
         okBtn.setOnClickListener((v) -> validator.validate());
 
-
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        if (bundle != null)
             load(bundle.getString("uuid"));
-        } else {
-            image.setVisibility(View.INVISIBLE);
-            imageChoose.setVisibility(View.INVISIBLE);
-        }
+        else
+            create();
+
+    }
+
+    private void load(String uuid) {
+        carService.getCar(uuid, (car) -> {
+            this.car = car;
+            CarHelper.setCarImage(car, image);
+            brand.setText(car.brand);
+            model.setText(car.model);
+            year.setText(Integer.toString(car.year));
+            color.setText(car.color);
+            number.setText(car.number);
+        });
+    }
+
+    private void create() {
+        carService.createCar((car) -> this.car = car);
     }
 
     @Override
@@ -111,27 +126,12 @@ public class CreateNewCarActivity extends AbstractAuthActivity implements Valida
 
             String message = error.getCollatedErrorMessage(this);
 
-            if (view instanceof EditText) {
+            if (view instanceof EditText)
                 ((EditText) view).setError(message);
-            } else {
+            else
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
+
         }
-    }
-
-    private void load(String uuid) {
-        carService.getCar(uuid, (car) -> {
-            this.car = car;
-            brand.setText(car.brand);
-            model.setText(car.model);
-            year.setText(Integer.toString(car.year));
-            color.setText(car.color);
-            number.setText(car.number);
-
-//            if (car.image != null)
-//                new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"));
-
-        });
     }
 
     //method to show file chooser
@@ -142,15 +142,12 @@ public class CreateNewCarActivity extends AbstractAuthActivity implements Valida
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-    //handling the image chooser activity result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
-            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) ->{}
-                   // new DownloadImageTask(image).execute(Constants.API_URL + "/uploads/car/" + FileHelper.getStyleName(car.image, "sm"))
-                    );
+            carService.uploadImage(car, FileHelper.getRealPathFromUri(this, data.getData()), (car) -> CarHelper.setCarImage(car, image));
 
     }
 }

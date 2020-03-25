@@ -14,51 +14,96 @@
         app:sml_scroller_duration="250"
         app:sml_scroller_interpolator="@android:anim/bounce_interpolator">
 
+        <LinearLayout
+            android:id="@id/smMenuViewLeft"
+            style="@style/CarList.ItemAction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/list_item_delete"
+                style="@style/CarList.ActionBtn"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_trash_alt"
+                android:tint="@color/white"
+                android:text="@string/delete_btn" />
+
+            <ImageButton
+                android:id="@+id/list_item_edit"
+                style="@style/CarList.ActionBtn"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_edit"
+                android:tint="@color/white"
+                android:text="@string/edit_btn"
+                />
+
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@id/smContentView"
+            style="@style/CarList.ItemBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_list_item">
 
+            <ImageView
+                android:id="@+id/car_image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:srcCompat="@drawable/btn_radio_shape" />
+
             <TextView
-                android:id="@+id/list_name"
+                android:id="@+id/car_model"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Киев - Велики Васюки" />
+                android:layout_alignTop="@+id/car_image"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/car_image"
+                android:text="Model" />
+
+            <TextView
+                android:id="@+id/car_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/car_model"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/car_model"
+                android:text="Brand" />
+
+            <TextView
+                android:id="@+id/car_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/car_model"
+                android:layout_alignStart="@+id/car_model"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:alpha="0.5"
+                android:text="Number" />
 
             <ImageView
                 android:id="@+id/list_status"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
                 app:srcCompat="@drawable/btn_radio_shape" />
 
 
         </RelativeLayout>
-
-        <LinearLayout
-            android:id="@id/smMenuViewLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/list_item_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete" />
-
-            <Button
-                android:id="@+id/list_item_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit" />
-
-        </LinearLayout>
 
     </com.tubb.smrv.SwipeHorizontalMenuLayout>
 </LinearLayout>

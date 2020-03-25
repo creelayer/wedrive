@@ -11,21 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dev.wedrive.Constants;
 import com.dev.wedrive.MapActivity;
 import com.dev.wedrive.R;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiUser;
-import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.informs.InformMessage;
 import com.dev.wedrive.service.LocationService;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.RouteService;
 import com.dev.wedrive.service.UserService;
-import com.dev.wedrive.util.DownloadImageTask;
-import com.dev.wedrive.util.ProfileImageUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import lombok.Getter;

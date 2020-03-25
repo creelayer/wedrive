@@ -1,19 +1,15 @@
 package com.dev.wedrive;
 
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Messenger;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,8 +21,7 @@ import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.service.ApiService;
 import com.dev.wedrive.service.MapService;
 import com.dev.wedrive.service.ProfileService;
-import com.dev.wedrive.sheet.PassengerSheet;
-import com.dev.wedrive.util.ProfileImageUtil;
+import com.dev.wedrive.util.ImageUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -135,7 +130,7 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
             navType.setText(profile.type);
 
             if (profile.image != null)
-                ProfileImageUtil
+                ImageUtil
                         .get()
                         .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
                         .into(navImage);

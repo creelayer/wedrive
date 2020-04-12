@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface ApiUserInterface {
 
-    @GET("/security/current")
+    @GET("/security/current?expand=profile")
     public Call<ApiResponse<ApiUser>> getCurrentUser();
 
     @GET("/user/view")

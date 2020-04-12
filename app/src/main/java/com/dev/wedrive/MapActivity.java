@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.dev.wedrive.controls.ControlsFactory;
 import com.dev.wedrive.controls.ControlsInterface;
 import com.dev.wedrive.helpers.FileHelper;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.informs.InformManager;
 import com.dev.wedrive.loaders.LoaderLocationManager;
 import com.dev.wedrive.service.ApiService;
@@ -126,14 +127,10 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
             controller = ControlsFactory.create(this, profile, loaderLocationManager).init();
             loaderLocationManager.start();
 
-            navName.setText(profile.name + " " + profile.lastName);
+            navName.setText(UserHelper.getName(profile));
             navType.setText(profile.type);
 
-            if (profile.image != null)
-                ImageUtil
-                        .get()
-                        .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
-                        .into(navImage);
+            UserHelper.setAvatarImage(profile, navImage);
 
         }, (error) -> {
         });
@@ -199,11 +196,13 @@ public class MapActivity extends AbstractAuthActivity implements OnMapReadyCallb
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_profile_edit)
-            goTo(ProfileEditActivity.class);
+        if (id == R.id.nav_request) goTo(RequestListActivity.class);
 
-        if (id == R.id.nav_log_out)
-            ApiService.getInstance().setToken(null);
+        if (id == R.id.nav_messages) goTo(MessengerActivity.class);
+
+        if (id == R.id.nav_profile_edit) goTo(ProfileEditActivity.class);
+
+        if (id == R.id.nav_log_out) ApiService.getInstance().setToken(null);
 
         return true;
     }

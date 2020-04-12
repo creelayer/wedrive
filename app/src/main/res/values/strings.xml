@@ -14,7 +14,6 @@
     <string name="menu_chat">Повідомлення</string>
     <string name="menu_log_out">Вихід</string>
 
-    <string name="edit">Редагувати</string>
     <string name="change">Змінити</string>
     <string name="run_route">Поіхали</string>
     <string name="stop_route">Завершити</string>
@@ -34,6 +33,7 @@
     <string name="cancel_request">Відмінити запит</string>
     <string name="save_btn">Зберегти</string>
     <string name="edit_btn">Редагувати</string>
+    <string name="cancel_btn">Скасувати</string>
     <string name="delete_btn">Видалити</string>
 
 
@@ -61,6 +61,15 @@
     <string name="car_year">Год</string>
     <string name="car_color">Цвет</string>
     <string name="car_number">Номер</string>
+
+
+    <string name="route_name">Маршрут</string>
+    <string name="route_description">Введіть маршрут відправлення та прибуття. Наприклад: Киів - Васильків. Час буде вказанно в окремій локаціі кожного з маршрутів. </string>
+
+    <string name="profile_name">Ім\'я</string>
+    <string name="profile_surname">Фамілія</string>
+    <string name="profile_phone">Телефон</string>
+    <string name="profile_phone_hint">(000) 000-00-00</string>
 
 
     <string name="message_input_placeholder">Повідомлення...</string>

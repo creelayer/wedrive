@@ -14,8 +14,46 @@
         app:sml_scroller_interpolator="@android:anim/bounce_interpolator">
 
 
+        <LinearLayout
+            android:id="@id/smMenuViewLeft"
+            style="@style/CarList.ItemAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+
+            <ImageButton
+                android:id="@+id/list_item_delete"
+                style="@style/CarList.ActionBtn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_trash_alt"
+                android:tint="@color/white"
+                android:text="@string/delete_btn" />
+
+            <ImageButton
+                android:id="@+id/list_item_edit"
+                style="@style/CarList.ActionBtn"
+                android:layout_width="60dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_edit"
+                android:text="@string/edit_btn"
+                android:tint="@color/white" />
+
+
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@id/smContentView"
+            style="@style/CarList.ItemBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_list_item">
@@ -34,30 +72,6 @@
                 app:srcCompat="@drawable/btn_radio_shape" />
 
         </RelativeLayout>
-
-        <LinearLayout
-            android:id="@id/smMenuViewLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/list_item_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete" />
-
-            <Button
-                android:id="@+id/list_item_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit" />
-
-        </LinearLayout>
 
     </com.tubb.smrv.SwipeHorizontalMenuLayout>
 </LinearLayout>

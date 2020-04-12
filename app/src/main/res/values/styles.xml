@@ -49,7 +49,6 @@
         <item name="android:background">@drawable/btn_bg_dark_rounded</item>
     </style>
 
-
     <style name="StatusRoundedWhite">
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:background">@drawable/status_rounded_bg_white</item>
@@ -70,6 +69,17 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:paddingBottom">0dp</item>
+    </style>
+
+
+    <style name="TextGreyButton" parent="TextViewStyle">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextOrangeButton" parent="TextGreyButton">
+        <item name="android:textColor">@color/orange</item>
     </style>
 
 
@@ -119,9 +129,26 @@
         <item name="android:layout_marginTop">6dp</item>
     </style>
 
+    <style name="Form.Description">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
     <style name="Form.Input">
         <item name="android:background">@drawable/message_input_bg</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="Form.Input2">
+        <item name="android:background">@drawable/message_input2_bg</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">10dp</item>
@@ -338,6 +365,10 @@
 
     <style name="CarList.AddCarBtn">
         <item name="android:background">@drawable/btn_add_car</item>
+        <item name="android:src">@drawable/ic_car_plus</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">14dp</item>
     </style>
 
     <style name="CarList.ActionBtn">

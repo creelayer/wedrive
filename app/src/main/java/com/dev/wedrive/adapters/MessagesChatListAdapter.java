@@ -66,13 +66,9 @@ public class MessagesChatListAdapter extends RecyclerView.Adapter<MessagesChatLi
         holder.listItemMessage.setText(MessengerHelper.formatChatMessage(chat.message, user));
         holder.listItemTime.setText(MessengerHelper.formatShortTime(chat.updatedAt));
 
-        holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
+        UserHelper.setAvatarImage(chat.recipient, holder.listItemImage);
 
-        if (chat.recipient.profile.image != null)
-            ImageUtil
-                    .get()
-                    .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(chat.recipient.profile.image, "sm"))
-                    .into(holder.listItemImage);
+        holder.listItem.setOnClickListener((v) -> listener.onItemClick(v, position));
 
     }
 

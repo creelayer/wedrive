@@ -14,13 +14,13 @@ import retrofit2.http.Query;
 public interface ApiMessageInterface {
 
 
-    @GET("/message/conversations?expand=recipient,message")
+    @GET("/message/conversations?expand=recipient.profile,message")
     public Call<ApiResponse<List<ApiMessageChat>>> getConversations();
 
     @GET("/message/conversation")
     public Call<ApiResponse<List<ApiMessage>>> getConversation(@Query("chat") String uuid);
 
-    @GET("/message/info?expand=user,recipient")
+    @GET("/message/info?expand=user,recipient.profile")
     public Call<ApiResponse<ApiMessageChat>> getConversationInfo(@Query("chat") String uuid);
 
 //    @GET("/message/conversation?expand=created_at,recipient")

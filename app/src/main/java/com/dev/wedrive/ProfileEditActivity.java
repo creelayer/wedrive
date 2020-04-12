@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wedrive.entity.ApiProfile;
+import com.dev.wedrive.helpers.CarHelper;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
 import com.dev.wedrive.service.ProfileService;
@@ -45,9 +47,6 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
     @Getter
     private TextView phone;
 
-    @Getter
-    private TextView email;
-
     public ProfileEditActivity() {
         super();
         validator = new Validator(this);
@@ -67,12 +66,14 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
         name = findViewById(R.id.profile_name);
         lastName = findViewById(R.id.profile_last_name);
         phone = findViewById(R.id.profile_phone);
-        email = findViewById(R.id.profile_email);
         ImageButton imageChoose = findViewById(R.id.profile_image_choose);
         imageChoose.setOnClickListener((v) -> showFileChooser());
 
-        Button saveBtn = findViewById(R.id.profile_save_btn);
+        TextView saveBtn = findViewById(R.id.profile_save_btn);
         saveBtn.setOnClickListener((v) -> validator.validate());
+
+        TextView cancelBtn = findViewById(R.id.profile_cancel_btn);
+        cancelBtn.setOnClickListener((v) -> finish());
 
         load();
 
@@ -104,17 +105,12 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
             this.profile = profile;
             name.setText(profile.name);
             lastName.setText(profile.lastName);
-            phone.setText(profile.phone);
-            email.setText(profile.email);
-
-            //TODO: image
-//            if (profile.image != null)
-//                new DownloadImageTask(getResources(), image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+            phone.setText(UserHelper.phoneFormat(profile.user.phone));
+            UserHelper.setAvatarImage(profile, image);
         }, (error) -> {
         });
     }
 
-    //method to show file chooser
     public void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -122,16 +118,12 @@ public class ProfileEditActivity extends AbstractAuthActivity implements Validat
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-    //handling the image chooser activity result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) ->{}
-                    //TODO: image
-//                    new DownloadImageTask(getResources(), image).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"))
-            );
-        }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
+            profileService.uploadImage(FileHelper.getRealPathFromUri(this, data.getData()), (profile) -> UserHelper.setAvatarImage(profile, image));
+
     }
 }

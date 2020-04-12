@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -74,8 +75,8 @@ public class RoutesListAdapter extends RecyclerView.Adapter<RoutesListAdapter.Vi
         RelativeLayout content;
         TextView name;
         ImageView checkbox;
-        Button editBtn;
-        Button deleteBtn;
+        ImageButton editBtn;
+        ImageButton deleteBtn;
 
         ViewHolder(View view) {
             super(view);

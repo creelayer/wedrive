@@ -122,12 +122,7 @@ public class MessengerActivity extends AbstractAuthActivity {
         messagesService.getConversation(chat, (messages) -> {
             if (messagesList == null) {
                 messagesService.getConversationInfo(chat, (info) -> {
-                    if (info.recipient.profile.image != null)
-                        ImageUtil
-                                .get()
-                                .load(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(info.recipient.profile.image, "sm"))
-                                .into(messageHeaderImage);
-
+                    UserHelper.setAvatarImage(info.recipient, messageHeaderImage);
                     messageHeaderName.setText(UserHelper.getName(info.recipient));
                     messagesList = messagesListFactory.createMessageList(messages, info.recipient);
                     messageBtn.setOnClickListener((v) -> sendMessage(new ApiMessage(info.recipient, messageInp.getText().toString())));

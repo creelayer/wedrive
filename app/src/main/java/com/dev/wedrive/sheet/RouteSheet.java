@@ -97,24 +97,23 @@ public class RouteSheet extends Sheet {
         requestCancelBtn = view.findViewById(R.id.request_cancel_btn);
 
 
-        userService.current((user) -> {
-            routeService.getRoute(route != null ? route.uuid : location.routeUuid, (route) -> {
-                this.route = route;
+        userService.current((user) ->
+                routeService.getRoute(route != null ? route.uuid : location.routeUuid, (route) -> {
+                    this.route = route;
 
-                createRouteLine(user, route);
-                createCarLine(user, route.car);
+                    createRouteLine(user, route);
+                    createCarLine(user, route.car);
 
-                if (location != null) {
-                    locationService.getLocation(location.uuid, (location) -> {
-                        this.location = location;
-                        createLocationLine(user, location);
-                        createRequestLine(user, location);
-                    });
-                }
+                    if (location != null) {
+                        locationService.getLocation(location.uuid, (location) -> {
+                            this.location = location;
+                            createLocationLine(user, location);
+                            createRequestLine(user, location);
+                        });
+                    }
 
-            });
-
-        });
+                })
+        );
 
 
         return view;

@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface ApiProfileInterface {
 
-    @GET("/profile")
+    @GET("/profile?expand=user")
     public Call<ApiResponse<ApiProfile>> getMyProfile();
 
     @GET("/profile/info")

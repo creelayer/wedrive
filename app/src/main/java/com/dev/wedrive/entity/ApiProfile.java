@@ -15,6 +15,9 @@ public class ApiProfile implements Serializable {
     @SerializedName("user_id")
     public Integer userId;
 
+    @Getter
+    public ApiUser user;
+
     @SerializedName("type")
     @Getter
     public String type;

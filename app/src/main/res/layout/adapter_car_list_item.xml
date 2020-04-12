@@ -19,7 +19,7 @@
             style="@style/CarList.ItemAction"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -60,7 +60,7 @@
                 android:id="@+id/car_image"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                app:srcCompat="@drawable/btn_radio_shape" />
+                app:srcCompat="@drawable/default_image_dark" />
 
             <TextView
                 android:id="@+id/car_model"

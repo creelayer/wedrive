@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:padding="10dp"
     tools:context=".CreateNewRouteActivity">
 
     <LinearLayout
@@ -17,12 +19,14 @@
 
         <TextView
             android:id="@+id/textView8"
+            style="@style/Form.Label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Destination from" />
+            android:text="@string/route_name" />
 
         <EditText
             android:id="@+id/route_name_input"
+            style="@style/Form.Input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -30,19 +34,24 @@
 
         <TextView
             android:id="@+id/textView9"
+            style="@style/Form.Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout" />
+            android:text="@string/route_description" />
+
     </LinearLayout>
 
     <Button
         android:id="@+id/route_save_btn"
+        style="@style/Form.Btn.SuccessBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="2dp"
-        android:text="Сохранить"
+        android:text="@string/save_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 </RelativeLayout>

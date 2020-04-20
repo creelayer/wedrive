@@ -35,6 +35,8 @@
     <string name="edit_btn">Редагувати</string>
     <string name="cancel_btn">Скасувати</string>
     <string name="delete_btn">Видалити</string>
+    <string name="exit">Вихід</string>
+    <string name="map">Карта</string>
 
 
 
@@ -55,6 +57,8 @@
     <string name="pin_resend">Відправити ще раз? </string>
     <string name="pin_resend_wait">Відправити ще раз через: %1$s сек </string>
 
+
+    <string name="message_chat_label">Повідомлення</string>
 
     <string name="car_brand">Бренд</string>
     <string name="car_model">Модель</string>

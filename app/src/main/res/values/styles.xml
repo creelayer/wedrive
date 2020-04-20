@@ -198,6 +198,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Messenger.ChatListHeader">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
+    </style>
+
     <style name="Messenger.ChatListContent">
         <item name="android:paddingLeft">10dp</item>
     </style>
@@ -221,7 +228,7 @@
         <item name="android:background">@drawable/message_transparent_bg_rounded</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">2dp</item>
         <item name="android:paddingLeft">10dp</item>
@@ -233,21 +240,23 @@
     </style>
 
     <style name="Messenger.DayTime">
-        <item name="android:textColor">@color/message_grey_time</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">11sp</item>
+        <item name="android:alpha">1</item>
         <item name="android:textAlignment">center</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="Messenger.Message">
-        <item name="android:background">@drawable/message_text_bg</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Messenger.Time">
-        <item name="android:textColor">@color/message_grey_time</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:alpha">1</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="Messenger.Message.Input">
@@ -296,7 +305,7 @@
     <style name="Sheet"/>
 
     <style name="Sheet.LocationInfoMessage">
-        <item name="android:background">@drawable/message_text_bg</item>
+        <item name="android:background">@drawable/message_border_text_bg</item>
         <item name="android:textSize">12sp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>

@@ -22,7 +22,7 @@ public interface ApiLocationInterface {
     @GET("/location/active-passenger-location")
     public Call<ApiResponse<ApiLocation>> getActivePassengerLocation();
 
-    @GET("/location/info?expand=route,user,request")
+    @GET("/location/info?expand=route,user.profile,request.user.profile,request.message")
     public Call<ApiResponse<ApiLocation>> getLocationInfo(@Query("location") String uuid);
 
     @POST("/location/position")

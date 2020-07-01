@@ -22,6 +22,8 @@ import com.dev.wedrive.entity.ApiRequest;
 import com.dev.wedrive.entity.ApiRoute;
 import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.entity.DriverLocationData;
+import com.dev.wedrive.helpers.CarHelper;
+import com.dev.wedrive.helpers.UserHelper;
 import com.dev.wedrive.service.UserService;
 import com.dev.wedrive.util.DownloadImageTask;
 import com.dev.wedrive.helpers.FileHelper;
@@ -81,9 +83,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         ApiProfile profile = request.user.profile;
         ApiLocation location = request.location;
 
-
-//        if (profile.image != null)
-//            new DownloadImageTask(holder.userImage).execute(Constants.API_URL + "/uploads/profile/" + FileHelper.getStyleName(profile.image, "sm"));
+        UserHelper.setAvatarImage(request.user, holder.userImage);
 
         holder.userName.setText(profile.name + " " + profile.lastName);
         holder.requestTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(request.createdAt));
@@ -113,26 +113,26 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
     public void updateControlsState(ViewHolder holder, ApiRequest request) {
 
-        holder.cancelBtn.setVisibility(View.GONE);
-        holder.acceptBtn.setVisibility(View.GONE);
-        holder.deniedBtn.setVisibility(View.GONE);
-
-        if (request.status.equals(ApiRequest.STATUS_NEW)) {
-            if (user.id == request.userId)
-                holder.cancelBtn.setVisibility(View.VISIBLE);
-            else {
-                holder.acceptBtn.setVisibility(View.VISIBLE);
-                holder.deniedBtn.setVisibility(View.VISIBLE);
-            }
-        }
-
-        if (request.status.equals(ApiRequest.STATUS_ACCEPTED)) {
-            if (user.id == request.userId)
-                holder.cancelBtn.setVisibility(View.VISIBLE);
-            else {
-                holder.deniedBtn.setVisibility(View.VISIBLE);
-            }
-        }
+//        holder.cancelBtn.setVisibility(View.GONE);
+//        holder.acceptBtn.setVisibility(View.GONE);
+//        holder.deniedBtn.setVisibility(View.GONE);
+//
+//        if (request.status.equals(ApiRequest.STATUS_NEW)) {
+//            if (user.id == request.userId)
+//                holder.cancelBtn.setVisibility(View.VISIBLE);
+//            else {
+//                holder.acceptBtn.setVisibility(View.VISIBLE);
+//                holder.deniedBtn.setVisibility(View.VISIBLE);
+//            }
+//        }
+//
+//        if (request.status.equals(ApiRequest.STATUS_ACCEPTED)) {
+//            if (user.id == request.userId)
+//                holder.cancelBtn.setVisibility(View.VISIBLE);
+//            else {
+//                holder.deniedBtn.setVisibility(View.VISIBLE);
+//            }
+//        }
     }
 
     // stores and recycles views as they are scrolled off screen
@@ -161,7 +161,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             routeName = view.findViewById(R.id.route_name);
             locationTime = view.findViewById(R.id.location_time);
             acceptBtn = view.findViewById(R.id.accept_btn);
-            deniedBtn = view.findViewById(R.id.denied_btn);
+            deniedBtn = view.findViewById(R.id.cancel_btn); //TODO:denied_btn
             cancelBtn = view.findViewById(R.id.cancel_btn);
             messageBtn = view.findViewById(R.id.message_btn);
 

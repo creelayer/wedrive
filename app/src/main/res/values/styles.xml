@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -388,6 +388,45 @@
 
     <!--Car end-->
 
+    <!--Request start-->
 
+    <style name="RequestList"/>
+
+    <style name="RequestList.ActionBtn" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">82dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingTop">35dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="RequestList.Line">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="RequestList.Title">
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="RequestList.Text">
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="RequestList.ActionBtnIcon">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_marginTop">13dp</item>
+        <item name="android:layout_marginEnd">38dp</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <!--Request end-->
 
 </resources>

@@ -1,9 +1,14 @@
 package com.dev.wedrive.service;
 
+import android.util.Log;
+
+import androidx.arch.core.util.Function;
 import androidx.core.util.Consumer;
 
 import com.dev.wedrive.api.ApiResponse;
 import com.dev.wedrive.api.Callback;
+import com.dev.wedrive.data.Pager;
+import com.dev.wedrive.data.Slice;
 import com.dev.wedrive.entity.ApiLocation;
 import com.dev.wedrive.entity.ApiRequest;
 
@@ -16,6 +21,17 @@ public class RequestService {
 
     public void getMyRequests(final Consumer<ArrayList<ApiRequest>> func) {
         ApiService.getInstance().request().getMyRequests().enqueue(new Callback<ApiResponse<ArrayList<ApiRequest>>>() {
+            @Override
+            public void onResult(ApiResponse response) {
+                if (response instanceof ApiResponse.Success) {
+                    func.accept((ArrayList<ApiRequest>) response.getData());
+                }
+            }
+        });
+    }
+
+    public void getMyRequests(Pager pager, final Consumer<ArrayList<ApiRequest>> func) {
+        ApiService.getInstance().request().getMyRequests(pager.getPage()).enqueue(new Callback<ApiResponse<ArrayList<ApiRequest>>>() {
             @Override
             public void onResult(ApiResponse response) {
                 if (response instanceof ApiResponse.Success) {

@@ -2,22 +2,33 @@ package com.dev.wedrive;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev.wedrive.adapters.RecyclerViewScrollListener;
 import com.dev.wedrive.adapters.RequestListAdapter;
+import com.dev.wedrive.data.Pager;
+import com.dev.wedrive.data.Slice;
 import com.dev.wedrive.dialog.ConfirmDialog;
 import com.dev.wedrive.entity.ApiRequest;
+import com.dev.wedrive.entity.ApiUser;
 import com.dev.wedrive.service.RequestService;
 import com.dev.wedrive.service.UserService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestListActivity extends AbstractAuthActivity implements RequestListAdapter.OnItemClickListener {
 
     private UserService userService;
     private RequestService requestService;
     private RequestListAdapter adapter;
+    private RecyclerView recyclerView;
+    private ApiUser user;
 
     public RequestListActivity() {
         userService = new UserService();
@@ -37,13 +48,32 @@ public class RequestListActivity extends AbstractAuthActivity implements Request
 
         userService.current((user) -> {
 
+            this.user = user;
+
             requestService.getMyRequests((requests) -> {
-                // set up the RecyclerView
-                RecyclerView list = findViewById(R.id.request_list);
-                list.setLayoutManager(new LinearLayoutManager(this));
-                adapter = new RequestListAdapter(this, user, requests);
+                recyclerView = findViewById(R.id.request_list);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter = new RequestListAdapter(this, this.user, requests);
                 adapter.setListener(this);
-                list.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
+
+                recyclerView.addOnScrollListener(new RecyclerViewScrollListener<ApiRequest>((top) ->
+                        requestService.getMyRequests(new Pager(0), (items) -> {
+                            HashMap<String, ApiRequest> data = new HashMap<String, ApiRequest>();
+                            for (ApiRequest item : items) {
+                                data.put(item.getUuid(), item);
+                            }
+                            top.reset(data);
+                        })
+                        , (bottom) ->
+                        requestService.getMyRequests(new Pager(bottom.getData().size()), (items) -> {
+                            HashMap<String, ApiRequest> data = new HashMap<String, ApiRequest>();
+                            for (ApiRequest item : items) {
+                                data.put(item.getUuid(), item);
+                            }
+                            bottom.add(data);
+                        })
+                ));
             });
 
 
@@ -67,7 +97,7 @@ public class RequestListActivity extends AbstractAuthActivity implements Request
                     .show();
 
 
-        if (view.getId() == R.id.denied_btn)
+        if (view.getId() == R.id.cancel_btn) //TODO: denied_btn
             new ConfirmDialog(this)
                     .setHeaderText("Confirm")
                     .setMessageText("Confirm denied click")

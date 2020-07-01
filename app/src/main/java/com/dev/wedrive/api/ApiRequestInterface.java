@@ -16,6 +16,9 @@ public interface ApiRequestInterface {
     @GET("/request/my?expand=message,user.profile")
     public Call<ApiResponse<ArrayList<ApiRequest>>> getMyRequests();
 
+    @GET("/request/my?expand=message,user.profile")
+    public Call<ApiResponse<ArrayList<ApiRequest>>> getMyRequests(@Query("page") int page);
+
     @GET("/request/info?expand=location.user")
     public Call<ApiResponse<ApiRequest>> getInfo(@Query("request") String uuid);
 
